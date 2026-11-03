@@ -82,3 +82,6 @@ Set `OPENAI_API_KEY` only in the root `.env` for local development or Netlify se
 - `tests/` — project tests
 
 See [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md) and [docs/](./docs/) for architecture decisions, requirements, and implementation guidance.
+
+See [DEPLOY.md](./DEPLOY.md) for the Netlify build, function, environment
+variable, and production verification settings.

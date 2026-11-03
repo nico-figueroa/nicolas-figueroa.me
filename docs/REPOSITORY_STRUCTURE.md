@@ -29,7 +29,6 @@ nicolas-figueroa.me/
 │   ├── server/
 │   └── styles/
 ├── tests/
-├── .env.example
 ├── netlify.toml
 ├── package.json
 └── requirements.txt
