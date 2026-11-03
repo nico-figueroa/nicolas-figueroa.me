@@ -224,6 +224,7 @@ node_modules/
 dist/
 .astro/
 .netlify/
+.vscode/
 
 # Local environment variables
 .env.*
