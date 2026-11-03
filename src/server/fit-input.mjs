@@ -1,10 +1,13 @@
 import { lookup } from "node:dns/promises";
 import https from "node:https";
-import { PDFParse } from "pdf-parse";
+import { DOMMatrix } from "@napi-rs/canvas";
 import ipaddr from "ipaddr.js";
 import { load } from "cheerio";
 import WordExtractor from "word-extractor";
 import { readBodyBytes, readJsonBody, sanitizeText } from "./http.mjs";
+
+globalThis.DOMMatrix ??= DOMMatrix;
+const { PDFParse } = await import("pdf-parse");
 
 export const MAX_JOB_DESCRIPTION_LENGTH = 12_000;
 export const MAX_FILE_BYTES = 2_000_000;

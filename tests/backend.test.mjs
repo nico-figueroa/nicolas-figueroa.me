@@ -296,6 +296,7 @@ test("Fit endpoint accepts a bounded text file upload", async () => {
 });
 
 test("Fit input extraction handles JSON, CSV, HTML, and RTF files", async () => {
+  assert.equal(typeof globalThis.DOMMatrix, "function");
   const json = await extractJobDescriptionFile(
     "role.json",
     Buffer.from(JSON.stringify({ title: "AI Engineer", skills: ["Python", "RAG"] })),

@@ -53,6 +53,12 @@ project uses its built-in model defaults. Keep the secret scanner enabled and
 leave `OPENAI_API_KEY` configured only if generated Guide answers are wanted.
 Then trigger a fresh deploy.
 
+If a Guide request displays “Failed to fetch,” open the deployed page and
+`/.netlify/functions/ai-guide` in a private/incognito window. A `401` from both
+URLs indicates site/deploy access protection, not an OpenAI configuration
+problem. Make the production site publicly accessible, then retry. Without an
+OpenAI key the function should still return cited local evidence.
+
 ## Deploy and verify
 
 After saving the settings, trigger the initial deploy. Subsequent commits
@@ -66,8 +72,13 @@ After deployment, verify:
 - `/.netlify/functions/ai-guide` and
   `/.netlify/functions/check-nicos-fit` respond when submitted through their
   site forms.
+- The production site's visitor-access settings allow public requests. Site or
+  deploy protection can return `401 Unauthorized` for both pages and Functions
+  before application code runs; keep production public for a public portfolio
+  and apply access restrictions to previews only if desired.
 - The Contact form appears under **Forms** in the Netlify site dashboard after
-  a successful production deploy. Its form name is `contact`; configure email
+  a successful production deploy. If it does not, enable form detection in
+  **Forms** and redeploy. Its form name is `contact`; configure email
   notifications under **Forms → Notifications** if desired.
 - If the Guide is used without an OpenAI key, it should return local cited
   evidence instead of generated answers.
