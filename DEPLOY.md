@@ -66,6 +66,12 @@ pushed to `main` deploy automatically; other branches can use Deploy Previews.
 The existing [`netlify.toml`](./netlify.toml) also configures response security
 headers and the Node.js Functions directory.
 
+The Content Security Policy allows same-origin Function requests and scripts.
+Keep the closing quote in the `connect-src 'self';` directive intact; a
+malformed directive blocks browser calls to the Guide and Fit endpoints.
+Theme behavior is served from `/scripts/theme-toggle.js` so the static pages
+do not need an inline-script exception.
+
 After deployment, verify:
 
 - The home page and content routes load.

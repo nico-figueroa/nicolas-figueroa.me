@@ -25,6 +25,11 @@ const guidePrompt = await readFile(
   new URL("../src/components/GuidePrompt.astro", import.meta.url),
   "utf8",
 );
+const siteHeader = await readFile(
+  new URL("../src/components/SiteHeader.astro", import.meta.url),
+  "utf8",
+);
+const netlifyConfig = await readFile(new URL("../netlify.toml", import.meta.url), "utf8");
 const slugPage = await readFile(new URL("../src/pages/[slug].astro", import.meta.url), "utf8");
 
 test("navigation destinations have matching page content", () => {
@@ -46,6 +51,11 @@ test("home primary action leads to The Guide and second action leads to Journey"
 
 test("AI-generated Guide answers carry a cited-source accuracy disclaimer", () => {
   assert.match(guideForm, /AI-generated response:.*Confirm important claims with the cited source links/);
+});
+
+test("CSP permits same-origin function requests without inline scripts", () => {
+  assert.match(netlifyConfig, /connect-src 'self';/);
+  assert.match(siteHeader, /<script is:inline src="\/scripts\/theme-toggle\.js"><\/script>/);
 });
 
 test("resume views link to the Guide with a role-specific question prompt", () => {
