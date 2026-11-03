@@ -27,20 +27,31 @@ for the corpus-building scripts and tests, not for deployed Functions.
 
 ## Environment variables
 
-In **Site configuration → Environment variables**, add:
+In **Site configuration → Environment variables**, add only:
 
 | Variable | Required? | Purpose |
 | --- | --- | --- |
 | `OPENAI_API_KEY` | No | Enables OpenAI-generated Guide answers and embedding-based query search. Without it, the Guide still returns matching local evidence. |
-| `OPENAI_MODEL` | No | Guide model override. Defaults to `gpt-4.1-mini`. |
-| `OPENAI_EMBEDDING_MODEL` | No | Embedding model override. Defaults to the model recorded in `data/embeddings.json`. |
 
 Set secrets in Netlify, not in source files or committed `.env` files. For
 production AI responses, make `OPENAI_API_KEY` available to the production
 deploy's Functions. Add it to Deploy Previews only if previews should also use
 the paid OpenAI service. Do not expose it as a client-side/public build variable.
-The site and its evidence-only Guide fallback work when these variables are
+The application has built-in model defaults, so do not add `OPENAI_MODEL` or
+`OPENAI_EMBEDDING_MODEL` as Netlify secret variables. Their non-secret model
+identifiers also appear in source and corpus metadata, which causes Netlify's
+secret scanner to reject the build when it treats those values as secrets.
+The site and its evidence-only Guide fallback work when `OPENAI_API_KEY` is
 unset.
+
+### If Netlify reports model values as exposed secrets
+
+Open **Site configuration → Environment variables** and delete
+`OPENAI_MODEL` and `OPENAI_EMBEDDING_MODEL` from the site and any shared/team
+environment configuration. They are optional overrides, not credentials; this
+project uses its built-in model defaults. Keep the secret scanner enabled and
+leave `OPENAI_API_KEY` configured only if generated Guide answers are wanted.
+Then trigger a fresh deploy.
 
 ## Deploy and verify
 
