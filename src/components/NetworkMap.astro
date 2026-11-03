@@ -1,0 +1,15 @@
+---
+import navigation from "../content/navigation.json";
+---
+
+<nav class="network-map" aria-label="Explore portfolio sections">
+  <svg class="network-map-lines" viewBox="0 0 400 300" aria-hidden="true">
+    <path d="M65 45 200 150M335 45 200 150M65 105 200 150M335 105 200 150M65 195 200 150M335 195 200 150M65 255 200 150M335 255 200 150" />
+  </svg>
+  {navigation.map((item, index) => (
+    <a class:list={["network-map-node", `network-map-node-${index + 1}`]} href={item.href}>
+      <span class="network-map-dot" aria-hidden="true"></span>
+      <span>{item.label}</span>
+    </a>
+  ))}
+</nav>

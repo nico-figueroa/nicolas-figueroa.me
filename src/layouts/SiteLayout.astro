@@ -1,0 +1,43 @@
+---
+import site from "../content/site.json";
+import "../styles/global.css";
+import SiteHeader from "../components/SiteHeader.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  wide?: boolean;
+}
+
+const { title, description, wide = false } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0A0A0A" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title} | {site.name}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <SiteHeader />
+    <main
+      id="main"
+      class:list={[
+        "mx-auto min-h-[65vh] w-full px-6 py-16 md:py-24",
+        wide ? "max-w-[96rem]" : "max-w-6xl",
+      ]}
+    >
+      <slot />
+    </main>
+    <footer class="border-t border-[var(--line)]">
+      <div class="mx-auto max-w-[96rem] px-4 py-6 text-sm text-[var(--muted)] sm:px-6">
+        <p>{site.brandStatement}</p>
+      </div>
+    </footer>
+  </body>
+</html>

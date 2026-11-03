@@ -1,0 +1,15 @@
+{
+  "name": "Nicolas Figueroa",
+  "brandStatement": "Exploring how complex systems learn, adapt, and evolve.",
+  "introduction": "A systems, automation, and technical operations leader with a career across financial services, medical devices, and manufacturing. I lead cross-functional teams, improve quality and product-lifecycle systems, and connect enterprise operations with hands-on software and AI engineering.",
+  "focusAreas": ["Systems leadership", "Technical operations", "Automation", "AI engineering"],
+  "sectionEyebrow": "Portfolio",
+  "primaryAction": {
+    "label": "Ask the Guide",
+    "href": "/the-guide/"
+  },
+  "secondaryAction": {
+    "label": "Explore the journey",
+    "href": "/journey/"
+  }
+}

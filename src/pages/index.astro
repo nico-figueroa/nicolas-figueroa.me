@@ -1,0 +1,24 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import site from "../content/site.json";
+import NetworkMap from "../components/NetworkMap.astro";
+---
+
+<SiteLayout title="Home" description={site.brandStatement}>
+  <section class="grid gap-10 md:grid-cols-[1.4fr_0.6fr] md:items-center">
+    <div>
+      <p class="mb-5 text-sm font-medium uppercase tracking-[0.18em] text-[var(--accent)]">
+        {site.focusAreas.join(" · ")}
+      </p>
+      <h1 class="max-w-3xl text-4xl font-semibold leading-tight tracking-tight md:text-6xl">
+        {site.brandStatement}
+      </h1>
+      <p class="mt-6 max-w-2xl text-lg leading-8 text-[var(--muted)]">{site.introduction}</p>
+      <div class="mt-9 flex flex-wrap gap-4">
+        <a class="button button-primary" href={site.primaryAction.href}>{site.primaryAction.label}</a>
+        <a class="button button-secondary" href={site.secondaryAction.href}>{site.secondaryAction.label}</a>
+      </div>
+    </div>
+    <NetworkMap />
+  </section>
+</SiteLayout>

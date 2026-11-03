@@ -1,0 +1,281 @@
+<form class="mt-10 max-w-3xl space-y-4" data-fit-form>
+  <div class="space-y-4">
+    <div>
+      <label class="font-medium" for="fit-input-mode">Job description input</label>
+      <select
+        class="mt-2 w-full rounded-xl border border-[var(--line)] bg-[var(--surface)] p-3 text-[var(--text)]"
+        id="fit-input-mode"
+        aria-describedby="fit-help"
+      >
+        <option value="text">Paste text or JSON</option>
+        <option value="url">Public HTTPS URL</option>
+        <option value="file">Upload a file</option>
+      </select>
+    </div>
+    <div data-fit-text-group>
+      <label class="font-medium" for="job-description">Job description</label>
+      <textarea
+        class="mt-2 min-h-48 w-full rounded-xl border border-[var(--line)] bg-[var(--surface)] p-4 text-[var(--text)]"
+        id="job-description"
+        name="jobDescription"
+        maxlength="12000"
+      ></textarea>
+    </div>
+    <div data-fit-url-group hidden>
+      <label class="font-medium" for="job-description-url">Job description URL</label>
+      <input
+        class="mt-2 w-full rounded-xl border border-[var(--line)] bg-[var(--surface)] p-3 text-[var(--text)]"
+        id="job-description-url"
+        type="url"
+        inputmode="url"
+        autocomplete="url"
+        placeholder="https://example.com/careers/role"
+      />
+      <p class="mt-2 text-sm text-[var(--muted)]">
+        Public HTTPS pages only. Private destinations, redirects, and non-HTML files are blocked.
+      </p>
+    </div>
+    <div data-fit-file-group hidden>
+      <label class="font-medium" for="job-description-file">Job description file</label>
+      <input
+        class="mt-2 block w-full rounded-xl border border-[var(--line)] bg-[var(--surface)] p-3 text-[var(--text)]"
+        id="job-description-file"
+        type="file"
+        accept=".pdf,.doc,.docx,.txt,.md,.csv,.tsv,.json,.html,.htm,.rtf"
+      />
+      <p class="mt-2 text-sm text-[var(--muted)]">
+        PDF, Word (DOC/DOCX), TXT, Markdown, CSV/TSV, JSON, HTML, and RTF; maximum 2 MB. Scanned PDFs may not contain extractable text.
+      </p>
+    </div>
+    <p class="text-sm text-[var(--muted)]" id="fit-help">
+      The analysis is an evidence-overlap estimate, not a hiring decision. Input is processed for this request only.
+    </p>
+  </div>
+  <button class="button button-primary" type="submit" data-fit-submit>Check Nico's Fit</button>
+  <p class="text-sm text-[var(--muted)]" aria-live="polite" data-fit-status></p>
+</form>
+
+<section class="mt-10 max-w-3xl space-y-8" data-fit-results hidden aria-live="polite">
+  <div>
+    <h2 class="text-xl font-semibold">Match Score</h2>
+    <p class="mt-3 text-3xl font-semibold" data-fit-score></p>
+    <p class="mt-2 leading-7 text-[var(--muted)]" data-fit-explanation></p>
+    <p class="mt-2"><a class="text-sm text-[var(--accent)] underline" data-fit-source></a></p>
+  </div>
+  <div>
+    <h2 class="text-xl font-semibold">Relevant Skills</h2>
+    <ul class="mt-3 flex flex-wrap gap-2" data-fit-skills></ul>
+  </div>
+  <div>
+    <h2 class="text-xl font-semibold">Partially Supported Requirements</h2>
+    <p class="mt-2 leading-7 text-[var(--muted)]">
+      Related evidence is available, but it does not establish the exact role requirement.
+    </p>
+    <ul class="mt-3 list-inside list-disc space-y-2" data-fit-partial></ul>
+  </div>
+  <div>
+    <h2 class="text-xl font-semibold">Relevant Experience</h2>
+    <ul class="mt-3 flex flex-wrap gap-2" data-fit-experience></ul>
+  </div>
+  <div>
+    <h2 class="text-xl font-semibold">Relevant Projects</h2>
+    <ul class="mt-3 space-y-3" data-fit-projects></ul>
+  </div>
+  <div>
+    <h2 class="text-xl font-semibold">Potential Gaps</h2>
+    <p class="mt-2 leading-7 text-[var(--muted)]">
+      Requirements not established by the available profile or candidate-confirmed evidence. The same items appear in each growth estimate below.
+    </p>
+    <ul class="mt-3 list-inside list-disc space-y-2" data-fit-gaps></ul>
+  </div>
+  <div>
+    <h2 class="text-xl font-semibold">Growth Projection</h2>
+    <p class="mt-2 font-semibold text-[var(--accent)]" data-fit-growth-label></p>
+    <p class="mt-2 leading-7 text-[var(--muted)]" data-fit-growth-basis></p>
+    <div class="mt-4 grid gap-4 md:grid-cols-2 2xl:grid-cols-3" data-fit-growth-levels></div>
+  </div>
+  <div>
+    <h2 class="text-xl font-semibold">Recommended Content</h2>
+    <ul class="mt-3 list-inside list-disc space-y-2" data-fit-recommendations></ul>
+  </div>
+</section>
+
+<script>
+  import { readApiResponse } from "../scripts/api-response.mjs";
+
+  const form = document.querySelector("[data-fit-form]");
+  const mode = document.querySelector("#fit-input-mode");
+  const field = document.querySelector("#job-description");
+  const urlField = document.querySelector("#job-description-url");
+  const fileField = document.querySelector("#job-description-file");
+  const status = document.querySelector("[data-fit-status]");
+  const results = document.querySelector("[data-fit-results]");
+  const submitButton = form?.querySelector("[data-fit-submit]");
+
+  function updateInputMode() {
+    if (!(mode instanceof HTMLSelectElement)
+      || !(field instanceof HTMLTextAreaElement)
+      || !(urlField instanceof HTMLInputElement)
+      || !(fileField instanceof HTMLInputElement)) return;
+    const textGroup = form?.querySelector("[data-fit-text-group]");
+    const urlGroup = form?.querySelector("[data-fit-url-group]");
+    const fileGroup = form?.querySelector("[data-fit-file-group]");
+    if (!(textGroup instanceof HTMLElement)
+      || !(urlGroup instanceof HTMLElement)
+      || !(fileGroup instanceof HTMLElement)) return;
+    textGroup.hidden = mode.value !== "text";
+    urlGroup.hidden = mode.value !== "url";
+    fileGroup.hidden = mode.value !== "file";
+    field.disabled = mode.value !== "text";
+    urlField.disabled = mode.value !== "url";
+    fileField.disabled = mode.value !== "file";
+    field.required = mode.value === "text";
+    urlField.required = mode.value === "url";
+    fileField.required = mode.value === "file";
+  }
+
+  mode?.addEventListener("change", updateInputMode);
+  updateInputMode();
+
+  function fillList(selector, values, formatValue = (value) => value) {
+    const list = results?.querySelector(selector);
+    if (!list) return;
+    list.replaceChildren();
+    for (const value of values) {
+      const item = document.createElement("li");
+      item.textContent = formatValue(value);
+      list.append(item);
+    }
+  }
+
+  form?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    if (
+      !(form instanceof HTMLFormElement)
+      || !(mode instanceof HTMLSelectElement)
+      || !(field instanceof HTMLTextAreaElement)
+      || !(urlField instanceof HTMLInputElement)
+      || !(fileField instanceof HTMLInputElement)
+      || !(status instanceof HTMLElement)
+      || !(results instanceof HTMLElement)
+    ) return;
+    status.textContent = mode.value === "url"
+      ? "Retrieving the public job-description page…"
+      : mode.value === "file"
+        ? "Reading the job-description file…"
+        : "Comparing the job description with documented portfolio evidence…";
+    results.hidden = true;
+    if (submitButton instanceof HTMLButtonElement) submitButton.disabled = true;
+
+    try {
+      let request;
+      if (mode.value === "file") {
+        const file = fileField.files?.[0];
+        if (!file) throw new Error("Choose a job-description file to upload.");
+        const body = new FormData();
+        body.append("file", file);
+        request = { method: "POST", body };
+      } else {
+        request = {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify(mode.value === "url"
+            ? { jobDescriptionUrl: urlField.value }
+            : { jobDescription: field.value }),
+        };
+      }
+      const response = await fetch("/.netlify/functions/check-nicos-fit", {
+        ...request,
+      });
+      const payload = await readApiResponse(response);
+
+      const score = results.querySelector("[data-fit-score]");
+      const explanation = results.querySelector("[data-fit-explanation]");
+      const source = results.querySelector("[data-fit-source]");
+      const growthLabel = results.querySelector("[data-fit-growth-label]");
+      const growthBasis = results.querySelector("[data-fit-growth-basis]");
+      const growthLevels = results.querySelector("[data-fit-growth-levels]");
+      if (!score || !explanation || !source || !(growthLabel instanceof HTMLElement)
+        || !(growthBasis instanceof HTMLElement)
+        || !(growthLevels instanceof HTMLElement)) {
+        throw new Error("The Fit results area is unavailable.");
+      }
+      growthLabel.textContent = payload.growthProjection.label;
+      score.textContent = `${payload.matchScore}%`;
+      explanation.textContent = payload.scoreExplanation;
+      source.href = payload.source;
+      source.textContent = "Source profile";
+      fillList("[data-fit-skills]", payload.relevantSkills);
+      fillList(
+        "[data-fit-partial]",
+        payload.partiallySupportedRequirements || [],
+        (item) => `${item.label} — ${item.evidence}`,
+      );
+      fillList("[data-fit-experience]", payload.relevantExperience);
+      fillList("[data-fit-gaps]", payload.potentialGaps);
+      const projects = results.querySelector("[data-fit-projects]");
+      if (!(projects instanceof HTMLUListElement)) {
+        throw new Error("The Fit projects area is unavailable.");
+      }
+      projects.replaceChildren();
+      for (const project of payload.relevantProjects || []) {
+        const item = document.createElement("li");
+        const link = document.createElement("a");
+        link.href = project.source;
+        link.textContent = `${project.name} — ${project.reason}`;
+        link.className = "text-[var(--accent)] underline";
+        item.append(link);
+        projects.append(item);
+      }
+      const recommendations = results.querySelector("[data-fit-recommendations]");
+      if (!(recommendations instanceof HTMLUListElement)) {
+        throw new Error("The Fit recommendations area is unavailable.");
+      }
+      recommendations.replaceChildren();
+      for (const recommendation of payload.recommendedContent || []) {
+        const item = document.createElement("li");
+        const link = document.createElement("a");
+        link.href = recommendation.url;
+        link.textContent = recommendation.title;
+        link.className = "text-[var(--accent)] underline";
+        item.append(link);
+        recommendations.append(item);
+      }
+      growthBasis.textContent = payload.growthProjection.basis;
+      growthLevels.replaceChildren();
+      for (const level of payload.growthProjection.levels || []) {
+        const card = document.createElement("article");
+        card.className = "rounded-xl border border-[var(--line)] bg-[var(--surface)] p-5";
+        const heading = document.createElement("h3");
+        heading.className = "text-lg font-semibold";
+        heading.textContent = level.label;
+        const target = document.createElement("p");
+        target.className = "mt-1 text-sm text-[var(--muted)]";
+        target.textContent = level.target;
+        const overall = document.createElement("p");
+        overall.className = "mt-3 font-medium text-[var(--accent)]";
+        overall.textContent = `All identified skills: ${level.overall.time}`;
+        const skills = document.createElement("ul");
+        skills.className = "mt-3 space-y-2 text-sm text-[var(--muted)]";
+        for (const item of level.skills) {
+          const entry = document.createElement("li");
+          const name = document.createElement("strong");
+          name.className = "text-[var(--text)]";
+          name.textContent = `${item.skill}: `;
+          entry.append(name, document.createTextNode(item.time));
+          skills.append(entry);
+        }
+        card.append(heading, target, overall, skills);
+        growthLevels.append(card);
+      }
+      results.hidden = false;
+      status.textContent = "Analysis complete. The score is a transparent evidence-overlap estimate.";
+    } catch (error) {
+      status.textContent = error instanceof Error
+        ? error.message
+        : "Fit analysis is temporarily unavailable.";
+    } finally {
+      if (submitButton instanceof HTMLButtonElement) submitButton.disabled = false;
+    }
+  });
+</script>

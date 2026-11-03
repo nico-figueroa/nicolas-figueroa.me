@@ -1,0 +1,237 @@
+{
+  "summary": "Systems, automation, and technical operations leader with progressive experience across enterprise support, engineering, software validation, quality operations, product quality, and safety, quality, and regulatory leadership. Combines cross-functional team leadership and product-lifecycle expertise with graduate study and hands-on software and AI engineering.",
+  "views": [
+    {
+      "slug": "recruiter",
+      "label": "Recruiter",
+      "focus": "A concise, role-alignment view of leadership progression, breadth, and core capabilities.",
+      "summary": "Systems and technical operations leader with progressive experience across financial services, medical devices, and manufacturing. Brings cross-functional leadership, quality and regulatory expertise, enterprise systems support, and hands-on software and AI learning.",
+      "presentation": "screening",
+      "sectionOrder": ["experience", "skills", "projects", "education"],
+      "sectionTitles": {
+        "experience": "Career Snapshot",
+        "skills": "Skills and Capabilities",
+        "projects": "Selected Projects",
+        "education": "Education and Certifications"
+      },
+      "sectionDescriptions": {
+        "experience": "A concise chronology of cross-industry leadership, product quality, and technical operations.",
+        "skills": "A screening-friendly view of documented technical, operational, and domain capabilities.",
+        "projects": "Selected examples of software, AI learning, and digital product work.",
+        "education": "Verified degrees, studies, and professional credentials."
+      },
+      "experienceHighlightLimit": 2,
+      "experienceTitles": [
+        "Special assignment — transition, remediation, and operational continuity",
+        "Safety, Quality and Regulatory Leader",
+        "Head of Product Quality Engineering",
+        "Sustaining Quality Assurance Manager",
+        "Quality Operations Manager",
+        "Quality Operations Supervisor",
+        "Quality Compliance Supervisor",
+        "Senior Validation Administrator",
+        "Lead Systems Support Engineer"
+      ],
+      "skillGroups": ["languages", "platformsAndFrameworks", "practices", "spokenLanguages"],
+      "skillFilters": {},
+      "projectNames": [
+        "AI Trip Planner",
+        "IntakeWise",
+        "Nomadant Tech Store",
+        "AI Engineering Lessons",
+        "Full Stack Engineering Lessons",
+        "RESTful Restaurants",
+        "Tara Hidalgo Artist Portfolio",
+        "Python Lessons",
+        "Unbound Root",
+        "HusKey Manager Security Coursework"
+      ]
+    },
+    {
+      "slug": "engineering-manager",
+      "label": "Engineering Manager",
+      "focus": "A delivery-oriented technical view, led by software projects and supported by engineering and validation experience.",
+      "summary": "Technical leader with experience guiding engineering and validation teams, supporting enterprise applications, and improving software and product systems. Recent full-stack and AI projects provide direct evidence of hands-on implementation across APIs, databases, user interfaces, and AI-assisted workflows.",
+      "presentation": "technical",
+      "sectionOrder": ["projects", "experience", "skills", "education"],
+      "sectionTitles": {
+        "projects": "Selected Engineering Projects",
+        "skills": "Technical Stack and Practices",
+        "experience": "Relevant Engineering Experience",
+        "education": "Education and Certifications"
+      },
+      "sectionDescriptions": {
+        "projects": "Implementation evidence across full-stack applications, APIs, databases, and AI-assisted systems.",
+        "skills": "Documented programming languages, frameworks, and practices used across the portfolio.",
+        "experience": "Selected software, systems, validation, and product-engineering roles.",
+        "education": "Education and credentials supporting continued technical development."
+      },
+      "experienceHighlightLimit": 2,
+      "experienceTitles": [
+        "Head of Product Quality Engineering",
+        "Sustaining Quality Assurance Manager",
+        "Senior Quality Engineer",
+        "Senior Validation Administrator",
+        "Software Validation Engineer",
+        "Lead Systems Support Engineer",
+        "Senior Systems Support Engineer",
+        "Junior Systems Support Engineer"
+      ],
+      "skillGroups": ["languages", "platformsAndFrameworks", "practices", "spokenLanguages"],
+      "skillFilters": {
+        "practices": [
+          "AI applications",
+          "Machine learning",
+          "LLM and RAG pipelines",
+          "Automation",
+          "Software validation",
+          "Systems integration",
+          "Technical operations",
+          "Team leadership"
+        ]
+      },
+      "projectNames": [
+        "IntakeWise",
+        "Nomadant Tech Store",
+        "RESTful Restaurants",
+        "AI Trip Planner",
+        "Full Stack Engineering Lessons",
+        "Python Lessons"
+      ]
+    },
+    {
+      "slug": "leadership",
+      "label": "Leadership",
+      "focus": "An executive-oriented career narrative centered on organizational scope, transformation, and team leadership.",
+      "summary": "Cross-functional leader who has grown from frontline operations and engineering into global product quality, regulatory, and safety leadership. Experience spans the product lifecycle, organizational transitions, remediation, operational continuity, and team capability-building across regulated industries.",
+      "presentation": "leadership",
+      "sectionOrder": ["experience", "education", "skills", "projects"],
+      "sectionTitles": {
+        "experience": "Leadership Experience",
+        "education": "Education and Professional Development",
+        "skills": "Leadership and Quality Domains",
+        "projects": "Selected Digital Initiatives"
+      },
+      "sectionDescriptions": {
+        "experience": "A leadership-focused chronology emphasizing organizational scope, team development, remediation, and operational continuity.",
+        "education": "Academic and professional development across engineering, information management, and quality systems.",
+        "skills": "Leadership, quality, risk, regulatory, and lifecycle domains documented in the source profile.",
+        "projects": "Selected digital products illustrating practical systems thinking and cross-functional problem solving."
+      },
+      "experienceHighlightLimit": 3,
+      "experienceTitles": [
+        "Special assignment — transition, remediation, and operational continuity",
+        "Safety, Quality and Regulatory Leader",
+        "Head of Product Quality Engineering",
+        "Sustaining Quality Assurance Manager",
+        "Quality Operations Manager",
+        "Quality Operations Supervisor",
+        "Quality Compliance Supervisor",
+        "Quality Section Manager",
+        "Senior Quality Engineer",
+        "Senior Validation Administrator",
+        "Lead Systems Support Engineer"
+      ],
+      "skillGroups": ["practices", "spokenLanguages"],
+      "skillFilters": {
+        "practices": [
+          "Technical operations",
+          "Product quality engineering",
+          "Design controls",
+          "Risk management",
+          "Regulatory compliance",
+          "Post-market surveillance",
+          "Continuous improvement",
+          "Systems integration",
+          "Team leadership"
+        ]
+      },
+      "projectNames": [
+        "IntakeWise",
+        "Nomadant Tech Store",
+        "Tara Hidalgo Artist Portfolio",
+        "AI Trip Planner"
+      ]
+    },
+    {
+      "slug": "ai-engineering",
+      "label": "AI Engineering",
+      "focus": "A portfolio-first view of AI learning, software projects, and the technical foundations that support continued growth.",
+      "summary": "Software and AI engineering practitioner building on an Electrical Engineering background, graduate study in Information Management, and experience with software validation and enterprise systems. Current work explores AI applications, machine learning, neural networks, and retrieval-augmented generation through documented projects and continued learning.",
+      "presentation": "ai-portfolio",
+      "sectionOrder": ["projects", "skills", "experience", "education"],
+      "sectionTitles": {
+        "projects": "AI and Software Project Portfolio",
+        "skills": "AI and Technical Stack",
+        "experience": "Relevant Engineering Foundations",
+        "education": "Education and AI Credentials"
+      },
+      "sectionDescriptions": {
+        "projects": "Portfolio evidence across AI agents, retrieval-augmented generation, machine learning, and full-stack applications.",
+        "skills": "Documented AI learning, programming, frameworks, and applied engineering practices.",
+        "experience": "Software validation and systems experience that informs a growing AI engineering practice.",
+        "education": "Engineering studies, graduate education, and completed software and AI learning credentials."
+      },
+      "experienceHighlightLimit": 2,
+      "experienceTitles": [
+        "Senior Quality Engineer",
+        "Senior Validation Administrator",
+        "Software Validation Engineer",
+        "Lead Systems Support Engineer",
+        "Senior Systems Support Engineer"
+      ],
+      "skillGroups": [
+        "languages",
+        "platformsAndFrameworks",
+        "aiAndMachineLearning",
+        "practices",
+        "spokenLanguages"
+      ],
+      "skillFilters": {
+        "practices": [
+          "AI applications",
+          "Machine learning",
+          "LLM and RAG pipelines",
+          "Automation",
+          "Software validation",
+          "Systems integration"
+        ]
+      },
+      "projectNames": [
+        "AI Trip Planner",
+        "AI Engineering Lessons",
+        "Python Lessons",
+        "IntakeWise",
+        "Nomadant Tech Store",
+        "RESTful Restaurants",
+        "Full Stack Engineering Lessons"
+      ]
+    }
+  ],
+  "sections": [
+    {
+      "id": "experience",
+      "title": "Experience",
+      "content": "Progressive leadership and technical experience spanning enterprise systems support, software validation, quality operations, product quality engineering, and safety, quality, and regulatory leadership.",
+      "audiences": ["recruiter", "engineering-manager", "leadership", "ai-engineering"]
+    },
+    {
+      "id": "skills",
+      "title": "Technical skills and practices",
+      "content": "Technical operations, quality and regulatory systems, software validation, team leadership, and a hands-on software and AI portfolio.",
+      "audiences": ["recruiter", "engineering-manager", "leadership", "ai-engineering"]
+    },
+    {
+      "id": "projects",
+      "title": "Projects",
+      "content": "Selected work and learning projects are available in the project portfolio.",
+      "audiences": ["recruiter", "engineering-manager", "leadership", "ai-engineering"]
+    },
+    {
+      "id": "education",
+      "title": "Education and certifications",
+      "content": "Graduate and undergraduate engineering education, professional certifications, and continuing technical learning.",
+      "audiences": ["recruiter", "engineering-manager", "leadership", "ai-engineering"]
+    }
+  ]
+}

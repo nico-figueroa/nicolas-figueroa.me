@@ -1,0 +1,110 @@
+[
+  {
+    "name": "AI Trip Planner",
+    "description": "A Streamlit itinerary planner using OpenAI tool calling, verified place data, optional travel-guide retrieval, interactive maps, and PDF or JSON export. Optional model and place services can fail independently of itinerary planning.",
+    "technologies": ["Python", "OpenAI", "Streamlit", "PostgreSQL", "Geoapify", "PyDeck"],
+    "source": "https://github.com/nico-figueroa/Trip_Planner_AI_Agent",
+    "productionLinks": [
+      {
+        "label": "Live app",
+        "url": "https://nomadant-agentic-trip-planner.streamlit.app/"
+      }
+    ]
+  },
+  {
+    "name": "IntakeWise",
+    "description": "A responsive organizer for medication, supplements, vitamins, and custom intake schedules. Account holders can manage a private item catalog, review schedules in a calendar, and adjust or skip individual intakes.",
+    "technologies": ["React", "Node.js", "Express", "PostgreSQL", "Vite"],
+    "source": "https://github.com/nico-figueroa/Full_Stack_Engineering_Lessons/tree/main/Full_Stack/Intakewise",
+    "productionLinks": [
+      {
+        "label": "Live frontend",
+        "url": "https://intakewise.onrender.com"
+      },
+      {
+        "label": "Backend API",
+        "url": "https://intakewise-api.onrender.com"
+      }
+    ]
+  },
+  {
+    "name": "Nomadant Tech Store",
+    "description": "An academic full-stack electronics storefront with GitHub OAuth sign-in and Stripe test-mode checkout. Its React storefront and Node.js REST API are deployed separately.",
+    "technologies": ["React", "Vite", "Tailwind CSS", "Node.js", "Express", "PostgreSQL", "GitHub OAuth", "Stripe"],
+    "source": "https://github.com/nico-figueroa/Full_Stack_Engineering_Lessons/tree/main/Full_Stack/E_Commerce_App",
+    "productionLinks": [
+      {
+        "label": "Live storefront",
+        "url": "https://nomadant-tech.onrender.com"
+      },
+      {
+        "label": "Backend API",
+        "url": "https://nomadant-tech-api.onrender.com"
+      }
+    ]
+  },
+  {
+    "name": "AI Engineering Lessons",
+    "description": "A collection of AI, machine-learning, and RAG learning projects. It includes a historical archive of an exercise deploying Microsoft's Azure Search and OpenAI sample; the repository states that the model service has been retired.",
+    "technologies": ["Python", "RAG", "Azure", "OpenAI", "Machine Learning"],
+    "source": "https://github.com/nico-figueroa/AI_Engineering_Lessons"
+  },
+  {
+    "name": "Full Stack Engineering Lessons",
+    "description": "Coursework and projects spanning frontend, backend, APIs, databases, authentication, testing, and Git. The repository includes RESTful Restaurants and an e-commerce REST API.",
+    "technologies": ["JavaScript", "Node.js", "Express", "React", "PostgreSQL", "REST APIs"],
+    "source": "https://github.com/nico-figueroa/Full_Stack_Engineering_Lessons"
+  },
+  {
+    "name": "RESTful Restaurants",
+    "description": "A responsive application for organizing restaurants into categories, maintaining a starred list, and managing records through an Express API backed by Supabase.",
+    "technologies": ["React", "Express", "Supabase", "REST APIs"],
+    "source": "https://github.com/nico-figueroa/Full_Stack_Engineering_Lessons/tree/main/Full_Stack/RESTful_restaurants",
+    "productionLinks": [
+      {
+        "label": "Live frontend",
+        "url": "https://restful-restaurants-frontend-xjlj.onrender.com"
+      },
+      {
+        "label": "Backend API",
+        "url": "https://restful-restaurants-backend-2ygw.onrender.com"
+      }
+    ]
+  },
+  {
+    "name": "Tara Hidalgo Artist Portfolio",
+    "description": "A bilingual portfolio for creative workshops and event services, with facilitator profiles and an artwork gallery. Spanish is the default language, with English available throughout the site.",
+    "technologies": ["Next.js", "React", "TypeScript", "Tailwind CSS", "Netlify"],
+    "source": "https://github.com/nico-figueroa/Personal-Projects/tree/main/Tara_Portfolio_Site",
+    "productionLinks": [
+      {
+        "label": "Live portfolio",
+        "url": "https://tara-hidalgo.netlify.app/"
+      }
+    ]
+  },
+  {
+    "name": "Python Lessons",
+    "description": "Python exercises, university assignments, data-analysis notebooks, and personal learning projects, including an interactive multimodal commute-map project.",
+    "technologies": ["Python", "Jupyter", "Data Analysis", "Visualization"],
+    "source": "https://github.com/nico-figueroa/Python-Lessons"
+  },
+  {
+    "name": "Unbound Root",
+    "description": "A static, multilingual educational website about digital safety and cybersecurity awareness for families and everyday internet users.",
+    "technologies": ["HTML", "CSS", "JavaScript", "Accessibility"],
+    "source": "https://github.com/nico-figueroa/unboundroot.com",
+    "productionLinks": [
+      {
+        "label": "Live site",
+        "url": "https://unboundroot.com"
+      }
+    ]
+  },
+  {
+    "name": "HusKey Manager Security Coursework",
+    "description": "A course repository centered on learning to identify and remediate security issues in a sample password-manager application.",
+    "technologies": ["Application Security", "Docker", "PHP", "MySQL"],
+    "source": "https://github.com/nico-figueroa/Nico-Custom-Huskey-Manager"
+  }
+]

@@ -1,0 +1,34 @@
+[
+  {
+    "label": "Journey",
+    "href": "/journey/"
+  },
+  {
+    "label": "Experience",
+    "href": "/experience/"
+  },
+  {
+    "label": "Resume",
+    "href": "/resume/"
+  },
+  {
+    "label": "Projects",
+    "href": "/projects/"
+  },
+  {
+    "label": "Media",
+    "href": "/media/"
+  },
+  {
+    "label": "The Guide",
+    "href": "/the-guide/"
+  },
+  {
+    "label": "Check Nico's Fit",
+    "href": "/check-fit/"
+  },
+  {
+    "label": "Contact",
+    "href": "/contact/"
+  }
+]

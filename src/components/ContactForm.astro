@@ -1,0 +1,47 @@
+<form
+  class="max-w-2xl space-y-4 rounded-xl border border-[var(--line)] bg-[var(--surface)] p-6"
+  name="contact"
+  method="POST"
+  action="/contact-success/"
+  data-netlify="true"
+  netlify-honeypot="bot-field"
+>
+  <input type="hidden" name="form-name" value="contact" />
+  <p class="hidden">
+    <label>Leave this field empty: <input name="bot-field" /></label>
+  </p>
+  <div>
+    <label class="font-medium" for="contact-name">Name</label>
+    <input
+      class="mt-2 w-full rounded-xl border border-[var(--line)] bg-[var(--background)] p-3 text-[var(--text)]"
+      id="contact-name"
+      name="name"
+      autocomplete="name"
+      maxlength="120"
+      required
+    />
+  </div>
+  <div>
+    <label class="font-medium" for="contact-email">Email</label>
+    <input
+      class="mt-2 w-full rounded-xl border border-[var(--line)] bg-[var(--background)] p-3 text-[var(--text)]"
+      id="contact-email"
+      name="email"
+      type="email"
+      autocomplete="email"
+      maxlength="254"
+      required
+    />
+  </div>
+  <div>
+    <label class="font-medium" for="contact-message">Message</label>
+    <textarea
+      class="mt-2 min-h-40 w-full rounded-xl border border-[var(--line)] bg-[var(--background)] p-3 text-[var(--text)]"
+      id="contact-message"
+      name="message"
+      maxlength="5000"
+      required
+    ></textarea>
+  </div>
+  <button class="button button-primary" type="submit">Send message</button>
+</form>

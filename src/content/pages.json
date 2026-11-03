@@ -1,0 +1,50 @@
+[
+  {
+    "slug": "journey",
+    "title": "Journey",
+    "description": "Follow a career from global financial-services operations and systems support through medical-device validation, product quality, and safety, quality, and regulatory leadership.",
+    "placeholder": "Journey content is being prepared."
+  },
+  {
+    "slug": "experience",
+    "title": "Experience",
+    "description": "A progressive career across Western Union, Hospira, Volcano Corporation, Philips, and higher education—from frontline support and engineering to product-lifecycle and quality leadership.",
+    "placeholder": "Verified experience details will be added here."
+  },
+  {
+    "slug": "resume",
+    "title": "Resume",
+    "description": "Explore shared resume content through a perspective tailored to your role.",
+    "placeholder": "Resume details will be added from verified source material."
+  },
+  {
+    "slug": "projects",
+    "title": "Projects",
+    "description": "Selected projects demonstrating systems thinking and technical problem solving.",
+    "placeholder": "Project details are being prepared."
+  },
+  {
+    "slug": "media",
+    "title": "Media",
+    "description": "Featured videos and other media.",
+    "placeholder": "Featured media will be added here."
+  },
+  {
+    "slug": "the-guide",
+    "title": "The Guide",
+    "description": "Ask questions about Nicolas using cited evidence from verified portfolio sources.",
+    "placeholder": ""
+  },
+  {
+    "slug": "check-fit",
+    "title": "Check Nico's Fit",
+    "description": "Compare a job description with documented skills, experience, and projects.",
+    "placeholder": ""
+  },
+  {
+    "slug": "contact",
+    "title": "Contact",
+    "description": "Professional profiles and ways to connect with Nicolas.",
+    "placeholder": "Verified contact and profile links will be added here."
+  }
+]

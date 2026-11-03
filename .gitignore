@@ -218,3 +218,19 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# JavaScript / Astro / Netlify
+node_modules/
+dist/
+.astro/
+.netlify/
+
+# Local environment variables (keep .env.example in version control)
+.env.*
+!.env.example
+
+# Frontend test output
+playwright-report/
+test-results/
+data/source_content.json
+data/*.tmp

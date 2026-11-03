@@ -1,0 +1,26 @@
+{
+  "name": "nicolas-figueroa-portfolio",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "node --env-file-if-exists=.env ./node_modules/astro/bin/astro.mjs dev --host 127.0.0.1 --port 4321 --strictPort",
+    "build": "astro build",
+    "preview": "astro preview",
+    "test": "node --test",
+    "test:node-coverage": "node --test --experimental-test-coverage",
+    "test:python": "python -m pytest",
+    "test:all": "npm run build && npm run test:node-coverage && python -m pytest --cov=scripts --cov-report=term-missing --cov-report=xml --cov-report=html"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.3.4",
+    "astro": "^7.4.5",
+    "cheerio": "^1.2.0",
+    "ipaddr.js": "^2.5.0",
+    "pdf-parse": "^2.4.5",
+    "tailwindcss": "^4.3.4",
+    "word-extractor": "^1.0.4"
+  }
+}
