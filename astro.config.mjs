@@ -49,6 +49,9 @@ export default defineConfig({
   site: "https://nicolas-figueroa.me",
   trailingSlash: "always",
   vite: {
+    build: {
+      assetsInlineLimit: 0,
+    },
     plugins: [tailwindcss(), localNetlifyFunctions()],
   },
 });

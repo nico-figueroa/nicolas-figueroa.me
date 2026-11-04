@@ -49,7 +49,7 @@ const { title, description, wide = false, fluid = false } = Astro.props;
                   target={item.href.startsWith("mailto:") ? undefined : "_blank"}
                   rel={item.href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
                 >
-                  <span class="footer-icon" style={`--footer-icon: url('/images/platforms/${item.icon}.svg')`} aria-hidden="true"></span>
+                  <span class="footer-icon" data-platform={item.icon} aria-hidden="true"></span>
                   {item.label}
                 </a>
               </li>

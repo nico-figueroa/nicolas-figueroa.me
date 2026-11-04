@@ -69,7 +69,7 @@ const mobileConnections = layers.slice(0, -1).flatMap((layer, index) =>
         ))}
       </svg>
       {layers.map((layer, index) => (
-        <section class="network-map-layer" style={`--layer-index: ${index}`} aria-label={`${layer.title}: ${layer.subtitle}`}>
+        <section class="network-map-layer" data-layer-index={index} data-node-count={layer.nodes.length} aria-label={`${layer.title}: ${layer.subtitle}`}>
           <div class="network-map-layer-heading">
             <h2>{layer.title}</h2>
             <p>{layer.subtitle}</p>
@@ -87,7 +87,7 @@ const mobileConnections = layers.slice(0, -1).flatMap((layer, index) =>
             </span>
           </div>
           {layer.nodes.map((node, nodeIndex) => (
-            <a class="network-map-node" href={node.href} style={`--node-y: ${node.y / 560 * 100}%; --mobile-node-x: ${(nodeIndex + 0.5) / layer.nodes.length * 100}%`}>
+            <a class="network-map-node" href={node.href} data-node-y={node.y} data-node-index={nodeIndex}>
               <span class="network-map-dot" aria-hidden="true"></span><span>{node.label}</span>
             </a>
           ))}

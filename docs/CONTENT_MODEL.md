@@ -37,6 +37,9 @@ The home network map models four left-to-right neural layers: About/Journey/Educ
 The diagram now scales to its container at every width without an internal scrollbar, superseding the fixed node dimensions and horizontal-region behavior above. Desktop uses a balanced text/diagram grid, fluid heading and node text sizes, and a diagram height bounded between 24rem and 35rem. Below 64rem, four layers run top-to-bottom with wrapping buttons and a viewport-aware height bounded between 36rem and 45rem. Mobile-specific connectors follow the same topology vertically and reverse during backpropagation. Nodes preserve at least 44px touch height; normal vertical page scrolling remains available for content that exceeds the viewport.
 Desktop adds a compact 2.5rem offset to the node/connector coordinate area, keeping layer labels and activation symbols clear of the first row without a large empty band. Mobile activation symbols use tighter vertical spacing.
 
+Network layer/node positions and footer platform masks are defined in the external stylesheet using data attributes, not inline style attributes. Netlify's `style-src 'self'` policy blocks inline styles; production checks must include this header to catch differences from the development server.
+Vite's `assetsInlineLimit` is zero so Astro emits even small scripts and styles as external assets, compatible with the same-origin-only script/style policy. This also keeps the network animation script executable in production without weakening CSP.
+
 AI Trip Planner
 
 Nomadant Tech

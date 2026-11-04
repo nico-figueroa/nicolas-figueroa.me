@@ -186,6 +186,26 @@ span.footer-icon {
   mask: var(--footer-icon) center / contain no-repeat;
 }
 
+.footer-icon[data-platform="github"] {
+  --footer-icon: url("/images/platforms/github.svg");
+}
+
+.footer-icon[data-platform="linkedin"] {
+  --footer-icon: url("/images/platforms/linkedin.svg");
+}
+
+.footer-icon[data-platform="codecademy"] {
+  --footer-icon: url("/images/platforms/codecademy.svg");
+}
+
+.footer-icon[data-platform="handshake"] {
+  --footer-icon: url("/images/platforms/handshake.svg");
+}
+
+.footer-icon[data-platform="microsoftoutlook"] {
+  --footer-icon: url("/images/platforms/microsoftoutlook.svg");
+}
+
 .footer-contact-list .button {
   min-width: 0;
   padding: 0.65rem 0.5rem;
@@ -489,6 +509,23 @@ span.footer-icon {
   inset: 0 auto 0 calc(var(--layer-index) * 25%);
   width: 25%;
 }
+
+.network-map-layer[data-layer-index="0"] { --layer-index: 0; }
+.network-map-layer[data-layer-index="1"] { --layer-index: 1; }
+.network-map-layer[data-layer-index="2"] { --layer-index: 2; }
+.network-map-layer[data-layer-index="3"] { --layer-index: 3; }
+
+.network-map-node[data-node-y="160"] { --node-y: calc(160 / 560 * 100%); }
+.network-map-node[data-node-y="230"] { --node-y: calc(230 / 560 * 100%); }
+.network-map-node[data-node-y="300"] { --node-y: calc(300 / 560 * 100%); }
+.network-map-node[data-node-y="370"] { --node-y: calc(370 / 560 * 100%); }
+.network-map-node[data-node-y="440"] { --node-y: calc(440 / 560 * 100%); }
+
+.network-map-node[data-node-index="0"] { --mobile-node-x: calc(100% / 6); }
+.network-map-node[data-node-index="1"] { --mobile-node-x: 50%; }
+.network-map-node[data-node-index="2"] { --mobile-node-x: calc(500% / 6); }
+.network-map-layer[data-node-count="2"] [data-node-index="0"] { --mobile-node-x: 25%; }
+.network-map-layer[data-node-count="2"] [data-node-index="1"] { --mobile-node-x: 75%; }
 
 .network-map-layer-heading {
   padding-top: 1.5rem;
