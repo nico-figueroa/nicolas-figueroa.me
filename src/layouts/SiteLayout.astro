@@ -1,5 +1,6 @@
 ---
 import site from "../content/site.json";
+import contact from "../content/contact.json";
 import "../styles/global.css";
 import SiteHeader from "../components/SiteHeader.astro";
 
@@ -7,9 +8,10 @@ interface Props {
   title: string;
   description: string;
   wide?: boolean;
+  fluid?: boolean;
 }
 
-const { title, description, wide = false } = Astro.props;
+const { title, description, wide = false, fluid = false } = Astro.props;
 ---
 
 <!doctype html>
@@ -29,15 +31,56 @@ const { title, description, wide = false } = Astro.props;
       id="main"
       class:list={[
         "mx-auto min-h-[65vh] w-full px-6 py-16 md:py-24",
-        wide ? "max-w-[96rem]" : "max-w-6xl",
+        fluid ? "interactive-page" : wide ? "max-w-[96rem]" : "max-w-6xl",
       ]}
     >
       <slot />
     </main>
     <footer class="border-t border-[var(--line)]">
-      <div class="mx-auto max-w-[96rem] px-4 py-6 text-sm text-[var(--muted)] sm:px-6">
-        <p>{site.brandStatement}</p>
+      <div class="mx-auto grid max-w-[96rem] gap-8 px-4 py-8 text-sm sm:px-6 md:grid-cols-2 xl:grid-cols-4">
+        <section>
+          <h2 class="font-semibold text-[var(--text)]">Contact</h2>
+          <ul class="footer-contact-list mt-3">
+            {contact.map((item) => (
+              <li>
+                <a
+                  class="button button-secondary w-full"
+                  href={item.href}
+                  target={item.href.startsWith("mailto:") ? undefined : "_blank"}
+                  rel={item.href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
+                >
+                  <span class="footer-icon" style={`--footer-icon: url('/images/platforms/${item.icon}.svg')`} aria-hidden="true"></span>
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+        <section>
+          <h2 class="font-semibold text-[var(--text)]">Privacy</h2>
+          <a class="button button-secondary mt-3" href="/privacy-policy/">
+            <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+              <path d="M12 3 4 6v6c0 5 8 9 8 9s8-4 8-9V6l-8-3Z" />
+              <path d="m8.5 12 2.5 2.5 4.5-5" />
+            </svg>
+            Privacy Policy
+          </a>
+        </section>
+        <section>
+          <h2 class="font-semibold text-[var(--text)]">Home</h2>
+          <a class="button button-secondary mt-3" href="/">
+            <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+              <path d="m3 10 9-7 9 7M5 9v12h14V9M9 21v-8h6v8" />
+            </svg>
+            Back to Home
+          </a>
+        </section>
+        <section>
+          <h2 class="font-semibold text-[var(--text)]">Copyright</h2>
+          <p class="mt-3 text-[var(--muted)]">© {new Date().getFullYear()} {site.name}</p>
+        </section>
       </div>
     </footer>
+    <script is:inline src="/scripts/responsive-cards.js" defer></script>
   </body>
 </html>

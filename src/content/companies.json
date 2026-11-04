@@ -1,0 +1,32 @@
+[
+  {
+    "name": "Philips",
+    "logo": "/images/companies/philips.svg",
+    "source": "https://www.philips.com/",
+    "darkBackground": false
+  },
+  {
+    "name": "Western Union",
+    "logo": "/images/companies/western-union.svg",
+    "source": "https://www.westernunion.com/us/en/home.html",
+    "darkBackground": false
+  },
+  {
+    "name": "Hospira",
+    "logo": "/images/companies/hospira.png",
+    "source": "https://seekvectorlogo.com/wp-content/uploads/2018/01/hospira-vector-logo-small.png",
+    "darkBackground": false
+  },
+  {
+    "name": "Volcano Corporation",
+    "logo": "/images/companies/volcano.jpg",
+    "source": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBTEArRJHyKsCVz7-KBpOBqxdTFWl_mPQTo2p2F8uJaBZiRlYaD4LUAPc&s=10",
+    "darkBackground": false
+  },
+  {
+    "name": "Hispanoamerican University",
+    "logo": "/images/companies/hispanoamerican-university.png",
+    "source": "https://uh.ac.cr/",
+    "darkBackground": true
+  }
+]

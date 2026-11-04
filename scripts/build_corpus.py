@@ -32,7 +32,10 @@ def _document(
 ) -> dict[str, str] | None:
     """Create a source document, excluding empty or uncited content."""
     normalized_text = " ".join(text.split())
-    if not normalized_text or not source.startswith("https://"):
+    public_source = source.startswith("https://") or (
+        source.startswith("/") and not source.startswith("//")
+    )
+    if not normalized_text or not public_source:
         return None
     return {
         "id": document_id,
@@ -47,6 +50,8 @@ def build_corpus(content_dir: Path = CONTENT_DIR) -> list[dict[str, str]]:
     profile = _read_json(content_dir / "profile.json")
     site = _read_json(content_dir / "site.json")
     projects = _read_json(content_dir / "projects.json")
+    about = _read_json(content_dir / "about.json")
+    evidence = _read_json(content_dir / "evidence.json")
     documents: list[dict[str, str]] = []
 
     profile_documents = [
@@ -108,6 +113,25 @@ def build_corpus(content_dir: Path = CONTENT_DIR) -> list[dict[str, str]]:
         if item:
             documents.append(item)
 
+    about_item = _document(
+        "about-narrative",
+        "About Nicolas",
+        " ".join(about["paragraphs"] + about["principles"]),
+        "/about/",
+    )
+    if about_item:
+        documents.append(about_item)
+
+    for entry in about["timeline"]:
+        item = _document(
+            f'about-timeline-{_slug(entry["period"])}',
+            entry["title"],
+            f'{entry["period"]}. {entry["description"]}',
+            "/about/",
+        )
+        if item:
+            documents.append(item)
+
     for certification in profile["certifications"]:
         credential = (
             f' Credential: {certification["credentialUrl"]}.'
@@ -156,6 +180,30 @@ def build_corpus(content_dir: Path = CONTENT_DIR) -> list[dict[str, str]]:
         if item:
             documents.append(item)
 
+    evidence_by_id = {item["id"]: item for item in evidence}
+    for achievement in profile.get("achievements", []):
+        source_id = next(iter(achievement.get("evidenceIds", [])), None)
+        source_record = evidence_by_id.get(source_id)
+        source = f'/evidence/{source_id}.pdf' if source_record else profile["source"]
+        item = _document(
+            f'achievement-{_slug(achievement["title"])}',
+            achievement["title"],
+            achievement["description"],
+            source,
+        )
+        if item:
+            documents.append(item)
+
+    for record in evidence:
+        item = _document(
+            f'evidence-{record["id"]}',
+            record["title"],
+            record["knowledge"],
+            f'/evidence/{record["id"]}.pdf',
+        )
+        if item:
+            documents.append(item)
+
     for project in projects:
         deployments = " ".join(
             f'Production deployment ({link["label"]}): {link["url"]}.'
@@ -192,6 +240,7 @@ def main() -> None:
     args.output.write_text(
         json.dumps(documents, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
+        newline="\n",
     )
     print(f"Wrote {len(documents)} source documents to {args.output}")
 

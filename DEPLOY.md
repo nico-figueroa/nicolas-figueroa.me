@@ -31,7 +31,7 @@ In **Site configuration → Environment variables**, add only:
 
 | Variable | Required? | Purpose |
 | --- | --- | --- |
-| `OPENAI_API_KEY` | No | Enables OpenAI-generated Guide answers and embedding-based query search. Without it, the Guide still returns matching local evidence. |
+| `OPENAI_API_KEY` | For Fit and generated Guide answers | Enables Fit classification/assessment, generated Guide answers and embedding-based query search. Without it, Fit returns an explicit unavailable error; the Guide still returns matching local evidence. |
 
 Set secrets in Netlify, not in source files or committed `.env` files. For
 production AI responses, make `OPENAI_API_KEY` available to the production
@@ -42,7 +42,7 @@ The application has built-in model defaults, so do not add `OPENAI_MODEL` or
 identifiers also appear in source and corpus metadata, which causes Netlify's
 secret scanner to reject the build when it treats those values as secrets.
 The site and its evidence-only Guide fallback work when `OPENAI_API_KEY` is
-unset.
+unset. Fit requires the key; it does not fall back to rules-based scoring.
 
 ### If Netlify reports model values as exposed secrets
 
@@ -50,7 +50,7 @@ Open **Site configuration → Environment variables** and delete
 `OPENAI_MODEL` and `OPENAI_EMBEDDING_MODEL` from the site and any shared/team
 environment configuration. They are optional overrides, not credentials; this
 project uses its built-in model defaults. Keep the secret scanner enabled and
-leave `OPENAI_API_KEY` configured only if generated Guide answers are wanted.
+leave `OPENAI_API_KEY` configured if Fit or generated Guide answers are wanted.
 Then trigger a fresh deploy.
 
 If a Guide request displays “Failed to fetch,” open the deployed page and
@@ -88,6 +88,12 @@ After deployment, verify:
   notifications under **Forms → Notifications** if desired.
 - If the Guide is used without an OpenAI key, it should return local cited
   evidence instead of generated answers.
+- Fit makes two sequential OpenAI requests under a shared 45-second model deadline.
+  Ensure the deployed synchronous Function execution limit permits the full request,
+  including input extraction (allow at least 60 seconds). A shorter hosting timeout
+  can interrupt the request before the application can return its explicit error.
+- Verify Fit excludes benefits/commentary, displays cited evidence and classifies
+  human capabilities separately. Only technical/engineering gaps get study estimates.
 
 ## Local checks before deployment
 
@@ -99,3 +105,10 @@ npm run test:all
 `npm run build` creates the `dist` directory that Netlify publishes.
 `npm run dev` runs Astro locally; Netlify Forms submissions are processed only
 by a deployed Netlify site.
+
+`npm run test:fit-live` uses the root `.env` key to run a small synthetic job-description
+evaluation against the real Fit model (two paid requests per case). It checks semantic
+classification and evidence conclusions, unlike mocked unit tests. Run it before
+deploying model or prompt changes. It fails if the key is missing or checks fail.
+Local changes to backend modules imported by `astro.config.mjs` require restarting
+the development server; browser refresh alone does not reload those handlers.

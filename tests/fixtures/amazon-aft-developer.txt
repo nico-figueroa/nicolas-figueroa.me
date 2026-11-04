@@ -1,0 +1,37 @@
+## About the job
+
+**Description
+
+**At Amazon, we are working to be the most customer centric company on earth. To get there, we need exceptionally talented, bright, and driven people. If you're ready for your next challenge, this is your chance to make a direct impact to Amazon's operations, global expansion and customer obsession.
+
+Amazon Fulfillment Technologies (AFT) powers the physical engine at the heart of Amazon. AFT builds and operates software, hardware, and processes that run the global network of fulfillment centers that move many millions of units of inventory, employ tens of thousands of people, and ensure that customers get what they want by the promised date/time. In the service of our customers, we are innovating in the areas of material handling automation, robotics, machine learning, logistics and transportation.
+
+The Operations Technology team supports all of the software and infrastructure that powers Amazon's world-class fulfillment engine. The Operations Technology team in India is looking for a Software Development Engineer to support worldwide expansion of Amazon Fulfillment network.
+
+The ideal candidate must be detail oriented, have superior verbal and written communication skills, strong organizational skills, able to work on multiple tasks at once, able to work independently and can maintain professionalism under pressure. You are a quick learner who can adapt to new technologies seamlessly. You are able to identify problems before they happen and implement solutions that detect and prevent outages. You must be able to accurately prioritize projects, make sound judgments, work to improve the customer experience, and get the right things done.
+
+Key job responsibilities
+
+- You will experiment, design and deliver large scale highly available software.
+- You are a Full stack developer who provides the solution from front end using react or equivalent frameworks.
+- You deliver solutions that scale to our customers using Cloud/AWS Serverless architectures,
+- You monitor the services using suitable metrics and design mechanism for operational excellence.
+- You tackle complex problems, trouble shoot and provide simple and effective solutions.
+**Basic Qualifications
+
+**
+- 3+ years of non-internship professional software development experience
+- 2+ years of non-internship design or architecture (design patterns, reliability and scaling) of new and existing systems experience
+- Experience programming with at least one software programming language
+**Preferred Qualifications
+
+**
+- 3+ years of full software development life cycle, including coding standards, code reviews, source control management, build processes, testing, and operations experience
+- Bachelor's degree in computer science or equivalent
+Amazon is an equal opportunity employer and does not discriminate on the basis of protected veteran status, disability, or other legally protected status.
+
+Our inclusive culture empowers Amazonians to deliver the best results for our customers. If you have a disability and need a workplace accommodation or adjustment during the application and hiring process, including support for the interview or onboarding process, please visit [https://amazon.jobs/content/en/how-we-hire/accommodations](https://www.linkedin.com/safety/go/?url=https%3A%2F%2Famazon%2Ejobs%2Fcontent%2Fen%2Fhow-we-hire%2Faccommodations&urlhash=mAhv&mt=snWBmSIrHPkfl3hL2VAJL17glcP7mVnseGHJf5AO5xupvCWXEb1KjyHamGC5_p3fT62imN56GWQ_jZPQQPSNtTayio4dvQrP_vre8V1p-RgeY_TkPAj2e9GFrdORhVVwb8UKdU82YDX5Dfu54YtSEDUNjFB9UddSInjuztMQZOM&isSdui=true) for more information. If the country/region you’re applying in isn’t listed, please contact your Recruiting Partner.
+
+The base salary range for this position is listed below. Your Amazon package will include sign-on payments and restricted stock units (RSUs). Final compensation will be determined based on factors including experience, qualifications, and location. Amazon also offers comprehensive benefits including health insurance (medical, dental, vision, prescription, Basic Life & AD&D insurance and option for Supplemental life plans, EAP, Mental Health Support, Medical Advice Line, Flexible Spending Accounts, Adoption and Surrogacy Reimbursement coverage), 401(k) matching, paid time off, and parental leave. Learn more about our benefits at [https://amazon.jobs/en/benefits](https://www.linkedin.com/safety/go/?url=https%3A%2F%2Famazon%2Ejobs%2Fen%2Fbenefits&urlhash=1Eq0&mt=I6xwgjkl03MNnaYZUcPBTzuoYOasn_IgSO98urluSSbzrSglAYjFboDMeejc4Hcsg-hmVgVMaIKo5XpRS7b33qngUQ859QHrr9NlHvFxA_9IA6h2V6A7L4kKcopOTg__pBAtWh37aAMVCnX-TpZrnQAFVJeNccXmRb1UiHC4OJU&isSdui=true).
+
+USA, WA, Bellevue - 143,700.00 - 194,400.00 USD annually

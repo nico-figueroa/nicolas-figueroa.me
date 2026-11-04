@@ -1,4 +1,8 @@
-<form class="mt-10 max-w-3xl space-y-4" data-fit-form>
+---
+import ResponsiveCard from "./ResponsiveCard.astro";
+---
+
+<form class="mt-10 w-full min-w-0 space-y-4" data-fit-form>
   <div class="space-y-4">
     <div>
       <label class="font-medium" for="fit-input-mode">Job description input</label>
@@ -48,60 +52,108 @@
       </p>
     </div>
     <p class="text-sm text-[var(--muted)]" id="fit-help">
-      The analysis is an evidence-overlap estimate, not a hiring decision. Input is processed for this request only.
+      OpenAI receives the extracted job-description text and public portfolio evidence to classify requirements and assess fit. Code validates evidence references and calculates the score.
+      AI assessments can be wrong; this is an evidence-coverage estimate, not a hiring decision. Analysis may take up to a minute and requires the AI service to be available.
+      Do not submit confidential or sensitive information.
+      See the <a class="text-[var(--accent)] underline" href="/privacy-policy/">Privacy Policy</a> for processing and retention details.
     </p>
   </div>
   <button class="button button-primary" type="submit" data-fit-submit>Check Nico's Fit</button>
-  <p class="text-sm text-[var(--muted)]" aria-live="polite" data-fit-status></p>
+  <div class="flex items-start gap-2 text-sm text-[var(--muted)]">
+    <span class="fit-spinner" data-fit-spinner hidden aria-hidden="true"></span>
+    <p aria-live="polite" data-fit-status></p>
+  </div>
 </form>
 
-<section class="mt-10 max-w-3xl space-y-8" data-fit-results hidden aria-live="polite">
-  <div>
-    <h2 class="text-xl font-semibold">Match Score</h2>
-    <p class="mt-3 text-3xl font-semibold" data-fit-score></p>
+<section class="report-grid mt-10 w-full min-w-0 break-words scroll-mt-6" data-fit-results hidden aria-live="polite">
+  <div class="report-span rounded-xl border border-[var(--line)] bg-[var(--surface)] p-5" data-fit-summary>
+    <h2 class="text-xl font-semibold">Results summary</h2>
+    <dl class="mt-4 grid gap-5 sm:grid-cols-2">
+      <div>
+        <dt class="text-sm text-[var(--muted)]">Fit (evidence coverage)</dt>
+        <dd class="mt-1 text-3xl font-semibold" data-fit-score></dd>
+      </div>
+      <div>
+        <dt class="text-sm text-[var(--muted)]">Number of gaps</dt>
+        <dd class="mt-1 text-3xl font-semibold" data-fit-gap-count></dd>
+      </div>
+      <div class="sm:col-span-2">
+        <dt class="text-sm text-[var(--muted)]">Estimated learning time for skill gaps</dt>
+        <dd class="mt-1 text-sm leading-6" data-fit-summary-time></dd>
+      </div>
+    </dl>
+    <p class="mt-4 leading-7 text-[var(--muted)]" data-fit-summary-paragraph></p>
+  </div>
+  <ResponsiveCard title="Score methodology and source" heading="h2" alwaysCollapsible>
     <p class="mt-2 leading-7 text-[var(--muted)]" data-fit-explanation></p>
     <p class="mt-2"><a class="text-sm text-[var(--accent)] underline" data-fit-source></a></p>
-  </div>
-  <div>
-    <h2 class="text-xl font-semibold">Relevant Skills</h2>
+  </ResponsiveCard>
+  <ResponsiveCard title="Requirement-by-requirement Assessment" heading="h2" alwaysCollapsible class="report-span">
+    <p class="mt-2 leading-7 text-[var(--muted)]">
+      Each requirement is normalized and checked for consistent evidence before scoring.
+      Confidence describes the strength of the documented assessment, not a hiring probability.
+      Direct, equivalent, and exceeding evidence receive the same full credit.
+    </p>
+    <p class="mt-2 text-sm text-[var(--muted)]" data-fit-validation></p>
+    <div class="report-subcards mt-4" data-fit-requirements></div>
+  </ResponsiveCard>
+  <ResponsiveCard title="Relevant Skills" heading="h2" alwaysCollapsible>
     <ul class="mt-3 flex flex-wrap gap-2" data-fit-skills></ul>
-  </div>
-  <div>
-    <h2 class="text-xl font-semibold">Partially Supported Requirements</h2>
+  </ResponsiveCard>
+  <ResponsiveCard title="Interpersonal and Transferable Capabilities" heading="h2" alwaysCollapsible>
+    <p class="mt-2 leading-7 text-[var(--muted)]">
+      Soft skills are evaluated separately from technical skills using documented responsibilities and outcomes.
+    </p>
+    <ul class="mt-3 list-inside list-disc space-y-2" data-fit-transferable></ul>
+  </ResponsiveCard>
+  <ResponsiveCard title="Supported Qualifications" heading="h2" alwaysCollapsible>
+    <p class="mt-2 leading-7 text-[var(--muted)]">
+      Direct, equivalent, and exceeding qualifications receive full credit when supported by the documented evidence.
+    </p>
+    <ul class="mt-3 list-inside list-disc space-y-2" data-fit-supported></ul>
+  </ResponsiveCard>
+  <ResponsiveCard title="Partially Supported Requirements" heading="h2" alwaysCollapsible>
     <p class="mt-2 leading-7 text-[var(--muted)]">
       Related evidence is available, but it does not establish the exact role requirement.
     </p>
     <ul class="mt-3 list-inside list-disc space-y-2" data-fit-partial></ul>
-  </div>
-  <div>
-    <h2 class="text-xl font-semibold">Relevant Experience</h2>
+  </ResponsiveCard>
+  <ResponsiveCard title="Relevant Experience" heading="h2" alwaysCollapsible>
     <ul class="mt-3 flex flex-wrap gap-2" data-fit-experience></ul>
-  </div>
-  <div>
-    <h2 class="text-xl font-semibold">Relevant Projects</h2>
-    <ul class="mt-3 space-y-3" data-fit-projects></ul>
-  </div>
-  <div>
-    <h2 class="text-xl font-semibold">Potential Gaps</h2>
+  </ResponsiveCard>
+  <ResponsiveCard title="Relevant Projects" heading="h2" alwaysCollapsible>
+    <ul class="report-subcards mt-3" data-fit-projects></ul>
+  </ResponsiveCard>
+  <ResponsiveCard title="Potential Gaps" heading="h2" alwaysCollapsible>
     <p class="mt-2 leading-7 text-[var(--muted)]">
-      Requirements not established by the available profile or candidate-confirmed evidence. The same items appear in each growth estimate below.
+      Requirements not established by the available profile or candidate-confirmed evidence. Only technical-skill and engineering-capability gaps receive illustrative study estimates; credentials, tenure, human capabilities and domain experience do not.
     </p>
     <ul class="mt-3 list-inside list-disc space-y-2" data-fit-gaps></ul>
-  </div>
-  <div>
-    <h2 class="text-xl font-semibold">Growth Projection</h2>
+  </ResponsiveCard>
+  <ResponsiveCard title="Industry-domain Gaps" heading="h2" alwaysCollapsible>
+    <p class="mt-2 leading-7 text-[var(--muted)]">
+      Domain experience is evaluated independently. A missing industry background does not negate demonstrated engineering capabilities.
+    </p>
+    <ul class="mt-3 list-inside list-disc space-y-2" data-fit-domain-gaps></ul>
+  </ResponsiveCard>
+  <ResponsiveCard title="Growth Projection" heading="h2" alwaysCollapsible class="report-span">
     <p class="mt-2 font-semibold text-[var(--accent)]" data-fit-growth-label></p>
     <p class="mt-2 leading-7 text-[var(--muted)]" data-fit-growth-basis></p>
-    <div class="mt-4 grid gap-4 md:grid-cols-2 2xl:grid-cols-3" data-fit-growth-levels></div>
-  </div>
-  <div>
-    <h2 class="text-xl font-semibold">Recommended Content</h2>
+    <div class="report-subcards mt-4" data-fit-growth-levels></div>
+  </ResponsiveCard>
+  <ResponsiveCard title="Recommended Content" heading="h2" alwaysCollapsible>
     <ul class="mt-3 list-inside list-disc space-y-2" data-fit-recommendations></ul>
-  </div>
+  </ResponsiveCard>
+  <ResponsiveCard title="Excluded Job-description Content" heading="h2" alwaysCollapsible>
+    <p class="mt-2 leading-7 text-[var(--muted)]">Benefits, employer commentary and application information are classified separately and never scored.</p>
+    <ul class="mt-3 list-inside list-disc space-y-2" data-fit-excluded></ul>
+  </ResponsiveCard>
 </section>
 
 <script>
   import { readApiResponse } from "../scripts/api-response.mjs";
+  import { summarizeFit } from "../scripts/fit-summary.mjs";
+  import { startFitProgress } from "../scripts/fit-progress.mjs";
 
   const form = document.querySelector("[data-fit-form]");
   const mode = document.querySelector("#fit-input-mode");
@@ -109,6 +161,7 @@
   const urlField = document.querySelector("#job-description-url");
   const fileField = document.querySelector("#job-description-file");
   const status = document.querySelector("[data-fit-status]");
+  const spinner = document.querySelector("[data-fit-spinner]");
   const results = document.querySelector("[data-fit-results]");
   const submitButton = form?.querySelector("[data-fit-submit]");
 
@@ -159,11 +212,13 @@
       || !(status instanceof HTMLElement)
       || !(results instanceof HTMLElement)
     ) return;
-    status.textContent = mode.value === "url"
+    if (submitButton instanceof HTMLButtonElement && submitButton.disabled) return;
+    if (spinner instanceof HTMLElement) spinner.hidden = false;
+    const stopProgress = startFitProgress((message) => { status.textContent = message; }, mode.value === "url"
       ? "Retrieving the public job-description page…"
       : mode.value === "file"
         ? "Reading the job-description file…"
-        : "Comparing the job description with documented portfolio evidence…";
+        : "Comparing the job description with documented portfolio evidence…");
     results.hidden = true;
     if (submitButton instanceof HTMLButtonElement) submitButton.disabled = true;
 
@@ -189,6 +244,19 @@
       });
       const payload = await readApiResponse(response);
 
+      const gapCount = results.querySelector("[data-fit-gap-count]");
+      const summaryTime = results.querySelector("[data-fit-summary-time]");
+      const summaryParagraph = results.querySelector("[data-fit-summary-paragraph]");
+      if (!gapCount || !summaryTime || !summaryParagraph) {
+        throw new Error("The Fit summary area is unavailable.");
+      }
+      const reportSummary = summarizeFit(payload);
+      gapCount.textContent = String(reportSummary.gapCount);
+      summaryTime.textContent = reportSummary.learningTime;
+      summaryParagraph.textContent = reportSummary.paragraph;
+      results.querySelectorAll("details[data-report-section]").forEach((section) => {
+        if (section instanceof HTMLDetailsElement) section.open = false;
+      });
       const score = results.querySelector("[data-fit-score]");
       const explanation = results.querySelector("[data-fit-explanation]");
       const source = results.querySelector("[data-fit-source]");
@@ -203,9 +271,84 @@
       growthLabel.textContent = payload.growthProjection.label;
       score.textContent = `${payload.matchScore}%`;
       explanation.textContent = payload.scoreExplanation;
+      const assessment = results.querySelector("[data-fit-requirements]");
+      const validation = results.querySelector("[data-fit-validation]");
+      if (!(assessment instanceof HTMLElement) || !(validation instanceof HTMLElement)
+        || !payload.validation?.passed || !Array.isArray(payload.requirements)) {
+        throw new Error("The assessment did not pass its consistency checks.");
+      }
+      validation.textContent = `Validation checks passed: ${payload.validation.checks.join("; ")}. Semantic judgments are AI-generated, not independently guaranteed.`;
+      assessment.replaceChildren();
+      for (const requirement of payload.requirements) {
+        const card = document.createElement("details");
+        card.className = "responsive-card report-section rounded-xl border border-[var(--line)] bg-[var(--surface)] p-5";
+        card.dataset.reportSection = "";
+        const summary = document.createElement("summary");
+        const heading = document.createElement("h3");
+        heading.className = "font-semibold";
+        heading.textContent = requirement.label;
+        const chevron = document.createElement("span");
+        chevron.className = "card-chevron";
+        chevron.setAttribute("aria-hidden", "true");
+        summary.append(heading, chevron);
+        const body = document.createElement("div");
+        body.className = "card-content";
+        const fields = document.createElement("dl");
+        fields.className = "space-y-3 text-sm leading-6";
+        for (const [label, value] of [
+          ["Requirement", requirement.label],
+          ["Original wording", requirement.sourceText],
+          ["Category", requirement.category],
+          ["Importance", requirement.importance || "Role criterion"],
+          ["Evidence Found", requirement.evidence],
+          ["Evidence Type", requirement.evidenceType],
+          ["Confidence", `${Math.round(requirement.confidence * 100)}%`],
+          ["Result", requirement.result],
+        ]) {
+          const term = document.createElement("dt");
+          term.className = "font-semibold";
+          term.textContent = label;
+          const definition = document.createElement("dd");
+          definition.textContent = value;
+          fields.append(term, definition);
+        }
+        body.append(fields);
+        const citations = document.createElement("ul");
+        citations.className = "mt-3 space-y-2";
+        for (const record of requirement.sources) {
+          const item = document.createElement("li");
+          const link = document.createElement("a");
+          link.href = record.url;
+          link.textContent = `${record.kind}: ${record.title}`;
+          link.className = "text-sm text-[var(--accent)] underline";
+          item.append(link);
+          if (record.quote) {
+            const quote = document.createElement("blockquote");
+            quote.className = "mt-1 text-sm text-[var(--muted)]";
+            quote.textContent = record.quote;
+            item.append(quote);
+          }
+          citations.append(item);
+        }
+        body.append(citations);
+        card.append(summary, body);
+        assessment.append(card);
+      }
       source.href = payload.source;
       source.textContent = "Source profile";
       fillList("[data-fit-skills]", payload.relevantSkills);
+      fillList("[data-fit-excluded]", payload.excludedContent || [],
+        (item) => `${item.category}: ${item.sourceText} — ${item.reason}`);
+      fillList(
+        "[data-fit-transferable]",
+        payload.transferableCapabilities,
+        (item) => `${item.label} — ${item.result}: ${item.evidence}`,
+      );
+      fillList(
+        "[data-fit-supported]",
+        payload.supportedRequirements,
+        (item) => `${item.label} — ${item.matchType}: ${item.evidence}`,
+      );
       fillList(
         "[data-fit-partial]",
         payload.partiallySupportedRequirements || [],
@@ -213,6 +356,7 @@
       );
       fillList("[data-fit-experience]", payload.relevantExperience);
       fillList("[data-fit-gaps]", payload.potentialGaps);
+      fillList("[data-fit-domain-gaps]", payload.domainGaps, (item) => `${item.label} — ${item.evidence}`);
       const projects = results.querySelector("[data-fit-projects]");
       if (!(projects instanceof HTMLUListElement)) {
         throw new Error("The Fit projects area is unavailable.");
@@ -244,11 +388,19 @@
       growthBasis.textContent = payload.growthProjection.basis;
       growthLevels.replaceChildren();
       for (const level of payload.growthProjection.levels || []) {
-        const card = document.createElement("article");
-        card.className = "rounded-xl border border-[var(--line)] bg-[var(--surface)] p-5";
+        const card = document.createElement("details");
+        card.className = "responsive-card report-section rounded-xl border border-[var(--line)] bg-[var(--surface)] p-5";
+        card.dataset.reportSection = "";
+        const summary = document.createElement("summary");
         const heading = document.createElement("h3");
         heading.className = "text-lg font-semibold";
         heading.textContent = level.label;
+        const chevron = document.createElement("span");
+        chevron.className = "card-chevron";
+        chevron.setAttribute("aria-hidden", "true");
+        summary.append(heading, chevron);
+        const content = document.createElement("div");
+        content.className = "card-content";
         const target = document.createElement("p");
         target.className = "mt-1 text-sm text-[var(--muted)]";
         target.textContent = level.target;
@@ -265,16 +417,23 @@
           entry.append(name, document.createTextNode(item.time));
           skills.append(entry);
         }
-        card.append(heading, target, overall, skills);
+        content.append(target, overall, skills);
+        card.append(summary, content);
         growthLevels.append(card);
       }
       results.hidden = false;
-      status.textContent = "Analysis complete. The score is a transparent evidence-overlap estimate.";
+      status.textContent = "AI assessment complete. Evidence references were validated and the score was calculated from the assessed requirements.";
+      results.scrollIntoView({
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",
+        block: "start",
+      });
     } catch (error) {
       status.textContent = error instanceof Error
         ? error.message
         : "Fit analysis is temporarily unavailable.";
     } finally {
+      stopProgress();
+      if (spinner instanceof HTMLElement) spinner.hidden = true;
       if (submitButton instanceof HTMLButtonElement) submitButton.disabled = false;
     }
   });

@@ -1,0 +1,36 @@
+---
+import profile from "../content/profile.json";
+import evidence from "../content/evidence.json";
+import ResponsiveCard from "./ResponsiveCard.astro";
+import OrganizationLogo from "./OrganizationLogo.astro";
+
+const evidenceById = new Map(evidence.map((item) => [item.id, item]));
+---
+
+<ul class="mt-4 grid items-stretch gap-4 sm:grid-cols-2 xl:grid-cols-3" data-certification-cards>
+  {profile.certifications.map((certification) => (
+    <li class="min-w-0">
+      <ResponsiveCard title={certification.name}>
+      <OrganizationLogo organization={certification.institution} />
+      <div class="mt-3 flex flex-wrap gap-3">
+        <a
+          class="text-sm text-[var(--accent)] underline"
+          href={certification.credentialUrl || certification.source}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {certification.credentialUrl ? "Credential" : "Source profile"}
+        </a>
+        {certification.evidenceIds?.map((id) => {
+          const item = evidenceById.get(id);
+          return item && (
+            <a class="text-sm text-[var(--accent)] underline" href={`/evidence/${item.id}.pdf`} target="_blank" rel="noopener noreferrer">
+              Supporting certificate
+            </a>
+          );
+        })}
+      </div>
+      </ResponsiveCard>
+    </li>
+  ))}
+</ul>

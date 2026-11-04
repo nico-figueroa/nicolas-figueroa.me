@@ -1,0 +1,23 @@
+---
+import badges from "../content/technology-badges.json";
+
+interface Props {
+  technologies: string[];
+  label: string;
+}
+
+const { technologies, label } = Astro.props;
+const badgeFiles = new Map(Object.entries(badges).map(([name, badge]) => [name.toLowerCase(), badge.file]));
+---
+
+<ul class="technology-banners" aria-label={label}>
+  {technologies.map((technology) => (
+    <li class="technology-banner">
+      {badgeFiles.has(technology.toLowerCase()) ? (
+        <img src={`/images/technologies/${badgeFiles.get(technology.toLowerCase())}.svg`} alt={technology} loading="lazy" decoding="async" />
+      ) : (
+        <span class="technology-label">{technology}</span>
+      )}
+    </li>
+  ))}
+</ul>

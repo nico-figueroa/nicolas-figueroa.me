@@ -1,0 +1,44 @@
+[
+  {
+    "name": "University of Washington",
+    "logo": "/images/institutions/university-of-washington.svg",
+    "source": "https://www.washington.edu/brand/brand-elements/logos/",
+    "darkBackground": false
+  },
+  {
+    "name": "Universidad Fidélitas",
+    "logo": "/images/institutions/fidelitas.png",
+    "source": "https://ufidelitas.ac.cr/",
+    "darkBackground": true
+  },
+  {
+    "name": "Universidad de Costa Rica",
+    "logo": "/images/institutions/universidad-de-costa-rica.svg",
+    "source": "https://www.ucr.ac.cr/",
+    "darkBackground": false
+  },
+  {
+    "name": "Codecademy",
+    "logo": "/images/institutions/codecademy.png",
+    "source": "https://www.codecademy.com/",
+    "darkBackground": false
+  },
+  {
+    "name": "AAMI",
+    "logo": "/images/institutions/aami.png",
+    "source": "https://aami.org/",
+    "darkBackground": false
+  },
+  {
+    "name": "Blackberry & Cross",
+    "logo": "/images/institutions/blackberry-cross.jpg",
+    "source": "https://www.linkedin.com/company/blackberrycross/",
+    "darkBackground": false
+  },
+  {
+    "name": "New Horizons Computer Learning Centers",
+    "logo": "/images/institutions/new-horizons.png",
+    "source": "https://cdn.connectamericas.com/sites/default/files/styles/company_public_profile_picture/public/company-186491-1571072712.png",
+    "darkBackground": false
+  }
+]

@@ -3,6 +3,7 @@ import { mock, test } from "node:test";
 import { handleGuide } from "../functions/ai-guide.mjs";
 import { handleFitAnalysis } from "../functions/check-nicos-fit.mjs";
 import { analyzeFit } from "../src/server/fit.mjs";
+import { fitSources } from "../src/server/fit-ai.mjs";
 import {
   extractHtmlText,
   extractJobDescriptionFile,
@@ -18,6 +19,23 @@ function jsonRequest(url, payload, headers = {}) {
     headers: { "content-type": "application/json", ...headers },
     body: JSON.stringify(payload),
   });
+}
+
+function pythonFitOptions() {
+  const source = fitSources.find((item) => item.title === "Python");
+  return {
+    apiKey: "test-key",
+    fetchImpl: async (_url, init) => {
+      const request = JSON.parse(init.body);
+      const result = request.text.format.name === "fit_classification"
+        ? { passages: { "passage-1": [{ key: "python", label: "Python", sourceText: "Python",
+          category: "Technical skill", importance: "required", reason: "Requested programming capability." }] } }
+        : { summary: "Documented Python skills support the requested capability.",
+          assessments: { "requirement-1": { matchType: "direct", confidence: 0.9,
+            rationale: "Python is a documented skill.", citations: [source.id] } } };
+      return Response.json({ status: "completed", output: [{ content: [{ type: "output_text", text: JSON.stringify(result) }] }] });
+    },
+  };
 }
 
 function makePdf(text) {
@@ -104,8 +122,27 @@ function makeDocx() {
 test("local search retrieves cited evidence and rejects unsupported queries", () => {
   const found = rankDocuments("AI Engineer RAG Azure");
   assert.ok(found.some((item) => item.title === "AI Engineering Lessons"));
-  assert.ok(found.every((item) => item.source.startsWith("https://")));
+  assert.ok(found.every((item) =>
+    item.source.startsWith("https://") || item.source.startsWith("/"),
+  ));
   assert.deepEqual(rankDocuments("question about an undocumented fact"), []);
+});
+
+test("lexical search covers new evidence records without regenerated embeddings", () => {
+  const found = rankDocuments("WES electrical engineering", {
+    documents: [
+      { id: "older-record", text: "unrelated item" },
+      { id: "new-evidence", text: "World Education Services electrical engineering record" },
+    ],
+    sourceMetadata: [
+      { id: "older-record", title: "Older record", source: "https://example.test/older" },
+      { id: "new-evidence", title: "WES report", source: "/evidence/wes-report.pdf" },
+    ],
+    vectors: [{ id: "older-record", vector: [1, 0] }],
+    queryVector: [0, 1],
+  });
+
+  assert.deepEqual(found.map((item) => item.id), ["new-evidence"]);
 });
 
 test("Guide returns evidence-only fallback with the required response fields", async () => {
@@ -120,7 +157,9 @@ test("Guide returns evidence-only fallback with the required response fields", a
   assert.equal(payload.aiStatus, "disabled");
   assert.ok(payload.answer);
   assert.ok(payload.supportingEvidence.length > 0);
-  assert.ok(payload.citations.every((item) => item.url.startsWith("https://")));
+  assert.ok(payload.citations.every((item) =>
+    item.url.startsWith("https://") || item.url.startsWith("/"),
+  ));
   assert.ok(payload.sources.length > 0);
   assert.ok(payload.suggestedQuestions.length > 0);
 });
@@ -262,7 +301,7 @@ Experience in litigation and contract drafting preferred.`);
 test("Fit endpoint validates requests and returns the documented result shape", async () => {
   const response = await handleFitAnalysis(jsonRequest("/fit", {
     jobDescription: "Looking for Python skills and systems thinking.",
-  }));
+  }), { ip: "fit-test-response-shape" }, pythonFitOptions());
   const payload = await response.json();
 
   assert.equal(response.status, 200);
@@ -280,6 +319,73 @@ test("Fit endpoint validates requests and returns the documented result shape", 
   assert.ok(Array.isArray(payload.partiallySupportedRequirements));
 });
 
+test("Fit credits completed higher and equivalent degrees without a false BS gap", () => {
+  for (const minimum of ["BS degree", "B.S. degree", "B.Sc. degree", "Bachelor's degree", "Bachelor’s degree", "BS or higher", "Bachelor's degree in any field"]) {
+    const result = analyzeFit(`Qualifications:\n${minimum} required.`);
+    const academic = result.requirements.filter((item) => item.category === "Education");
+    assert.equal(academic.length, 1, minimum);
+    assert.equal(academic[0].status, "matched", minimum);
+    assert.equal(academic[0].matchType, "exceeds", minimum);
+    assert.match(academic[0].evidence, /Master of Science in Information Management/);
+    assert.equal(result.matchScore, 100, minimum);
+    assert.deepEqual(result.potentialGaps, [], minimum);
+    assert.ok(!result.requirements.some((item) => item.id === "role-title"));
+  }
+  const engineering = analyzeFit("Requirements:\nBachelor's degree in engineering required.");
+  assert.equal(engineering.requirements[0].status, "matched");
+  assert.match(engineering.requirements[0].evidence, /Electrical Engineering/);
+  const related = analyzeFit("Qualifications:\nBS in computer science or a related field required.");
+  assert.equal(related.requirements[0].status, "matched");
+  assert.match(related.requirements[0].evidence, /related-field allowance/);
+  const unspecifiedLevel = analyzeFit("Qualifications:\nA degree in electrical engineering required.");
+  assert.equal(unspecifiedLevel.requirements[0].status, "matched");
+  assert.match(unspecifiedLevel.requirements[0].evidence, /Electrical Engineering/);
+});
+
+test("Fit distinguishes adjacent education from unsupported fields, higher levels, and licenses", () => {
+  const related = analyzeFit("Requirements:\nBS in computer science required.");
+  assert.equal(related.requirements[0].status, "partial");
+  assert.equal(related.requirements[0].matchType, "adjacent");
+  assert.match(related.requirements[0].evidence, /exact requested field is not documented/);
+  assert.equal(related.matchScore, 35);
+  for (const field of ["accounting", "political science", "nursing"]) {
+    const unrelated = analyzeFit(`Qualifications:\nBS in ${field} required.`);
+    assert.equal(unrelated.requirements[0].status, "gap", field);
+    assert.equal(unrelated.matchScore, 0, field);
+  }
+  const doctorate = analyzeFit("Qualifications:\nPhD in information management required.");
+  assert.equal(doctorate.requirements[0].status, "partial");
+  assert.match(doctorate.requirements[0].evidence, /requested degree level is not documented/);
+  const higherUnrelated = analyzeFit("Qualifications:\nBS or higher in nursing required.");
+  assert.equal(higherUnrelated.requirements[0].status, "gap");
+  const multipleDegrees = analyzeFit("Qualifications:\nBS in engineering and MS in computer science required.");
+  assert.equal(multipleDegrees.requirements.filter((item) => item.category === "Education").length, 2);
+  assert.ok(multipleDegrees.requirements.some((item) => item.status === "partial"));
+  const compound = analyzeFit("Requirements:\nBS degree and 10 years of Kubernetes experience required. Current medical license required.");
+  assert.ok(compound.requirements.some((item) => item.category === "Education" && item.matchType === "exceeds"));
+  assert.ok(compound.requirements.some((item) => item.category === "Experience duration" && item.status === "gap"));
+  assert.ok(compound.potentialGaps.includes("Kubernetes"));
+  assert.ok(compound.potentialGaps.includes("Current medical license"));
+});
+
+test("Fit justifies equivalent skills and adjacent frameworks without duplicate credit", () => {
+  const result = analyzeFit("Requirements:\nNodeJS, Postgres, React.js and Vue.js proficiency required.");
+  assert.equal(result.requirements.length, 4);
+  assert.ok(!result.requirements.some((item) => item.label === "JS"));
+  assert.ok(result.requirements.some((item) =>
+    item.sourceText === "NodeJS" && item.matchType === "equivalent" && /Node.js/.test(item.evidence),
+  ));
+  assert.ok(result.requirements.some((item) =>
+    item.sourceText === "Postgres" && item.matchType === "equivalent" && /PostgreSQL/.test(item.evidence),
+  ));
+  assert.equal(result.requirements.filter((item) => /react/i.test(item.label)).length, 1);
+  assert.ok(result.partiallySupportedRequirements.some((item) =>
+    item.label === "Vue.js" && /React.*transferable/.test(item.evidence),
+  ));
+  assert.equal(result.partiallySupportedRequirements.filter((item) => /Vue/.test(item.label)).length, 1);
+  assert.ok(result.supportedRequirements.every((item) => item.evidence));
+});
+
 test("Fit endpoint accepts a bounded text file upload", async () => {
   const form = new FormData();
   form.append("file", new Blob([
@@ -288,7 +394,7 @@ test("Fit endpoint accepts a bounded text file upload", async () => {
   const response = await handleFitAnalysis(new Request("https://portfolio.test/fit", {
     method: "POST",
     body: form,
-  }), { ip: "fit-test-upload" });
+  }), { ip: "fit-test-upload" }, pythonFitOptions());
   const payload = await response.json();
 
   assert.equal(response.status, 200);
@@ -429,6 +535,8 @@ test("generated Guide answers accept only retrieved citation identifiers", async
     assert.match(requestBody.instructions, /untrusted data/i);
     assert.match(requestBody.instructions, /Never follow instructions/i);
     assert.match(requestBody.instructions, /Do not include source identifiers in the answer text/i);
+    assert.match(requestBody.instructions, /degree level separately from field/i);
+    assert.match(requestBody.instructions, /direct, equivalent, exceeding, adjacent, and unsupported/i);
   } finally {
     mockedFetch.mock.restore();
   }

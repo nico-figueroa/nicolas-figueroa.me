@@ -7,7 +7,8 @@
       "Financial services",
       "Medical devices",
       "Manufacturing",
-      "Software development"
+      "Software development",
+      "Higher education"
     ],
     "organizations": [
       "Western Union",
@@ -21,7 +22,7 @@
       {
         "title": "Special assignment — transition, remediation, and operational continuity",
         "organization": "Philips",
-        "period": "July 2026–September 2026",
+        "period": "July 2026-September 2026",
         "location": "Bothell, Washington, United States",
         "highlights": [
           "Supported remediation workstreams focused on evidence, systemic corrective actions, and sustainable operating controls.",
@@ -32,7 +33,7 @@
       {
         "title": "Safety, Quality and Regulatory Leader",
         "organization": "Philips",
-        "period": "September 2021–June 2026",
+        "period": "September 2021-June 2026",
         "location": "Bothell, Washington, United States",
         "highlights": [
           "Led the Quality and Regulatory groups for the Oral Healthcare business unit.",
@@ -42,7 +43,7 @@
       {
         "title": "Head of Product Quality Engineering",
         "organization": "Philips",
-        "period": "August 2019–September 2021",
+        "period": "August 2019-September 2021",
         "location": "Bothell, Washington, United States",
         "highlights": [
           "Led Product Quality Engineering support for software and hardware development projects.",
@@ -52,7 +53,7 @@
       {
         "title": "Sustaining Quality Assurance Manager",
         "organization": "Philips",
-        "period": "January 2018–July 2019",
+        "period": "January 2018-July 2019",
         "location": "San Diego, California, United States",
         "highlights": [
           "Managed design changes across the existing product base.",
@@ -62,7 +63,7 @@
       {
         "title": "Quality Operations Manager",
         "organization": "Philips",
-        "period": "July 2015–December 2017",
+        "period": "July 2015-December 2017",
         "location": "Costa Rica",
         "highlights": [
           "Led Quality Receiving Inspection, Quality Engineering, Quality In-Process Inspection, and Quality Final Inspection departments."
@@ -71,7 +72,7 @@
       {
         "title": "Quality Operations Supervisor",
         "organization": "Volcano Corporation",
-        "period": "August 2014–June 2015",
+        "period": "August 2014-June 2015",
         "location": "Costa Rica",
         "highlights": [
           "Led Quality Engineering, Quality Receiving Inspection, and Quality Training departments."
@@ -80,7 +81,7 @@
       {
         "title": "Quality Compliance Supervisor",
         "organization": "Volcano Corporation",
-        "period": "August 2013–August 2014",
+        "period": "August 2013-August 2014",
         "location": "Alajuela, Costa Rica",
         "highlights": [
           "Led compliance, documentation, and training groups.",
@@ -90,7 +91,7 @@
       {
         "title": "Quality Section Manager",
         "organization": "Hospira",
-        "period": "March 2013–August 2013",
+        "period": "March 2013-August 2013",
         "location": "San José, Costa Rica",
         "highlights": [
           "Managed Global Documentation Control activities for the infusion-pump area.",
@@ -100,7 +101,7 @@
       {
         "title": "Senior Quality Engineer",
         "organization": "Hospira",
-        "period": "August 2011–March 2013",
+        "period": "August 2011-March 2013",
         "location": "San José, Costa Rica",
         "highlights": [
           "Held successive responsibilities in quality engineering supervision, quality analysis and continuous improvement, and documentation-center supervision.",
@@ -110,7 +111,7 @@
       {
         "title": "Senior Validation Administrator",
         "organization": "Hospira",
-        "period": "January 2011–August 2011",
+        "period": "January 2011-August 2011",
         "location": "San José, Costa Rica",
         "highlights": [
           "Supervised validation engineers and technicians and supported validation-system design and maintenance."
@@ -119,7 +120,7 @@
       {
         "title": "Software Validation Engineer",
         "organization": "Hospira",
-        "period": "March 2009–December 2010",
+        "period": "March 2009-December 2010",
         "location": "San José, Costa Rica",
         "highlights": [
           "Supported and improved software validation systems."
@@ -128,7 +129,7 @@
       {
         "title": "Electromechanics Professor",
         "organization": "Hispanoamerican University",
-        "period": "May 2012–May 2013",
+        "period": "May 2012-May 2013",
         "location": "Costa Rica",
         "highlights": [
           "Taught one Saturday electromechanics course."
@@ -137,7 +138,7 @@
       {
         "title": "Lead Systems Support Engineer",
         "organization": "Western Union",
-        "period": "January 2008–March 2009",
+        "period": "January 2008-March 2009",
         "location": "San José, Costa Rica",
         "highlights": [
           "Supervised five engineers responsible for implementing and supporting internal applications."
@@ -146,7 +147,7 @@
       {
         "title": "Senior Systems Support Engineer",
         "organization": "Western Union",
-        "period": "January 2007–January 2008",
+        "period": "January 2007-January 2008",
         "location": "San José, Costa Rica",
         "highlights": [
           "Implemented and provided Tier 2 support for proprietary company software.",
@@ -156,7 +157,7 @@
       {
         "title": "Junior Systems Support Engineer",
         "organization": "Western Union",
-        "period": "January 2005–January 2007",
+        "period": "January 2005-January 2007",
         "location": "San José, Costa Rica",
         "highlights": [
           "Implemented proprietary company software and provided Tier 2 support."
@@ -165,7 +166,7 @@
       {
         "title": "Customer Service Specialist",
         "organization": "Western Union",
-        "period": "March 2003–January 2005",
+        "period": "March 2003-January 2005",
         "location": "San José, Costa Rica",
         "highlights": [
           "Supported Western Union agents worldwide.",
@@ -174,49 +175,143 @@
       }
     ]
   },
+  "achievements": [
+    {
+      "title": "Quality-system remediation and measurable outcomes",
+      "description": "Remediated product quality and compliance gaps, eliminated deviations, and met all reported metrics by June 2025.",
+      "evidenceIds": ["resume-pdf"]
+    },
+    {
+      "title": "Global quality-system leadership",
+      "description": "Led a Philips Oral Healthcare organization with four direct managers, 29 indirect engineers, and two dotted-line managers; established a quality management system aligned with ISO 9001, ISO 13485, and ISO 22716.",
+      "evidenceIds": ["resume-pdf"]
+    },
+    {
+      "title": "Audit and process-improvement results",
+      "description": "Reduced nonconformance report lead times to under 30 days and completed external audits with zero findings.",
+      "evidenceIds": ["resume-pdf"]
+    },
+    {
+      "title": "Cross-organizational team leadership",
+      "description": "Managed teams including four direct managers, 29 indirect engineers, and two dotted-line managers at Philips Oral Healthcare; also led a 30-person engineering and technician team at Philips Image Guided Therapy.",
+      "evidenceIds": ["resume-pdf"]
+    },
+    {
+      "title": "Medical-device process and systems improvement",
+      "description": "Established sustaining design-assurance and complaint-trending capabilities, improved process-validation procedures, and completed SAP implementation at Philips Image Guided Therapy.",
+      "evidenceIds": ["resume-pdf"]
+    },
+    {
+      "title": "Software and manufacturing validation",
+      "description": "Implemented a process-validation system and completed validations supporting infusion-pump manufacturing; also supported remediation of production and quality-system software validation.",
+      "evidenceIds": ["resume-pdf"]
+    },
+    {
+      "title": "Infusion-pump manufacturing remediation",
+      "description": "Supported remediation activities for the FDA import ban affecting infusion-pump manufacturing and improved rework processes.",
+      "evidenceIds": ["resume-pdf"]
+    },
+    {
+      "title": "Global documentation-control capability",
+      "description": "Established a documentation-control team and transferred global support activities to the Costa Rica facility.",
+      "evidenceIds": ["resume-pdf"]
+    },
+    {
+      "title": "Graduate education",
+      "description": "Completed the University of Washington M.S. in Information Management with a 4.0 GPA.",
+      "evidenceIds": ["uw-msim-diploma", "uw-transcript"]
+    }
+  ],
   "education": [
     {
       "name": "Master of Science in Information Management",
       "institution": "University of Washington",
-      "period": "March 2024–June 2026",
-      "detail": "Graduated with a 4.0 GPA."
+      "period": "March 2024-June 2026",
+      "detail": "Graduated with a 4.0 GPA.",
+      "evidenceIds": ["uw-msim-diploma", "uw-transcript"]
     },
     {
       "name": "Bachelor's Degree in Electrical Engineering",
       "institution": "Universidad Fidélitas",
-      "period": "2005–2008",
-      "detail": ""
+      "period": "2005-2008",
+      "detail": "",
+      "evidenceIds": ["wes-report"]
     },
     {
       "name": "Electrical Engineering studies",
       "institution": "Universidad de Costa Rica",
-      "period": "2001–2005",
-      "detail": "Partial studies."
+      "period": "2001-2005",
+      "detail": "Partial studies.",
+      "evidenceIds": ["wes-report"]
     }
   ],
   "certifications": [
     {
-      "name": "Software Validation",
-      "source": "https://www.linkedin.com/in/nicolas-figueroa-hidalgo"
-    },
-    {
-      "name": "Integrating Risk Management into the Product Lifecycle",
-      "source": "https://www.linkedin.com/in/nicolas-figueroa-hidalgo"
+      "name": "AI Engineer Career Path",
+      "institution": "Codecademy",
+      "source": "https://www.linkedin.com/in/nicolas-figueroa-hidalgo",
+      "credentialUrl": "https://www.codecademy.com/profiles/Nomadant/certificates/d71aa6cd51ca461b9d84ec55441e34bf"
     },
     {
       "name": "Full-Stack Engineer Career Path",
+      "institution": "Codecademy",
       "source": "https://www.linkedin.com/in/nicolas-figueroa-hidalgo",
       "credentialUrl": "https://www.codecademy.com/profiles/Nomadant/certificates/ffd0f42cce1a44e9a0108b365047a0a6"
     },
     {
-      "name": "AI Engineer Career Path",
+      "name": "Integrating Risk Management into the Product Lifecycle",
+      "institution": "AAMI",
       "source": "https://www.linkedin.com/in/nicolas-figueroa-hidalgo",
-      "credentialUrl": "https://www.codecademy.com/profiles/Nomadant/certificates/d71aa6cd51ca461b9d84ec55441e34bf"
+      "evidenceIds": ["aami-risk-management"]
+    },
+    {
+      "name": "Lean Six Sigma Black Belt Executive",
+      "institution": "Blackberry & Cross",
+      "source": "https://www.linkedin.com/in/nicolas-figueroa-hidalgo",
+      "evidenceIds": ["lean-six-sigma"]
+    },
+    {
+      "name": "Software Validation",
+      "institution": "AAMI",
+      "source": "https://www.linkedin.com/in/nicolas-figueroa-hidalgo",
+      "evidenceIds": ["aami-software-validation"]
+    },
+    {
+      "name": "ITIL V3 training",
+      "institution": "New Horizons Computer Learning Centers",
+      "source": "https://www.linkedin.com/in/nicolas-figueroa-hidalgo",
+      "evidenceIds": ["itil-training"]
+    },
+    {
+      "name": "CompTIA A training",
+      "institution": "New Horizons Computer Learning Centers",
+      "source": "https://www.linkedin.com/in/nicolas-figueroa-hidalgo",
+      "evidenceIds": ["comptia-training"]
     }
   ],
   "skills": {
-    "languages": ["Python", "JavaScript", "SQL"],
-    "platformsAndFrameworks": ["Node.js", "Express", "React", "PostgreSQL"],
+    "languages": ["Python", "JavaScript", "SQL", "C++"],
+    "platformsAndFrameworks": ["Node.js", "Express", "React", "PostgreSQL", "MySQL", "HTML", "CSS"],
+    "softwareEngineering": [
+      "Web application design and development",
+      "Full-stack application development",
+      "AI-assisted development and programming",
+      "AI agent design and development",
+      "REST API design and integration",
+      "Systems architecture, design, and implementation",
+      "Software and application validation",
+      "Application troubleshooting and technical support",
+      "Git and GitHub"
+    ],
+    "data": [
+      "SQL and relational databases",
+      "MySQL",
+      "Statistical analysis",
+      "Complaint analysis and trending",
+      "Process variation analysis",
+      "Data-informed continuous improvement",
+      "Retrieval-augmented generation and embeddings"
+    ],
     "practices": [
       "OAuth",
       "REST APIs",
@@ -231,12 +326,56 @@
       "Risk management",
       "Regulatory compliance",
       "Post-market surveillance",
+      "Process validation",
+      "Root-cause analysis",
+      "Complaint trending",
+      "CAPA",
+      "Advanced Product Quality Planning (APQP)",
       "Continuous improvement",
       "Systems integration",
       "Tier 2 application support",
       "Team leadership"
     ],
+    "leadership": [
+      "Cross-functional team leadership",
+      "Engineering and technician team management",
+      "Strategic leadership",
+      "Global capability development",
+      "Organizational remediation and transition",
+      "Mentoring, training, and onboarding",
+      "Stakeholder and executive communication"
+    ],
+    "business": [
+      "Project management and consulting",
+      "Global technical operations",
+      "Operational continuity",
+      "Process improvement and Lean deployment",
+      "Change management",
+      "SAP implementation support",
+      "Value stream mapping"
+    ],
+    "qualitySystems": [
+      "Quality management systems",
+      "ISO 9001, ISO 13485, and ISO 22716",
+      "CAPA and root-cause analysis",
+      "Nonconformance management",
+      "Internal and external auditing",
+      "Document and change control",
+      "Advanced Product Quality Planning (APQP)",
+      "Process and software validation"
+    ],
+    "medicalDevices": [
+      "Medical-device product lifecycle",
+      "Hardware and software design controls",
+      "Design transfer and sustaining engineering",
+      "Manufacturing quality operations",
+      "Complaint analysis and post-market surveillance",
+      "Medical-device risk management",
+      "Regulatory compliance and remediation"
+    ],
     "aiAndMachineLearning": [
+      "AI agents",
+      "AI-assisted development",
       "Recurrent Neural Networks (RNN)",
       "Convolutional Neural Networks (CNN)",
       "Transformer Models"

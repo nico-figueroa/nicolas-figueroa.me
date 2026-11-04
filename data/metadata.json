@@ -25,6 +25,11 @@
     "source": "https://www.linkedin.com/in/nicolas-figueroa-hidalgo"
   },
   {
+    "id": "technical-skills-001",
+    "title": "Technical skills and practices",
+    "source": "https://www.linkedin.com/in/nicolas-figueroa-hidalgo"
+  },
+  {
     "id": "learning-000",
     "title": "Ongoing learning",
     "source": "https://www.linkedin.com/in/nicolas-figueroa-hidalgo"
@@ -40,13 +45,53 @@
     "source": "https://www.linkedin.com/in/nicolas-figueroa-hidalgo"
   },
   {
-    "id": "certification-software-validation-000",
-    "title": "Software Validation",
-    "source": "https://www.linkedin.com/in/nicolas-figueroa-hidalgo"
+    "id": "about-narrative-000",
+    "title": "About Nicolas",
+    "source": "/about/"
   },
   {
-    "id": "certification-integrating-risk-management-into-the-product-lifecycle-000",
-    "title": "Integrating Risk Management into the Product Lifecycle",
+    "id": "about-narrative-001",
+    "title": "About Nicolas",
+    "source": "/about/"
+  },
+  {
+    "id": "about-narrative-002",
+    "title": "About Nicolas",
+    "source": "/about/"
+  },
+  {
+    "id": "about-timeline-2000-2003-000",
+    "title": "Network administrator and computer repair technician",
+    "source": "/about/"
+  },
+  {
+    "id": "about-timeline-2003-2009-000",
+    "title": "Systems support and early engineering",
+    "source": "/about/"
+  },
+  {
+    "id": "about-timeline-2009-2018-000",
+    "title": "Medical-device validation and quality operations",
+    "source": "/about/"
+  },
+  {
+    "id": "about-timeline-2018-000",
+    "title": "Relocated from Costa Rica to the United States",
+    "source": "/about/"
+  },
+  {
+    "id": "about-timeline-2019-2026-000",
+    "title": "Product quality and regulatory leadership",
+    "source": "/about/"
+  },
+  {
+    "id": "about-timeline-2024-2026-000",
+    "title": "Graduate study and software/AI engineering",
+    "source": "/about/"
+  },
+  {
+    "id": "certification-ai-engineer-career-path-000",
+    "title": "AI Engineer Career Path",
     "source": "https://www.linkedin.com/in/nicolas-figueroa-hidalgo"
   },
   {
@@ -55,8 +100,28 @@
     "source": "https://www.linkedin.com/in/nicolas-figueroa-hidalgo"
   },
   {
-    "id": "certification-ai-engineer-career-path-000",
-    "title": "AI Engineer Career Path",
+    "id": "certification-integrating-risk-management-into-the-product-lifecycle-000",
+    "title": "Integrating Risk Management into the Product Lifecycle",
+    "source": "https://www.linkedin.com/in/nicolas-figueroa-hidalgo"
+  },
+  {
+    "id": "certification-lean-six-sigma-black-belt-executive-000",
+    "title": "Lean Six Sigma Black Belt Executive",
+    "source": "https://www.linkedin.com/in/nicolas-figueroa-hidalgo"
+  },
+  {
+    "id": "certification-software-validation-000",
+    "title": "Software Validation",
+    "source": "https://www.linkedin.com/in/nicolas-figueroa-hidalgo"
+  },
+  {
+    "id": "certification-itil-v3-training-000",
+    "title": "ITIL V3 training",
+    "source": "https://www.linkedin.com/in/nicolas-figueroa-hidalgo"
+  },
+  {
+    "id": "certification-comptia-a-training-000",
+    "title": "CompTIA A training",
     "source": "https://www.linkedin.com/in/nicolas-figueroa-hidalgo"
   },
   {
@@ -153,6 +218,121 @@
     "id": "education-universidad-de-costa-rica-electrical-engineering-studies-000",
     "title": "Electrical Engineering studies — Universidad de Costa Rica",
     "source": "https://www.linkedin.com/in/nicolas-figueroa-hidalgo"
+  },
+  {
+    "id": "achievement-quality-system-remediation-and-measurable-outcomes-000",
+    "title": "Quality-system remediation and measurable outcomes",
+    "source": "/evidence/resume-pdf.pdf"
+  },
+  {
+    "id": "achievement-global-quality-system-leadership-000",
+    "title": "Global quality-system leadership",
+    "source": "/evidence/resume-pdf.pdf"
+  },
+  {
+    "id": "achievement-audit-and-process-improvement-results-000",
+    "title": "Audit and process-improvement results",
+    "source": "/evidence/resume-pdf.pdf"
+  },
+  {
+    "id": "achievement-cross-organizational-team-leadership-000",
+    "title": "Cross-organizational team leadership",
+    "source": "/evidence/resume-pdf.pdf"
+  },
+  {
+    "id": "achievement-medical-device-process-and-systems-improvement-000",
+    "title": "Medical-device process and systems improvement",
+    "source": "/evidence/resume-pdf.pdf"
+  },
+  {
+    "id": "achievement-software-and-manufacturing-validation-000",
+    "title": "Software and manufacturing validation",
+    "source": "/evidence/resume-pdf.pdf"
+  },
+  {
+    "id": "achievement-infusion-pump-manufacturing-remediation-000",
+    "title": "Infusion-pump manufacturing remediation",
+    "source": "/evidence/resume-pdf.pdf"
+  },
+  {
+    "id": "achievement-global-documentation-control-capability-000",
+    "title": "Global documentation-control capability",
+    "source": "/evidence/resume-pdf.pdf"
+  },
+  {
+    "id": "achievement-graduate-education-000",
+    "title": "Graduate education",
+    "source": "/evidence/uw-msim-diploma.pdf"
+  },
+  {
+    "id": "evidence-resume-pdf-000",
+    "title": "Resume",
+    "source": "/evidence/resume-pdf.pdf"
+  },
+  {
+    "id": "evidence-uw-msim-diploma-000",
+    "title": "M.S. in Information Management diploma",
+    "source": "/evidence/uw-msim-diploma.pdf"
+  },
+  {
+    "id": "evidence-uw-transcript-000",
+    "title": "University of Washington transcript and degree record",
+    "source": "/evidence/uw-transcript.pdf"
+  },
+  {
+    "id": "evidence-wes-report-000",
+    "title": "World Education Services (WES) report",
+    "source": "/evidence/wes-report.pdf"
+  },
+  {
+    "id": "evidence-aami-software-validation-000",
+    "title": "AAMI Software Validation",
+    "source": "/evidence/aami-software-validation.pdf"
+  },
+  {
+    "id": "evidence-aami-risk-management-000",
+    "title": "AAMI risk management training",
+    "source": "/evidence/aami-risk-management.pdf"
+  },
+  {
+    "id": "evidence-lean-six-sigma-000",
+    "title": "Lean Six Sigma Black Belt Executive",
+    "source": "/evidence/lean-six-sigma.pdf"
+  },
+  {
+    "id": "evidence-itil-training-000",
+    "title": "ITIL V3 training",
+    "source": "/evidence/itil-training.pdf"
+  },
+  {
+    "id": "evidence-comptia-training-000",
+    "title": "CompTIA A training",
+    "source": "/evidence/comptia-training.pdf"
+  },
+  {
+    "id": "evidence-presentation-doe-validation-000",
+    "title": "DOE in Validations",
+    "source": "/evidence/presentation-doe-validation.pdf"
+  },
+  {
+    "id": "evidence-presentation-medical-device-000",
+    "title": "Medical Device CC Imp Pres",
+    "source": "/evidence/presentation-medical-device.pdf"
+  },
+  {
+    "id": "evidence-presentation-ingeniero-forastero-000",
+    "title": "Presentación: Ingeniero Forastero",
+    "source": "/evidence/presentation-ingeniero-forastero.pdf"
+  },
+  {
+    "id": "evidence-presentation-production-records-000",
+    "title": "Review Production Records for Compliance",
+    "source": "/evidence/presentation-production-records.pdf"
+  },
+  {
+    "id": "evidence-presentation-process-variation-000",
+    "title": "Understand, Control, Reduce Variation",
+    "source": "/evidence/presentation-process-variation.pdf"
   },
   {
     "id": "project-ai-trip-planner-000",

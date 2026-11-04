@@ -1,4 +1,4 @@
-import { analyzeFit } from "../src/server/fit.mjs";
+import { analyzeFitWithAI, FitAnalysisError } from "../src/server/fit-ai.mjs";
 import {
   consumeRateLimit,
   jsonResponse,
@@ -6,7 +6,7 @@ import {
 } from "../src/server/http.mjs";
 import { FitInputError, readFitInput } from "../src/server/fit-input.mjs";
 
-export function handleFitAnalysis(request, context = {}) {
+export function handleFitAnalysis(request, context = {}, options = {}) {
   if (request.method !== "POST") {
     return jsonResponse({ error: "Method not allowed." }, 405, { allow: "POST" });
   }
@@ -21,10 +21,15 @@ export function handleFitAnalysis(request, context = {}) {
   }
 
   return readFitInput(request)
-    .then((jobDescription) => jsonResponse(analyzeFit(jobDescription)))
+    .then(async (jobDescription) => jsonResponse(await analyzeFitWithAI(jobDescription, options)))
     .catch((error) => {
-      if (!(error instanceof FitInputError)) throw error;
-      return jsonResponse({ error: error.message }, error.status);
+      if (error instanceof FitInputError) return jsonResponse({ error: error.message }, error.status);
+      if (error instanceof FitAnalysisError) {
+        console.error("Fit assessment failed", { code: error.code });
+        return jsonResponse({ error: error.message }, error.status);
+      }
+      console.error("Fit assessment failed", { code: "unexpected_error" });
+      return jsonResponse({ error: "Fit analysis failed unexpectedly. Please try again later." }, 500);
     });
 }
 

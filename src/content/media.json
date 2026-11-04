@@ -3,6 +3,19 @@
     "title": "Nomadant's Point of View",
     "description": "Videos and perspectives from my YouTube channel.",
     "label": "Visit my YouTube channel",
-    "url": "https://www.youtube.com/@Nomandantspointofview"
+    "url": "https://www.youtube.com/@Nomandantspointofview",
+    "type": "channel"
+  },
+  {
+    "title": "Presentations",
+    "description": "Conference and professional presentations available as PDFs.",
+    "type": "presentation-gallery",
+    "evidenceIds": [
+      "presentation-doe-validation",
+      "presentation-medical-device",
+      "presentation-ingeniero-forastero",
+      "presentation-production-records",
+      "presentation-process-variation"
+    ]
   }
 ]

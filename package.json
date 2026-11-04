@@ -10,6 +10,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "test": "node --test",
+    "test:fit-live": "node --env-file-if-exists=.env scripts/evaluate-fit.mjs",
     "test:node-coverage": "node --test --experimental-test-coverage",
     "test:python": "python -m pytest",
     "test:all": "npm run build && npm run test:node-coverage && python -m pytest --cov=scripts --cov-report=term-missing --cov-report=xml --cov-report=html"

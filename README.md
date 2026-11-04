@@ -70,6 +70,7 @@ python scripts/generate_embeddings.py
 ```
 
 Set `OPENAI_API_KEY` only in the root `.env` for local development or Netlify settings for deployment; never commit it. The generated `data/corpus.json`, `data/metadata.json`, and `data/embeddings.json` are versioned inputs to local search and Netlify Functions.
+Check Nico's Fit requires OpenAI for semantic classification and evidence-based assessment; it returns an explicit error rather than rules-based scores when AI is unavailable. `npm run test:fit-live` runs a small paid evaluation using synthetic job descriptions and public portfolio evidence. See [DEPLOY.md](./DEPLOY.md) for runtime and configuration requirements.
 
 ## Project structure
 

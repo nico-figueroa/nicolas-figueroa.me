@@ -1,5 +1,9 @@
 [
   {
+    "label": "About",
+    "href": "/about/"
+  },
+  {
     "label": "Journey",
     "href": "/journey/"
   },

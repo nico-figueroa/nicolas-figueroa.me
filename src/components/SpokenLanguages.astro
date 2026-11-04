@@ -1,0 +1,23 @@
+---
+interface Props {
+  languages: string[];
+}
+
+const { languages } = Astro.props;
+const flags = [
+  { language: "English", file: "us", country: "USA" },
+  { language: "Spanish", file: "cr", country: "Costa Rica" },
+];
+---
+
+<ul class="mt-3 space-y-3">
+  {languages.map((language) => {
+    const flag = flags.find((item) => language.startsWith(`${item.language} `));
+    return (
+      <li class="flex items-start gap-3 text-sm leading-6 text-[var(--muted)]">
+        {flag && <img class="mt-1 h-auto w-7 shrink-0" src={`/images/flags/${flag.file}.png`} alt={`${flag.country} flag`} width="28" height={flag.file === "us" ? 15 : 17} loading="lazy" />}
+        <span>{language}</span>
+      </li>
+    );
+  })}
+</ul>

@@ -4,21 +4,32 @@ import site from "../content/site.json";
 ---
 
 <header class="border-b border-[var(--line)]">
-  <div class="mx-auto flex max-w-[96rem] flex-wrap items-center justify-between gap-4 px-4 py-5 sm:px-6">
+  <div class="site-header-inner mx-auto flex max-w-[96rem] flex-wrap items-center justify-between gap-4 px-4 py-5 sm:px-6">
     <a class="font-semibold tracking-tight text-[var(--text)]" href="/" aria-label={`${site.name} home`}>
       {site.name}
     </a>
-    <nav aria-label="Main navigation">
-      <ul class="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-[var(--muted)]">
-        {navigation.map((item) => (
-          <li><a class="nav-link" href={item.href}>{item.label}</a></li>
-        ))}
-      </ul>
-    </nav>
     <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to light theme">
       Light theme
     </button>
+    <button
+      class="menu-toggle"
+      type="button"
+      data-navigation-toggle
+      aria-controls="site-navigation"
+      aria-expanded="false"
+    >
+      <span>Browse portfolio sections</span>
+      <span class="navigation-chevron" aria-hidden="true"></span>
+    </button>
+    <nav class="site-navigation" id="site-navigation" aria-label="Main navigation">
+      <ul class="site-navigation-list text-sm text-[var(--muted)]">
+        {navigation.map((item) => (
+          <li><a class="nav-link" href={item.href} aria-current={Astro.url.pathname === item.href ? "page" : undefined}>{item.label}</a></li>
+        ))}
+      </ul>
+    </nav>
   </div>
 </header>
 
 <script is:inline src="/scripts/theme-toggle.js"></script>
+<script is:inline src="/scripts/site-navigation.js"></script>

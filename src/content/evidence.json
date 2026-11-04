@@ -1,0 +1,142 @@
+[
+  {
+    "id": "resume-pdf",
+    "file": "resume/Resume_Nicolas_Figueroa_Simp.pdf",
+    "fileName": "Resume_Nicolas_Figueroa_Simp.pdf",
+    "title": "Resume",
+    "category": "Professional record",
+    "description": "Resume source document covering professional experience, education, achievements, skills, and training.",
+    "supportedSkills": ["Quality systems", "Software validation", "Systems support", "Team leadership", "Statistical analysis", "Risk management", "Project management"],
+    "knowledge": "Professional Resume: documented experience across Western Union, Hospira, Philips, medical-device quality, software validation, systems support, engineering and leadership. Includes project outcomes, education, certification, and skills evidence."
+  },
+  {
+    "id": "uw-msim-diploma",
+    "file": "resume/CeD.26V3-EJJQ-NFOF-MSIM-Diploma.pdf",
+    "fileName": "CeD.26V3-EJJQ-NFOF-MSIM-Diploma.pdf",
+    "title": "M.S. in Information Management diploma",
+    "category": "Education",
+    "description": "Credential document associated with the University of Washington M.S. in Information Management.",
+    "supportedSkills": ["Information management", "Systems thinking"],
+    "knowledge": "University of Washington Master of Science in Information Management diploma, completed in 2026."
+  },
+  {
+    "id": "uw-transcript",
+    "file": "resume/UWUnofficialTranscript Degree Record 06-19-2026.pdf",
+    "fileName": "UWUnofficialTranscript Degree Record 06-19-2026.pdf",
+    "title": "University of Washington transcript and degree record",
+    "category": "Education",
+    "description": "Unofficial University of Washington transcript and degree record.",
+    "supportedSkills": ["Information management", "Analytical rigor"],
+    "knowledge": "University of Washington transcript and degree record supporting the M.S. in Information Management and reported 4.0 GPA."
+  },
+  {
+    "id": "wes-report",
+    "file": "resume/WES Unofficial Report.pdf",
+    "fileName": "WES Unofficial Report.pdf",
+    "title": "World Education Services (WES) report",
+    "category": "Education",
+    "description": "Unofficial WES evaluation source document for international education records.",
+    "supportedSkills": ["Electrical engineering", "International education"],
+    "knowledge": "World Education Services unofficial report associated with the Electrical Engineering education records from Costa Rica."
+  },
+  {
+    "id": "aami-software-validation",
+    "file": "resume/AAMI Software Validation Certificate.pdf",
+    "fileName": "AAMI Software Validation Certificate.pdf",
+    "title": "AAMI Software Validation",
+    "category": "Certification and training",
+    "description": "AAMI certificate for Software Validation Requirements and Industry Practice.",
+    "supportedSkills": ["Software validation", "Validation requirements"],
+    "knowledge": "AAMI Software Validation Requirements and Industry Practice training, listed in the Resume as completed in 2010."
+  },
+  {
+    "id": "aami-risk-management",
+    "file": "resume/Risk Management Training Certificate 04-02-19.pdf",
+    "fileName": "Risk Management Training Certificate 04-02-19.pdf",
+    "title": "AAMI risk management training",
+    "category": "Certification and training",
+    "description": "Supporting certificate for risk management training.",
+    "supportedSkills": ["Risk management", "Medical-device product lifecycle"],
+    "knowledge": "AAMI Integrating Risk Management into the Product Lifecycle training, listed in the Resume as completed in 2019."
+  },
+  {
+    "id": "lean-six-sigma",
+    "file": "resume/Lean Six Sigma Black Belt Certificate.pdf",
+    "fileName": "Lean Six Sigma Black Belt Certificate.pdf",
+    "title": "Lean Six Sigma Black Belt Executive",
+    "category": "Certification and training",
+    "description": "Supporting Lean Six Sigma Black Belt certificate.",
+    "supportedSkills": ["Lean", "Continuous improvement", "Process improvement"],
+    "knowledge": "Lean Six Sigma Black Belt Executive certificate, listed in the Resume as completed in 2017."
+  },
+  {
+    "id": "itil-training",
+    "file": "resume/ITIL V3 Training Certificate.pdf",
+    "fileName": "ITIL V3 Training Certificate.pdf",
+    "title": "ITIL V3 training",
+    "category": "Certification and training",
+    "description": "ITIL V3 training certificate.",
+    "supportedSkills": ["IT service management", "Systems support"],
+    "knowledge": "ITIL V3 training supporting systems support and service management practices."
+  },
+  {
+    "id": "comptia-training",
+    "file": "resume/Comptia A  Certificate.pdf",
+    "fileName": "Comptia A  Certificate.pdf",
+    "title": "CompTIA A training",
+    "category": "Certification and training",
+    "description": "CompTIA A certificate provided as a supporting training record.",
+    "supportedSkills": ["Technical support", "Troubleshooting"],
+    "knowledge": "CompTIA A training, cited in the Resume as part of systems support capability development."
+  },
+  {
+    "id": "presentation-doe-validation",
+    "file": "media/DOE in Validations Final.pdf",
+    "fileName": "DOE in Validations Final.pdf",
+    "title": "DOE in Validations",
+    "category": "Presentation",
+    "description": "Presentation PDF; additional summary metadata is not available.",
+    "supportedSkills": ["Design of experiments", "Validation"],
+    "knowledge": "Presentation titled DOE in Validations."
+  },
+  {
+    "id": "presentation-medical-device",
+    "file": "media/Medical Device CC Imp Pres Full.pdf",
+    "fileName": "Medical Device CC Imp Pres Full.pdf",
+    "title": "Medical Device CC Imp Pres",
+    "category": "Presentation",
+    "description": "Presentation PDF; the supplied filename is retained because a fuller title was not available.",
+    "supportedSkills": [],
+    "knowledge": "Presentation titled Medical Device CC Imp Pres."
+  },
+  {
+    "id": "presentation-ingeniero-forastero",
+    "file": "media/Presentacion Ingeniero Forastero Nov 2019.pdf",
+    "fileName": "Presentacion Ingeniero Forastero Nov 2019.pdf",
+    "title": "Presentación: Ingeniero Forastero",
+    "category": "Presentation",
+    "description": "Spanish-language presentation from November 2019.",
+    "supportedSkills": ["Technical communication", "Cross-cultural communication"],
+    "knowledge": "Spanish-language presentation titled Ingeniero Forastero from November 2019."
+  },
+  {
+    "id": "presentation-production-records",
+    "file": "media/Review Production Records for Compliance_Nic Fig.pdf",
+    "fileName": "Review Production Records for Compliance_Nic Fig.pdf",
+    "title": "Review Production Records for Compliance",
+    "category": "Presentation",
+    "description": "Presentation about reviewing production records for compliance.",
+    "supportedSkills": ["Production records review", "Quality compliance"],
+    "knowledge": "Presentation about reviewing production records for compliance."
+  },
+  {
+    "id": "presentation-process-variation",
+    "file": "media/Understand Control Reduce Variation_Nic Fig.pdf",
+    "fileName": "Understand Control Reduce Variation_Nic Fig.pdf",
+    "title": "Understand, Control, Reduce Variation",
+    "category": "Presentation",
+    "description": "Presentation about understanding, controlling, and reducing variation.",
+    "supportedSkills": ["Statistical analysis", "Process variation analysis", "Continuous improvement"],
+    "knowledge": "Presentation about understanding, controlling, and reducing process variation."
+  }
+]

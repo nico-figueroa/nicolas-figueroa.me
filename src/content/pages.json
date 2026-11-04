@@ -1,20 +1,26 @@
 [
   {
+    "slug": "about",
+    "title": "About Nicolas",
+    "description": "A multidisciplinary engineering journey through medical devices, information systems, software, and artificial intelligence.",
+    "placeholder": ""
+  },
+  {
     "slug": "journey",
     "title": "Journey",
-    "description": "Follow a career from global financial-services operations and systems support through medical-device validation, product quality, and safety, quality, and regulatory leadership.",
+    "description": "Follow a career from global financial-services operations and systems support through medical-device validation, product quality, and safety, quality, and regulatory leadership, presently focused on software engineering and AI development and application.",
     "placeholder": "Journey content is being prepared."
   },
   {
     "slug": "experience",
     "title": "Experience",
-    "description": "A progressive career across Western Union, Hospira, Volcano Corporation, Philips, and higher education—from frontline support and engineering to product-lifecycle and quality leadership.",
+    "description": "A progressive career across Western Union, Hospira, Volcano, Philips, and higher education — from frontline support and engineering to product-lifecycle and leadership.",
     "placeholder": "Verified experience details will be added here."
   },
   {
     "slug": "resume",
     "title": "Resume",
-    "description": "Explore shared resume content through a perspective tailored to your role.",
+    "description": "Explore shared resume content through a perspective tailored to your role or interest.",
     "placeholder": "Resume details will be added from verified source material."
   },
   {
@@ -26,19 +32,19 @@
   {
     "slug": "media",
     "title": "Media",
-    "description": "Featured videos and other media.",
+    "description": "Featured videos, presentations, and other media.",
     "placeholder": "Featured media will be added here."
   },
   {
     "slug": "the-guide",
     "title": "The Guide",
-    "description": "Ask questions about Nicolas using cited evidence from verified portfolio sources.",
+    "description": "Ask questions about Nicolas. AI will provide answers using cited evidence from verified portfolio sources.",
     "placeholder": ""
   },
   {
     "slug": "check-fit",
     "title": "Check Nico's Fit",
-    "description": "Compare a job description with documented skills, experience, and projects.",
+    "description": "AI assisted comparison of fit for a role. Compare a job or role description with documented skills, experience, and projects.",
     "placeholder": ""
   },
   {
@@ -46,5 +52,11 @@
     "title": "Contact",
     "description": "Professional profiles and ways to connect with Nicolas.",
     "placeholder": "Verified contact and profile links will be added here."
+  },
+  {
+    "slug": "privacy-policy",
+    "title": "Privacy Policy",
+    "description": "How this portfolio handles information submitted through its forms and interactive tools.",
+    "placeholder": ""
   }
 ]

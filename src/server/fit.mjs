@@ -1,5 +1,13 @@
 import profile from "../content/profile.json" with { type: "json" };
 import projects from "../content/projects.json" with { type: "json" };
+import evidence from "../content/evidence.json" with { type: "json" };
+import {
+  assessDuration,
+  candidateSources,
+  canonicalRequirementKey,
+  normalizeCapabilities,
+  validateAssessment,
+} from "./fit-requirements.mjs";
 
 const additionalSkillSignals = [
   "AWS",
@@ -20,6 +28,29 @@ const candidateSkills = [...new Set([
   ...projects.flatMap((project) => project.technologies),
 ])];
 const documentedSkills = new Set(candidateSkills.map((skill) => skill.toLowerCase()));
+const skillRelationships = [
+  { skill: "JavaScript", aliases: ["JS", "ECMAScript"] },
+  { skill: "Node.js", aliases: ["NodeJS", "Node JS"] },
+  { skill: "React", aliases: ["React.js", "ReactJS"] },
+  { skill: "PostgreSQL", aliases: ["Postgres"] },
+  { skill: "REST APIs", aliases: ["RESTful APIs", "RESTful API development"] },
+  { skill: "Retrieval-augmented generation and embeddings", aliases: ["RAG", "retrieval augmented generation"] },
+  { skill: "Full-stack application development", aliases: ["full stack development", "full-stack development"] },
+  { skill: "Cross-functional team leadership", aliases: ["cross functional leadership"] },
+  { skill: "ISO 9001, ISO 13485, and ISO 22716", aliases: ["ISO 9001", "ISO 13485", "ISO 22716"] },
+  { skill: "React", aliases: ["Vue", "Vue.js", "Angular"], adjacent: true },
+  { skill: "Azure", aliases: ["AWS", "GCP"], adjacent: true },
+];
+const degreeLevels = [
+  { rank: 3, name: "doctorate", pattern: /\b(?:ph\.?d\.?|doctorate|doctoral degree)\b/i },
+  { rank: 2, name: "master", pattern: /\b(?:master(?:['’]s)?(?: of (?:science|arts))?(?: degree)?|m\.?s\.?c?\.?|m\.?a\.?)\b/i },
+  { rank: 1, name: "bachelor", pattern: /\b(?:bachelor(?:['’]s)?(?: of (?:science|arts))?(?: degree)?|b\.?s\.?c?\.?|b\.?a\.?)\b/i },
+];
+const technicalFields = [
+  "electrical engineering", "information management", "computer science",
+  "computer engineering", "software engineering", "information systems",
+  "information technology", "data science",
+];
 const candidateEvidence = [
   profile.summary,
   profile.experience.focus,
@@ -30,9 +61,11 @@ const candidateEvidence = [
   ]),
   ...profile.experience.industries,
   ...profile.education.flatMap((item) => [item.name, item.detail]),
+  ...profile.achievements.flatMap((item) => [item.title, item.description]),
   ...profile.certifications.map((item) => item.name),
   ...candidateSkills,
   ...projects.flatMap((project) => [project.name, project.description]),
+  ...evidence.flatMap((item) => [item.title, item.knowledge]),
 ].join(" ").toLowerCase();
 
 const selfReportedEvidence = [
@@ -314,8 +347,31 @@ const alternativeToolSignals = new Set([
 
 const qualificationCues = /\b(?:must|minimum|at least|required|requirement|qualification|experience|experienced|proficiency|proficient|expertise|expert|knowledge|ability|able to|degree|license|licen[cs]e|certification|certified|skill|skilled|background|strong|excellent|demonstrable|demonstrated|familiar|familiarity)\b/i;
 const roleDutyCues = /\b(?:lead|manage|design|develop|build|deliver|provide|ensure|implement|maintain|analy[sz]e|support|create|perform|debug|optimi[sz]e|own)\b/i;
-const sectionHeading = /^(?:#{1,4}\s*)?(?:requirements|qualifications|experience|skills|about the role|role overview|key responsibilities|responsibilities|what you(?:'|’)ll do|what you will do|what you bring|essential functions|duties)\s*:?$/i;
-const criteriaHeading = /^(?:#{1,4}\s*)?(?:requirements|qualifications|experience|skills|key responsibilities|responsibilities|what you(?:'|’)ll do|what you will do|what you bring|essential functions|duties)\s*:?$/i;
+const sectionHeading = /^(?:#{1,4}\s*)?(?:(?:(?:required|preferred|minimum|basic|desired) )?(?:requirements|qualifications|experience|skills)|about the (?:role|job)|role overview|key responsibilities|responsibilities|what you(?:'|’)ll do|what you will do|what you bring|essential functions|duties)\s*:?$/i;
+const criteriaHeading = /^(?:#{1,4}\s*)?(?:(?:(?:required|preferred|minimum|basic|desired) )?(?:requirements|qualifications|experience|skills)|key responsibilities|responsibilities|what you(?:'|’)ll do|what you will do|what you bring|essential functions|duties)\s*:?$/i;
+const nonCriteriaHeading = /^(?:#{1,4}\s*)?(?:benefits(?: and perks)?|perks(?: and benefits)?|compensation(?: and benefits)?|salary(?: and benefits)?|total rewards|what we offer|what you(?:'|’)ll (?:get|receive)|about (?:us|the company)|equal (?:employment )?opportunity(?: employer)?|how to apply|application process)(?:\s*:.*|\s*)$/i;
+const benefitStatement = /\b(?:we (?:offer|provide)|you(?:'|’)ll (?:receive|enjoy)|benefits? include|benefits? package|compensation (?:package|range)|salary range)\b|^(?:paid (?:time off|holidays?|parental leave)|401\s*\(?k\)?|health (?:insurance|coverage)|dental (?:insurance|coverage)|vision (?:insurance|coverage)|tuition reimbursement|employee (?:benefits|discounts)|stock options)\b/i;
+const employerCommentary = /^(?:we (?:value|believe|celebrate|are committed to|(?:do not|don't|don’t) (?:evaluate|measure|judge))|our (?:mission|vision|values|culture)|(?:equal (?:employment )?opportunity|all qualified applicants)\b)/i;
+const inlineHeading = /(^|[\n.!?;]|\s)(?:(?:#{1,4}|\*\*)\s*)?((?:(?:required|preferred|minimum|basic|desired) )?(?:requirements|qualifications|skills)|about the (?:job|role)|key responsibilities|responsibilities|what you(?:'|’)ll do|what you will do|what you bring|essential functions|duties|benefits(?: and perks)?|perks(?: and benefits)?|compensation(?: and benefits)?|salary(?: and benefits)?|total rewards|what we offer|about (?:us|the company)|how to apply|application process)\s*(?:\*\*)?:\s*/gi;
+
+function roleCriteriaText(description) {
+  let excluded = false;
+  const lines = [];
+  const normalized = description.replace(/\*\*/g, "")
+    .replace(inlineHeading, "$1\n$2:\n")
+    .replace(/([.!?;])(?=[A-Z][a-z])/g, "$1\n");
+  for (const rawLine of normalized.split(/\r?\n/)) {
+    const line = rawLine.trim().replace(/^[-*•]\s+/, "").replace(/\*\*/g, "");
+    if (sectionHeading.test(line)) excluded = false;
+    else if (nonCriteriaHeading.test(line)) { excluded = true; continue; }
+    if (!excluded) {
+      lines.push(line.split(/(?<=[.!?;])\s+/)
+        .filter((sentence) => !benefitStatement.test(sentence) && !employerCommentary.test(sentence))
+        .join(" "));
+    }
+  }
+  return lines.join("\n");
+}
 
 function escapeRegex(text) {
   return text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -332,8 +388,11 @@ function buildRequirement(id, label, category, sourceText, {
   evidence = "",
   matchType = "none",
   evidenceId = "",
+  normalizedKey = id,
+  sources = [],
+  confidence,
 } = {}) {
-  return { id, label, category, sourceText, weight, status, evidence, matchType, evidenceId };
+  return { id, normalizedKey, label, category, sourceText, weight, status, evidence, matchType, evidenceId, sources, confidence };
 }
 
 function roleTitle(description) {
@@ -352,8 +411,11 @@ function roleTitle(description) {
 
 function isGenericRoleTitle(title) {
   return !title
-    || /^(?:role overview|job description|about the role|key responsibilities|responsibilities|qualifications|requirements)$/i
-      .test(title);
+    || degreeLevels.some((level) => level.pattern.test(title))
+    || sectionHeading.test(title)
+    || nonCriteriaHeading.test(title)
+    || /^(?:role overview|job description|about the (?:role|job)|key responsibilities|responsibilities|qualifications|requirements)$/i
+      .test(title.replace(/:$/, ""));
 }
 
 function extractQualificationClauses(description) {
@@ -370,16 +432,96 @@ function extractQualificationClauses(description) {
     if (inQualifications) qualificationLines.push(line);
   }
   const source = (qualificationLines.length ? qualificationLines : lines)
-    .join(" ")
+    .map((line) => line.replace(/\b(?:[BM]\.(?:Sc?|A)\.|Ph\.D\.)/gi, (degree) => degree.replaceAll(".", "")))
+    .join("; ")
     .replace(/(?:^|\s)[•*-]\s+/g, ". ");
   return source
     .split(/(?<=[.!?;])\s+|\s*;\s*/)
     .map((clause) => clause.trim().replace(/^[,•*-]\s*/, ""))
     .filter((clause) =>
-      clause.length >= 20
+      clause.length >= 8
       && clause.length <= 500
-      && (qualificationCues.test(clause) || (hasCriteriaHeading && roleDutyCues.test(clause))),
+      && (qualificationCues.test(clause)
+        || degreeLevels.some((level) => level.pattern.test(clause))
+        || roleDutyCues.test(clause)
+        || (hasCriteriaHeading && clause.length >= 8)),
     );
+}
+
+function educationRequirement(clause) {
+  const levels = degreeLevels.filter((level) => level.pattern.test(clause));
+  if (!levels.length && !/\bdegree\b/i.test(clause)) return null;
+  if (/\b(?:juris|medical|medicine|law degree)\b/i.test(clause)) return null;
+  const level = levels.sort((a, b) => a.rank - b.rank)[0] || degreeLevels[2];
+  const degreeMatch = clause.match(level.pattern) || clause.match(/\bdegree\b/i);
+  const afterDegree = clause.slice(degreeMatch ? degreeMatch.index + degreeMatch[0].length : 0)
+    .replace(/^[.\s]+/, "");
+  const fieldText = afterDegree.split(/\b(?:required|preferred|with)\b/i)[0];
+  const explicitField = fieldText.match(/\bin\s+(.+)/i);
+  const field = (explicitField ? explicitField[1] : fieldText)
+    .replace(/^(?:degree\s+)?(?:in\s+)?/i, "")
+    .split(/[,;]|\b(?:is|are|required|preferred|with|or (?:a )?related|or (?:equivalent|higher|above)|and (?:at least|minimum|\d|experience|proficiency|knowledge))\b/i)[0]
+    .trim()
+    .replace(/[.!?]+$/, "");
+  return {
+    level,
+    field: /^(?:degree|education|any (?:field|discipline))?$/i.test(field) ? "" : field,
+    relatedAllowed: /\b(?:related (?:field|discipline)|equivalent)\b/i.test(clause),
+    exactLevel: /\b(?:exactly|only)\b/i.test(clause),
+  };
+}
+
+function matchEducation(requirement) {
+  const requested = educationRequirement(requirement.sourceText);
+  if (!requested) return null;
+  const degrees = profile.education
+    .filter((item) => !/\b(?:partial|incomplete|studies)\b/i.test(`${item.name} ${item.detail}`))
+    .map((item) => ({
+      item,
+      level: degreeLevels.find((level) => level.pattern.test(item.name)),
+      field: item.name.split(/\bin\b/i).slice(1).join("in").trim().toLowerCase(),
+    }))
+    .filter((entry) => entry.level);
+  const field = requested.field.toLowerCase();
+  const candidates = degrees.map((entry) => {
+    const direct = !field || field.includes(entry.field);
+    const broader = field.split(/\s+(?:or|and)\s+/).some((part) =>
+      /^(?:a |an )?engineering$/i.test(part)
+        ? entry.field.includes("engineering")
+        : /^(?:a |an )?(?:stem|technical field|science|scientific field)$/i.test(part)
+          && technicalFields.includes(entry.field),
+    );
+    const related = technicalFields.some((name) => field.includes(name))
+      && technicalFields.includes(entry.field);
+    const fieldMatches = direct || broader || (related && requested.relatedAllowed);
+    const levelMatches = requested.exactLevel
+      ? entry.level.rank === requested.level.rank
+      : entry.level.rank >= requested.level.rank;
+    const status = fieldMatches && levelMatches ? "matched"
+      : (direct || broader || related) ? "partial" : "gap";
+    const matchType = status !== "matched" ? status === "partial" ? "adjacent" : "none"
+      : entry.level.rank > requested.level.rank ? "exceeds"
+        : direct ? "direct" : "equivalent";
+    return { ...entry, status, matchType, fieldMatches, levelMatches };
+  }).sort((a, b) =>
+    ({ matched: 2, partial: 1, gap: 0 }[b.status] - { matched: 2, partial: 1, gap: 0 }[a.status])
+    || b.level.rank - a.level.rank,
+  );
+  const best = candidates[0];
+  if (!best) return null;
+  const qualification = `${best.item.name} at ${best.item.institution}`;
+  const reason = best.status === "matched"
+    ? `${best.matchType === "exceeds" ? "Exceeds the minimum degree level" : "Meets the degree level"}; ${field ? `the documented field ${best.field} ${requested.relatedAllowed ? "satisfies the stated field or related-field allowance" : "supports the requested field"}` : "no specific field was required"}.`
+    : best.status === "partial"
+      ? `Related academic evidence, but ${!best.levelMatches ? "the requested degree level is not documented" : "the exact requested field is not documented and related fields were not explicitly accepted"}.`
+      : "The documented degrees do not establish the requested field; a higher degree in another field is not automatically equivalent.";
+  return {
+    status: best.status, matchType: best.matchType, evidence: `${qualification}. ${reason}`,
+    normalizedKey: `education-${requested.level.rank}-${requested.field.toLowerCase().replace(/[^a-z0-9]+/g, "-")}-${requested.relatedAllowed}`,
+    sources: [{
+      title: qualification, text: best.item.detail, url: profile.source, kind: "Completed education",
+    }],
+  };
 }
 
 function requirementHasAlias(text, requirement) {
@@ -391,6 +533,21 @@ function requirementHasAlias(text, requirement) {
 }
 
 function matchRequirement(requirement, jobText) {
+  if (requirement.category === "Education") return matchEducation(requirement);
+  const relationship = skillRelationships.find((item) =>
+    item.aliases.some((alias) => alias.toLowerCase() === requirement.sourceText.toLowerCase())
+    && documentedSkills.has(item.skill.toLowerCase()),
+  );
+  if (relationship) {
+    return {
+      status: relationship.adjacent ? "partial" : "matched",
+      matchType: relationship.adjacent ? "adjacent" : "equivalent",
+      sources: candidateSources.filter((source) => source.title === relationship.skill),
+      evidence: relationship.adjacent
+        ? `Documented ${relationship.skill} experience provides transferable concepts for ${requirement.label}, but does not establish experience with that specific technology.`
+        : `${requirement.label} is supported by the documented ${relationship.skill} skill; the wording is equivalent or names a covered capability.`,
+    };
+  }
   if (requirement.evidenceId) {
     const report = selfReportedEvidence.find((item) => item.id === requirement.evidenceId);
     if (report && requirementHasAlias(jobText, requirement)) {
@@ -398,6 +555,7 @@ function matchRequirement(requirement, jobText) {
         status: "matched",
         matchType: "direct",
         evidence: report.evidence,
+        sources: [{ title: report.claim, text: report.evidence, url: "/journey/", kind: "Candidate-confirmed evidence" }],
       };
     }
   }
@@ -418,6 +576,9 @@ function matchRequirement(requirement, jobText) {
       status: "matched",
       matchType: "direct",
       evidence: "Supported by the LinkedIn-sourced profile or project record.",
+      sources: candidateSources.filter((source) =>
+        hasPhrase(`${source.title} ${source.text}`, requirement.sourceText),
+      ).slice(0, 3),
     };
   }
 
@@ -444,6 +605,13 @@ function matchRequirement(requirement, jobText) {
   }
 
   if (requirement.id === "role-title") {
+    if (/^(?:(?:junior|senior|lead|principal|staff|full.stack|backend|frontend)\s+)*(?:software|application)\s+(?:engineer|developer)/i.test(requirement.sourceText)) {
+      return {
+        status: "matched", matchType: "equivalent",
+        evidence: "Deployed full-stack applications and software engineering repositories demonstrate the generic role capability; an identical employment title is not required.",
+        sources: candidateSources.filter((source) => /Deployed portfolio project/.test(source.kind)).slice(0, 3),
+      };
+    }
     if (/engineer|engineering|mlops|systems/i.test(requirement.label)
       && /engineering|software|systems|technical/i.test(candidateEvidence)) {
       return {
@@ -474,9 +642,39 @@ function addRequirement(requirements, requirement, jobText) {
 }
 
 function extractRequirements(jobDescription) {
-  const jobText = jobDescription.toLowerCase();
+  jobDescription = roleCriteriaText(jobDescription);
   const requirements = [];
   const title = roleTitle(jobDescription);
+  const clauses = extractQualificationClauses(jobDescription);
+  const jobText = jobDescription.toLowerCase();
+  requirements.push(...normalizeCapabilities([...clauses, title]));
+
+  const academicClauses = clauses.flatMap((clause) =>
+    clause.split(/\band\s+(?=(?:a\s+)?(?:bachelor|master|doctorate|doctoral|phd|bs|ms|ba|ma)\b)/i),
+  );
+  for (const [index, clause] of academicClauses.entries()) {
+    if (!educationRequirement(clause)) continue;
+    const academicClause = clause.split(/\band (?=(?:at least |a minimum of )?\d|\b(?:experience|proficiency|knowledge|expertise)\b)/i)[0].trim();
+    addRequirement(requirements, {
+      id: `education-${index}`,
+      label: academicClause.replace(/[.!?;]+$/, ""),
+      category: "Education",
+      sourceText: academicClause,
+    }, jobText);
+  }
+
+  const durations = clauses.flatMap((clause) =>
+    [...clause.matchAll(/\b\d+(?:\s*[-–]\s*\d+)?\+?\s*(?:years?|yrs?)\b[^.;\n]*/gi)],
+  );
+  for (const [index, match] of durations.entries()) {
+    requirements.push(buildRequirement(
+      `experience-duration-${index}`,
+      match[0].trim(),
+      "Experience duration",
+      match[0].trim(),
+      assessDuration(match[0].trim()),
+    ));
+  }
 
   if (!isGenericRoleTitle(title)) {
     addRequirement(requirements, {
@@ -508,12 +706,30 @@ function extractRequirements(jobDescription) {
     }, jobText);
   }
 
-  for (const skill of skillSignals) {
-    if (!hasPhrase(jobText, skill)) continue;
+  const mentionedSignals = [...new Set([...skillSignals, ...skillRelationships.flatMap((item) => item.aliases)])]
+    .filter((skill) => hasPhrase(jobText, skill));
+  const signals = mentionedSignals.filter((skill) =>
+    !mentionedSignals.some((longer) => longer.length > skill.length && hasPhrase(longer, skill)),
+  )
+    .sort((a, b) => b.length - a.length);
+  for (const skill of signals) {
+    if (normalizeCapabilities([skill]).some((item) => item.category === "Interpersonal and transferable capability")) continue;
     const key = skill.toLowerCase();
     if (alternativeToolSignals.has(key)) continue;
-    const id = `skill-${key.replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}`;
-    if (requirements.some((item) => item.id === id)) continue;
+    const equivalent = skillRelationships.find((item) =>
+      !item.adjacent && item.aliases.some((alias) => alias.toLowerCase() === key),
+    );
+    const canonicalKey = equivalent ? equivalent.skill.toLowerCase()
+      : documentedSkills.has(key) ? key : key.replace(/\.js$/, "");
+    const id = `skill-${canonicalKey.replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}`;
+    const existing = requirements.find((item) => item.id === id);
+    if (existing) {
+      existing.sourceTexts = [...new Set([...(existing.sourceTexts || [existing.sourceText]), skill])];
+      continue;
+    }
+    const semanticKey = canonicalRequirementKey({ id, sourceText: skill });
+    if (requirements.some((item) => item.category === "Engineering capability"
+      && (item.normalizedKey === semanticKey || item.normalizedKey.startsWith(`${semanticKey}-`)))) continue;
     if (candidateSkills.some((item) => item.toLowerCase() === key)) {
       addRequirement(requirements, {
         id,
@@ -545,10 +761,29 @@ function extractRequirements(jobDescription) {
     }, jobText);
   }
 
-  for (const clause of extractQualificationClauses(jobDescription)) {
+  for (const clause of clauses) {
+    const fragments = clause.split(/,\s*|\s+(?:and|with)\s+/i);
+    if (normalizeCapabilities([clause]).length || fragments.length > 1) {
+      for (const fragment of fragments) {
+        if (normalizeCapabilities([fragment]).length || fragment.trim().length < 8) continue;
+        if (educationRequirement(fragment)) continue;
+        if (requirements.some((item) =>
+          !["Engineering capability", "Industry domain", "Interpersonal and transferable capability"].includes(item.category)
+          && (item.sourceTexts || [item.sourceText]).some((source) =>
+            fragment.toLowerCase().includes(source.toLowerCase())
+            || source.toLowerCase().includes(fragment.toLowerCase())),
+        )) continue;
+        if (!qualificationCues.test(fragment)
+          && !/\b(?:endorsement|clearance|certificat|licen[cs]|experience|expert|proficien|knowledge|required)\b/i.test(fragment)) continue;
+        const key = fragment.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+        requirements.push(buildRequirement(`qualification-${key}`, fragment.trim(), "Other stated qualification", fragment.trim()));
+      }
+      continue;
+    }
     const alreadyRepresented = requirements.some((item) =>
-      clause.toLowerCase().includes(item.sourceText.toLowerCase())
-      || item.sourceText.toLowerCase().includes(clause.toLowerCase()),
+      (item.sourceTexts || [item.sourceText]).some((source) =>
+        clause.toLowerCase().includes(source.toLowerCase())
+        || source.toLowerCase().includes(clause.toLowerCase())),
     );
     if (alreadyRepresented) continue;
 
@@ -628,12 +863,13 @@ function createGrowthProjection(potentialGaps) {
 }
 
 function extractEvidence(jobDescription) {
-  const text = jobDescription.toLowerCase();
+  const text = roleCriteriaText(jobDescription).toLowerCase();
   const recognizedSkills = [...new Set([
     ...candidateSkills,
     ...additionalSkillSignals,
   ])].filter((skill) => matchesPhrase(text, skill));
-  const relevantSkills = recognizedSkills.filter((skill) => documentedSkills.has(skill.toLowerCase()));
+  const relevantSkills = recognizedSkills.filter((skill) => documentedSkills.has(skill.toLowerCase())
+    && !normalizeCapabilities([skill]).some((item) => item.category === "Interpersonal and transferable capability"));
   const relevantExperience = [
     ...new Set([
       ...profile.experience.organizations,
@@ -669,13 +905,22 @@ function extractEvidence(jobDescription) {
 }
 
 export function analyzeFit(jobDescription) {
-  const requirements = extractRequirements(jobDescription);
+  const requirements = validateAssessment(extractRequirements(jobDescription));
   const evidence = extractEvidence(jobDescription);
+  return buildFitReport(requirements, evidence);
+}
+
+export function buildFitReport(requirements, evidence, {
+  summary = "",
+  excludedContent = [],
+  model,
+} = {}) {
   const relevantRequirements = requirements.filter((item) => item.status === "matched");
   const partialRequirements = requirements.filter((item) => item.status === "partial");
   const potentialGaps = requirements
-    .filter((item) => item.status === "gap")
+    .filter((item) => item.status === "gap" && item.category !== "Industry domain")
     .map((item) => item.label);
+  const domainGaps = requirements.filter((item) => item.status === "gap" && item.category === "Industry domain");
   const totalWeight = requirements.reduce((total, item) => total + item.weight, 0);
   const coveredWeight = requirements.reduce((total, item) =>
     total + (item.status === "matched" ? item.weight : item.status === "partial" ? item.weight * 0.35 : 0),
@@ -683,18 +928,40 @@ export function analyzeFit(jobDescription) {
   const matchScore = totalWeight
     ? Math.round((coveredWeight / totalWeight) * 100)
     : 0;
-  const growthProjection = createGrowthProjection(potentialGaps);
+  const growthProjection = createGrowthProjection(requirements
+    .filter((item) => item.status === "gap"
+      && (model
+        ? ["Technical skill", "Engineering capability"].includes(item.category)
+        : !["Industry domain", "Interpersonal and transferable capability"].includes(item.category)))
+    .map((item) => item.label));
 
   return {
+    assessmentMode: model ? "llm-grounded" : "rules-based",
+    summary,
+    excludedContent,
     matchScore,
     scoreExplanation: requirements.length
-      ? `Evidence coverage = ${relevantRequirements.length} directly supported requirement(s)${partialRequirements.length ? ` plus ${partialRequirements.length} partially supported requirement(s)` : ""}, weighted against ${requirements.length} extracted role requirement(s). Partial evidence receives 35% credit. This is a transparent evidence estimate, not a hiring probability; requirements absent from the source profile are not assumed to be met.`
+      ? `Evidence coverage = ${relevantRequirements.length} supported requirement(s), including direct, equivalent, or exceeding qualifications${partialRequirements.length ? ` plus ${partialRequirements.length} adjacent or partially supported requirement(s)` : ""}, weighted against ${requirements.length} extracted role requirement(s). Supported equivalents and higher qualifications receive full credit; adjacent evidence receives 35% credit.${model ? " Required criteria have weight 2; preferred criteria have weight 1. OpenAI classifies and assesses requirements against supplied portfolio records; code verifies quotations, evidence identifiers and result structure and calculates this score. These checks do not guarantee semantic accuracy, and AI judgments can be wrong." : ""} Degree level and field are evaluated separately. This is a transparent evidence estimate, not a hiring probability; unsupported credentials and experience are not assumed to be met.`
       : "No role requirements could be extracted from the submitted description, so this score is provisional rather than evidence of no fit.",
     requirements,
-    relevantSkills: [
+    validation: {
+      passed: true,
+      checks: model
+        ? ["Original job passages attached by code", "Unique normalized requirements", "One assessment per requirement", "Verified evidence identifiers with source-owned excerpts", "Consistent result and evidence states", "Code-calculated score"]
+        : ["Canonical requirement deduplication", "Consistent satisfied and gap results", "Degree level and field comparison", "Semantic capability evidence", "Separate industry-domain findings"],
+    },
+    supportedRequirements: relevantRequirements.map(({ label, evidence, matchType }) => ({
+      label, evidence, matchType,
+    })),
+    relevantSkills: [...new Set([
       ...evidence.relevantSkills,
-      ...relevantRequirements.map((item) => item.label),
-    ],
+      ...relevantRequirements.filter((item) =>
+        model ? ["Technical skill", "Engineering capability"].includes(item.category)
+          : !["Interpersonal and transferable capability", "Education", "Experience duration", "Industry domain", "Role alignment"].includes(item.category),
+      ).map((item) => item.label),
+    ])],
+    transferableCapabilities: requirements.filter((item) =>
+      item.category === "Interpersonal and transferable capability"),
     partiallySupportedRequirements: partialRequirements.map(({ label, evidence }) => ({
       label,
       evidence,
@@ -702,6 +969,7 @@ export function analyzeFit(jobDescription) {
     relevantExperience: evidence.relevantExperience,
     relevantProjects: evidence.relevantProjects,
     potentialGaps,
+    domainGaps,
     growthProjection,
     source: profile.source,
     recommendedContent: evidence.relevantProjects.length

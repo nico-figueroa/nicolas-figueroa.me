@@ -1,0 +1,67 @@
+{
+  "lastUpdated": "November 3, 2026",
+  "sections": [
+    {
+      "title": "About this policy",
+      "paragraphs": [
+        "This Privacy Policy applies only to nicolas-figueroa.me, Nicolas Figueroa's personal portfolio. It explains how information is handled when you browse this site, use The Guide or Check Nico's Fit, or submit the Contact form. It does not cover other websites or services.",
+        "The site does not require an account. It does not sell personal information or use advertising or analytics cookies."
+      ]
+    },
+    {
+      "title": "The Guide and OpenAI",
+      "paragraphs": [
+        "The Guide uses your submitted question to find relevant public portfolio evidence and answer your question. When its OpenAI service is enabled, your question is shared with OpenAI to create a search embedding and, when relevant evidence is found, to generate an answer using selected public portfolio excerpts.",
+        "Information submitted to the AI models is shared with OpenAI. This includes any personal information you choose to put in your question. OpenAI processes that information under its applicable API terms and privacy practices; the site cannot promise that OpenAI immediately deletes it or applies a particular retention period.",
+        "When OpenAI is unavailable or not configured, The Guide may return local source excerpts instead of a generated answer. Do not submit passwords, financial or health information, confidential material, or personal information about other people."
+      ]
+    },
+    {
+      "title": "Check Nico's Fit submissions",
+      "paragraphs": [
+        "Check Nico's Fit accepts pasted job descriptions, uploaded documents, or public HTTPS job-page URLs. The site's server extracts job-description text and shares it with OpenAI to classify requirements, benefits and commentary. Classified requirements and selected public portfolio records are then sent to OpenAI to assess supporting evidence, gaps and overall fit.",
+        "Information submitted to Fit's AI models is shared with OpenAI, including any personal information present in the extracted text. The application requests that these model responses not be stored for later API retrieval; this does not guarantee deletion or eliminate provider security or abuse-monitoring retention. OpenAI processing remains subject to its applicable API terms and privacy practices. Fit requires the AI service and does not silently substitute a rules-based assessment when it is unavailable.",
+        "For a URL submission, the server requests the page from the external website, which may log that request. Upload only documents you are authorized to share, remove unnecessary personal information, and do not submit confidential job descriptions or sensitive data."
+      ]
+    },
+    {
+      "title": "Contact-form submissions",
+      "paragraphs": [
+        "The Contact form collects your name, email address, and message. Netlify, the site's hosting and form-handling provider, processes the submission so Nicolas Figueroa can receive it and respond to your inquiry.",
+        "Contact information is used to read, respond to, and follow up on your message and to manage spam or abuse. Contact-form messages are not automatically sent to OpenAI or added to The Guide's public portfolio knowledge.",
+        "Please include only information needed for your inquiry. Do not send passwords, sensitive identifiers, confidential documents, or another person's private information."
+      ]
+    },
+    {
+      "title": "Technical information and cookies",
+      "paragraphs": [
+        "Netlify and other infrastructure providers may process technical request information, such as IP address, browser details, requested pages, and request time, for site delivery, security, troubleshooting, and abuse prevention. The site's rate-limiting code uses request identifiers in memory; it does not create a visitor account.",
+        "The site does not set analytics or advertising cookies. The theme toggle changes the current page's theme and does not save that preference to persistent browser storage. Hosting providers may apply their own essential technologies under their terms."
+      ]
+    },
+    {
+      "title": "Service providers and external links",
+      "paragraphs": [
+        "Netlify provides hosting, contact-form handling, and serverless processing for The Guide and Fit. OpenAI processes information sent to the AI models as described above. Information may be processed in countries other than your own under the providers' applicable terms and safeguards.",
+        "Submitted information is used to provide the feature you request, respond to inquiries, and protect the site. Information may also be disclosed when required by applicable law or necessary to address abuse or protect legal rights.",
+        "The site links to external services and professional profiles. When you follow an external link, that provider's privacy policy and practices apply."
+      ]
+    },
+    {
+      "title": "Retention, security, and your choices",
+      "paragraphs": [
+        "The portfolio application does not maintain user accounts or a database of Guide questions, Fit submissions, or uploaded Fit documents. This does not mean that infrastructure logs or OpenAI processing records are never retained. Provider retention is governed by their applicable settings, terms, operational needs, and legal obligations.",
+        "Contact-form submissions and related correspondence may remain with Netlify and the site owner as needed to respond, maintain relevant correspondence, address abuse, and meet legal obligations. This site does not promise a fixed deletion period across those systems.",
+        "You may browse the public pages without using these forms. To ask about your submitted information or request access, correction, or deletion where applicable, contact Nicolas through the Contact page and identify the submission without resending sensitive data. Requests are subject to applicable law, identity verification where needed, and provider-controlled records.",
+        "Reasonable technical safeguards are used, but no internet transmission or storage system can be guaranteed completely secure."
+      ]
+    },
+    {
+      "title": "Updates and contact",
+      "paragraphs": [
+        "This policy may be updated when site features or service providers change. The latest revision date appears above.",
+        "For questions about this site's privacy practices or your submitted information, use the Contact page on nicolas-figueroa.me."
+      ]
+    }
+  ]
+}

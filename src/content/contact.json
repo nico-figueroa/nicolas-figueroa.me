@@ -1,22 +1,27 @@
 [
   {
     "label": "GitHub",
+    "icon": "github",
     "href": "https://github.com/nico-figueroa"
   },
   {
     "label": "LinkedIn",
+    "icon": "linkedin",
     "href": "https://www.linkedin.com/in/nicolas-figueroa-hidalgo"
   },
   {
     "label": "Codecademy",
+    "icon": "codecademy",
     "href": "https://www.codecademy.com/profiles/Nomadant"
   },
   {
     "label": "Handshake",
+    "icon": "handshake",
     "href": "https://app.joinhandshake.com/profiles/nicolas-figueroa"
   },
   {
     "label": "Email",
+    "icon": "microsoftoutlook",
     "href": "mailto:nico.figueroa.hidalgo@outlook.com"
   }
 ]

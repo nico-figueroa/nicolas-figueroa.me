@@ -28,7 +28,15 @@ def test_corpus_contains_sourced_profile_and_project_content() -> None:
         "https://www.linkedin.com/in/nicolas-figueroa-hidalgo"
         in by_id["profile-summary"]["source"]
     )
-    assert all(document["source"].startswith("https://") for document in documents)
+    assert all(
+        document["source"].startswith(("https://", "/"))
+        for document in documents
+    )
+    assert "evidence-wes-report" in by_id
+    assert by_id["evidence-wes-report"]["source"] == "/evidence/wes-report.pdf"
+    assert "evidence-presentation-process-variation" in by_id
+    assert by_id["about-timeline-2000-2003"]["source"] == "/about/"
+    assert "Linux servers" in by_id["about-timeline-2000-2003"]["text"]
 
 
 def test_chunk_text_overlaps_without_losing_words() -> None:

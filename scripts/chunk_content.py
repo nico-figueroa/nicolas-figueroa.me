@@ -62,6 +62,7 @@ def _write_json(path: Path, content: Any) -> None:
     temporary_path.write_text(
         json.dumps(content, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
+        newline="\n",
     )
     temporary_path.replace(path)
 

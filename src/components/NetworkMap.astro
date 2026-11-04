@@ -1,15 +1,138 @@
 ---
-import navigation from "../content/navigation.json";
+const layers = [
+  {
+    title: "Input layer", subtitle: "Foundations", symbol: "x",
+    nodes: [
+      { label: "About", href: "/about/", y: 160 },
+      { label: "Journey", href: "/journey/", y: 300 },
+      { label: "Education", href: "/journey/#education", y: 440 },
+    ],
+  },
+  {
+    title: "Hidden layer 1", subtitle: "Applied learning", symbol: "relu",
+    nodes: [
+      { label: "Experience", href: "/experience/", y: 160 },
+      { label: "Projects", href: "/projects/", y: 300 },
+      { label: "Certificates", href: "/journey/#certificates", y: 440 },
+    ],
+  },
+  {
+    title: "Hidden layer 2", subtitle: "Evidence & synthesis", symbol: "sigmoid",
+    nodes: [
+      { label: "Resume", href: "/resume/", y: 230 },
+      { label: "Media", href: "/media/", y: 370 },
+    ],
+  },
+  {
+    title: "Output layer", subtitle: "Explore the fit", symbol: "sum",
+    nodes: [
+      { label: "Ask the Guide", href: "/the-guide/", y: 230 },
+      { label: "Check Nico's Fit", href: "/check-fit/", y: 370 },
+    ],
+  },
+];
+const connections = layers.slice(0, -1).flatMap((layer, index) =>
+  layer.nodes.flatMap((from) => layers[index + 1].nodes.map((to) => ({
+    x1: 120 + index * 240 + 96, y1: from.y,
+    x2: 120 + (index + 1) * 240 - 96, y2: to.y,
+  }))),
+);
+const mobileConnections = layers.slice(0, -1).flatMap((layer, index) =>
+  layer.nodes.flatMap((_from, fromIndex) => layers[index + 1].nodes.map((_to, toIndex) => ({
+    x1: (fromIndex + 0.5) * 600 / layer.nodes.length, y1: index * 180 + 158,
+    x2: (toIndex + 0.5) * 600 / layers[index + 1].nodes.length, y2: (index + 1) * 180 + 102,
+  }))),
+);
 ---
 
-<nav class="network-map" aria-label="Explore portfolio sections">
-  <svg class="network-map-lines" viewBox="0 0 400 300" aria-hidden="true">
-    <path d="M65 45 200 150M335 45 200 150M65 105 200 150M335 105 200 150M65 195 200 150M335 195 200 150M65 255 200 150M335 255 200 150" />
-  </svg>
-  {navigation.map((item, index) => (
-    <a class:list={["network-map-node", `network-map-node-${index + 1}`]} href={item.href}>
-      <span class="network-map-dot" aria-hidden="true"></span>
-      <span>{item.label}</span>
-    </a>
-  ))}
+<nav class="network-map" aria-label="Explore portfolio sections" data-network-map data-phase="forward">
+  <p class="network-map-scroll-hint" id="network-map-help"><span class="network-map-desktop-hint">Explore left to right.</span><span class="network-map-mobile-hint">Explore the layers from top to bottom.</span></p>
+  <div class="network-map-training">
+    <span data-network-phase>Forward pass &#8594;</span>
+  </div>
+  <p class="network-map-weights" data-network-weights aria-hidden="true">w&#8321; = 0.50 &#183; w&#8322; = 0.50 &#183; w&#8323; = 0.50</p>
+  <div class="network-map-scroll" tabindex="0" role="region" aria-label="Neural network portfolio diagram" aria-describedby="network-map-help">
+    <div class="network-map-diagram">
+      <svg class="network-map-lines network-map-lines-desktop" viewBox="0 0 960 560" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <marker id="network-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+            <path class="network-map-arrow" d="M0 0 10 5 0 10Z" />
+          </marker>
+        </defs>
+        {connections.map(({ x1, y1, x2, y2 }) => (
+          <path class="network-map-connection" d={`M${x1} ${y1} C${x1 + 24} ${y1} ${x2 - 24} ${y2} ${x2} ${y2}`} marker-end="url(#network-arrow)" />
+        ))}
+      </svg>
+      <svg class="network-map-lines network-map-lines-mobile" viewBox="0 0 600 720" preserveAspectRatio="none" aria-hidden="true">
+        {mobileConnections.map(({ x1, y1, x2, y2 }) => (
+          <path class="network-map-connection" d={`M${x1} ${y1} C${x1} ${y1 + 40} ${x2} ${y2 - 40} ${x2} ${y2}`} marker-end="url(#network-arrow)" />
+        ))}
+      </svg>
+      {layers.map((layer, index) => (
+        <section class="network-map-layer" style={`--layer-index: ${index}`} aria-label={`${layer.title}: ${layer.subtitle}`}>
+          <div class="network-map-layer-heading">
+            <h2>{layer.title}</h2>
+            <p>{layer.subtitle}</p>
+            <span class="network-map-activation" aria-hidden="true">
+              {layer.symbol === "x" && <span>x&#8321; &#183; x&#8322; &#183; x&#8323;</span>}
+              {layer.symbol === "relu" && <>
+                <svg viewBox="0 0 40 24"><path d="M3 19H18L34 3" /></svg>
+                <span>ReLU</span>
+              </>}
+              {layer.symbol === "sigmoid" && <>
+                <svg viewBox="0 0 40 24"><path d="M3 20C24 20 16 4 37 4" /></svg>
+                <span>&#963;(x)</span>
+              </>}
+              {layer.symbol === "sum" && <span>&#931; &#8594; y</span>}
+            </span>
+          </div>
+          {layer.nodes.map((node, nodeIndex) => (
+            <a class="network-map-node" href={node.href} style={`--node-y: ${node.y / 560 * 100}%; --mobile-node-x: ${(nodeIndex + 0.5) / layer.nodes.length * 100}%`}>
+              <span class="network-map-dot" aria-hidden="true"></span><span>{node.label}</span>
+            </a>
+          ))}
+        </section>
+      ))}
+    </div>
+  </div>
+  <p class="network-map-caption">Illustrative training cycle, not live model training. Line thickness represents changing weights.</p>
 </nav>
+
+<script>
+  import { startNetworkTraining } from "../scripts/network-training.mjs";
+
+  const map = document.querySelector("[data-network-map]");
+  if (map instanceof HTMLElement) {
+    const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const paths = [...map.querySelectorAll<SVGPathElement>(".network-map-connection")];
+    const phaseLabel = map.querySelector("[data-network-phase]");
+    const weightLabel = map.querySelector("[data-network-weights]");
+    let stop = () => {};
+
+    function synchronize() {
+      stop();
+      const active = !motion.matches;
+      map.dataset.training = active ? "running" : "paused";
+      if (!active) {
+        if (phaseLabel) phaseLabel.textContent = "Reduced motion: static network";
+        return;
+      }
+      stop = startNetworkTraining(paths.length, ({ phase, weights }) => {
+        map.dataset.phase = phase;
+        if (phaseLabel) phaseLabel.textContent = phase === "forward"
+          ? "Forward pass \u2192" : "\u2190 Backpropagation: adjusting weights";
+        paths.forEach((path, index) => {
+          path.style.setProperty("--connection-width", String(1 + weights[index] * 3));
+          path.style.setProperty("--connection-opacity", String(0.35 + weights[index] * 0.65));
+        });
+        if (weightLabel) weightLabel.textContent = weights.slice(0, 3)
+          .map((weight, index) => `w${index + 1} = ${weight.toFixed(2)}`).join(" \u00b7 ");
+      });
+    }
+
+    motion.addEventListener("change", synchronize);
+    window.addEventListener("pageshow", synchronize);
+    window.addEventListener("pagehide", () => stop());
+    synchronize();
+  }
+</script>

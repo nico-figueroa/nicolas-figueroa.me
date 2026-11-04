@@ -1,0 +1,53 @@
+{
+  "portrait": null,
+  "paragraphs": [
+    "I am a multidisciplinary engineer whose career has been shaped by a fascination with complex systems and the ways they learn, adapt, and evolve. My professional journey began in Electrical Engineering, expanded through nearly two decades in the medical device industry, and today continues through software engineering, artificial intelligence, and information systems.",
+    "Originally from Costa Rica, I relocated to the United States in 2018 to pursue opportunities in the design and development of medical technologies. The transition provided professional growth, but it also required rebuilding many aspects of daily life from the ground up, from establishing credit and navigating unfamiliar systems to creating a new sense of home. The experience strengthened my appreciation for adaptation, resilience, and lifelong learning.",
+    "Throughout my career, I have worked with global organizations, traveled internationally, collaborated across cultures, and participated in conferences spanning multiple disciplines. One of my earliest international experiences was representing Costa Rica through sponsorship from the Ministry of Science and Technology to participate in activities associated with the Texas Symposium on Relativistic Astrophysics at Stanford University. That experience reinforced a lifelong curiosity about science, technology, and the interconnected systems that shape our world.",
+    "My academic foundation combines a Bachelor of Science in Electrical Engineering with advanced studies in Information Management from the University of Washington. More recently, I completed Full Stack Engineering and AI Engineering certifications as part of a deliberate transition into modern software development and artificial intelligence.",
+    "I am particularly drawn to problems requiring systems thinking, pattern recognition, problem decomposition, technical adaptability, strategic planning, analytical rigor, and cross-domain problem solving. Rather than viewing disciplines in isolation, I enjoy understanding how people, technology, processes, and information interact to produce measurable outcomes.",
+    "Like many technically minded professionals, I continue improving my ability to balance depth with speed. My tendency toward deep analysis, taking on ambitious challenges, and pursuing multiple initiatives simultaneously can be both a strength and an opportunity for growth. Finding the right balance between optimization and execution remains an ongoing practice.",
+    "Recent work includes production full-stack applications, AI-enabled solutions, software engineering projects, machine learning experimentation, and the development of this portfolio itself as a living record of continuous learning and professional evolution.",
+    "Above all, I remain interested in a single recurring question: How do complex systems learn, adapt, and evolve? Whether the system is a software platform, an AI model, a business process, a medical device organization, or a human career, that question continues to shape the way I think, build, and grow."
+  ],
+  "principles": [
+    "Systems thinking is often more valuable than memorization.",
+    "Technology should augment people rather than replace them.",
+    "Curiosity is one of the strongest drivers of progress.",
+    "Constraints frequently drive innovation.",
+    "Failure is information and an opportunity to improve.",
+    "Evidence should carry greater weight than opinion."
+  ],
+  "timeline": [
+    {
+      "period": "2000–2003",
+      "title": "Network administrator and computer repair technician",
+      "description": "Installed networks, configured Linux servers, set up and maintained computer laboratories, and provided freelance computer support."
+    },
+    {
+      "period": "2003–2009",
+      "title": "Systems support and early engineering",
+      "description": "Built a foundation in global financial-services operations, application support, troubleshooting, and team leadership."
+    },
+    {
+      "period": "2009–2018",
+      "title": "Medical-device validation and quality operations",
+      "description": "Moved through software validation, engineering, quality operations, and cross-functional process improvement."
+    },
+    {
+      "period": "2018",
+      "title": "Relocated from Costa Rica to the United States",
+      "description": "Adapted to a new country and systems while continuing work in medical technology."
+    },
+    {
+      "period": "2019–2026",
+      "title": "Product quality and regulatory leadership",
+      "description": "Led quality and regulatory work across global hardware and software products, remediation, and operational transitions."
+    },
+    {
+      "period": "2024–2026",
+      "title": "Graduate study and software/AI engineering",
+      "description": "Completed an M.S. in Information Management and formal Full Stack and AI Engineering learning."
+    }
+  ]
+}

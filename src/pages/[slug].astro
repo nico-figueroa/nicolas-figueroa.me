@@ -3,15 +3,21 @@ import pages from "../content/pages.json";
 import projects from "../content/projects.json";
 import profile from "../content/profile.json";
 import resume from "../content/resume.json";
+import evidence from "../content/evidence.json";
+import about from "../content/about.json";
+import privacy from "../content/privacy.json";
 import site from "../content/site.json";
 import SiteLayout from "../layouts/SiteLayout.astro";
 import ProjectCard from "../components/ProjectCard.astro";
-import contact from "../content/contact.json";
 import GuideForm from "../components/GuideForm.astro";
 import FitForm from "../components/FitForm.astro";
 import media from "../content/media.json";
 import ContactForm from "../components/ContactForm.astro";
 import GuidePrompt from "../components/GuidePrompt.astro";
+import CertificationCards from "../components/CertificationCards.astro";
+import ResponsiveCard from "../components/ResponsiveCard.astro";
+import OrganizationLogo from "../components/OrganizationLogo.astro";
+import SpokenLanguages from "../components/SpokenLanguages.astro";
 
 export function getStaticPaths() {
   return pages.map((page) => ({
@@ -20,30 +26,98 @@ export function getStaticPaths() {
   }));
 }
 
-const widePages = new Set(["experience", "journey", "media", "projects", "resume"]);
+const widePages = new Set(["about", "experience", "journey", "media", "projects", "resume"]);
+const fluidPages = new Set(["the-guide", "check-fit"]);
 const { page } = Astro.props;
+const evidenceById = new Map(evidence.map((item) => [item.id, item]));
 ---
 
-<SiteLayout title={page.title} description={page.description} wide={widePages.has(page.slug)}>
-  <article class:list={widePages.has(page.slug) ? "w-full" : "max-w-3xl"}>
+<SiteLayout title={page.title} description={page.description} wide={widePages.has(page.slug)} fluid={fluidPages.has(page.slug)}>
+  <article class:list={widePages.has(page.slug) || fluidPages.has(page.slug) ? "w-full min-w-0" : "max-w-3xl"}>
     <p class="mb-4 text-sm font-medium uppercase tracking-[0.18em] text-[var(--accent)]">
       {page.title} · {site.sectionEyebrow}
     </p>
     <h1 class="text-4xl font-semibold tracking-tight md:text-5xl">{page.title}</h1>
-    <p class="mt-6 max-w-3xl text-lg leading-8 text-[var(--muted)]">{page.description}</p>
-    {page.slug === "projects" ? (
+    <p class:list={["mt-6 text-lg leading-8 text-[var(--muted)]", !fluidPages.has(page.slug) && "max-w-3xl"]}>{page.description}</p>
+    {page.slug === "about" ? (
+      <>
+        <section class="mt-10 grid gap-8 xl:grid-cols-[minmax(0,1.4fr)_minmax(18rem,0.6fr)]">
+          <div class="max-w-3xl space-y-5 leading-8 text-[var(--text)]">
+            {about.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+          </div>
+          <aside class="h-fit">
+            <ResponsiveCard title="At a glance" heading="h2">
+            {about.portrait && (
+              <img
+                class="mb-6 aspect-square w-full rounded-xl object-cover"
+                src={about.portrait.src}
+                alt={about.portrait.alt}
+                loading="lazy"
+              />
+            )}
+            <ul class="mt-4 space-y-3 leading-7 text-[var(--muted)]">
+              <li><strong class="text-[var(--text)]">Education:</strong> Electrical Engineering and Information Management</li>
+              <li><strong class="text-[var(--text)]">Experience:</strong> Medical devices, quality systems, technical operations, and software</li>
+              <li><strong class="text-[var(--text)]">Current focus:</strong> Full-stack engineering, AI, and complex systems</li>
+            </ul>
+            <a class="button button-secondary mt-6" href="/resume/">Explore resume views</a>
+            </ResponsiveCard>
+          </aside>
+        </section>
+        <section class="mt-14">
+          <h2 class="text-2xl font-semibold">A path of continuous reinvention</h2>
+          <ol class="mt-6 grid gap-4 md:grid-cols-2 2xl:grid-cols-3">
+            {about.timeline.map((item) => (
+              <li class="min-w-0">
+                <ResponsiveCard title={item.title}>
+                <p class="text-sm font-semibold text-[var(--accent)]">{item.period}</p>
+                <p class="mt-2 leading-7 text-[var(--muted)]">{item.description}</p>
+                </ResponsiveCard>
+              </li>
+            ))}
+          </ol>
+        </section>
+        <section class="mt-14">
+          <h2 class="text-2xl font-semibold">Principles that guide my work</h2>
+          <ul class="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+            {about.principles.map((principle) => (
+              <li class="rounded-lg border border-[var(--line)] p-4 leading-7">{principle}</li>
+            ))}
+          </ul>
+        </section>
+        <GuidePrompt question="How does Nicolas's multidisciplinary background shape his engineering work?" />
+      </>
+    ) : page.slug === "privacy-policy" ? (
+      <div class="mt-10 max-w-3xl">
+        <p class="text-sm text-[var(--muted)]">Last updated: {privacy.lastUpdated}</p>
+        <div class="mt-8 space-y-10">
+          {privacy.sections.map((section) => (
+            <section>
+              <h2 class="text-xl font-semibold">{section.title}</h2>
+              <div class="mt-3 space-y-4 leading-7 text-[var(--muted)]">
+                {section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+              </div>
+            </section>
+          ))}
+        </div>
+      </div>
+    ) : page.slug === "projects" ? (
       <div class="mt-10 grid items-stretch gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
         {projects.map((project) => <ProjectCard {...project} />)}
       </div>
+      <GuidePrompt question="Which projects best demonstrate Nicolas's systems thinking and engineering approach?" />
     ) : page.slug === "resume" ? (
       <div class="mt-10 grid items-stretch gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
         {resume.views.map((view) => (
-          <a class="h-full min-w-0 rounded-xl border border-[var(--line)] bg-[var(--surface)] p-6 transition-colors hover:border-[var(--accent)]" href={`/resume/${view.slug}/`}>
-            <h2 class="text-xl font-semibold">{view.label}</h2>
+          <ResponsiveCard title={view.label} heading="h2">
             <p class="mt-3 leading-7 text-[var(--muted)]">{view.focus}</p>
-          </a>
+            <a class="button button-secondary mt-4" href={`/resume/${view.slug}/`}>Open {view.label} Resume</a>
+          </ResponsiveCard>
         ))}
       </div>
+      <a class="mt-8 inline-flex text-[var(--accent)] underline" href="/evidence/resume-pdf.pdf" download="Resume_Nicolas_Figueroa_Simp.pdf">
+        Download Resume PDF
+      </a>
       <GuidePrompt question="What additional information should I explore in these resume views?" />
     ) : page.slug === "experience" ? (
       <div class="mt-10 space-y-8">
@@ -52,14 +126,14 @@ const { page } = Astro.props;
           <h2 class="text-xl font-semibold">Career history</h2>
           <div class="mt-4 grid items-stretch gap-4 sm:grid-cols-2 2xl:grid-cols-4">
             {profile.experience.positions.map((position) => (
-              <article class="h-full min-w-0 rounded-xl border border-[var(--line)] bg-[var(--surface)] p-5">
-                <h3 class="font-semibold">{position.title}</h3>
-                <p class="mt-1 text-[var(--accent)]">{position.organization} · {position.period}</p>
+              <ResponsiveCard title={position.title}>
+                <OrganizationLogo organization={position.organization} />
+                <p class="mt-1 text-[var(--accent)]">{position.period}</p>
                 {position.location && <p class="mt-1 text-sm text-[var(--muted)]">{position.location}</p>}
                 <ul class="mt-3 list-inside list-disc space-y-2 leading-7 text-[var(--muted)]">
                   {position.highlights.map((highlight) => <li>{highlight}</li>)}
                 </ul>
-              </article>
+              </ResponsiveCard>
             ))}
           </div>
         </section>
@@ -71,69 +145,120 @@ const { page } = Astro.props;
             ))}
           </ul>
         </section>
-        <a class="text-[var(--accent)] underline" href={profile.source}>Source: LinkedIn profile</a>
-      </div>
-    ) : page.slug === "journey" ? (
-      <div class="mt-10 space-y-8">
         <section>
-          <h2 class="text-xl font-semibold">Education</h2>
-          <ul class="mt-4 grid items-stretch gap-4 sm:grid-cols-2 2xl:grid-cols-4">
-            {profile.education.map((item) => (
-              <li class="h-full min-w-0 rounded-xl border border-[var(--line)] bg-[var(--surface)] p-5">
-                <h3 class="font-semibold">{item.name}</h3>
-                {item.institution && <p class="mt-1 text-[var(--muted)]">{item.institution}</p>}
-                {item.period && <p class="mt-1 text-sm text-[var(--accent)]">{item.period}</p>}
-                {item.detail && <p class="mt-1 text-[var(--muted)]">{item.detail}</p>}
+          <h2 class="text-xl font-semibold">Selected outcomes</h2>
+          <ul class="mt-4 grid gap-3 md:grid-cols-2">
+            {profile.achievements.map((achievement) => (
+              <li class="min-w-0">
+                <ResponsiveCard title={achievement.title}>
+                <p class="mt-2 leading-7 text-[var(--muted)]">{achievement.description}</p>
+                {achievement.evidenceIds.map((id) => {
+                  const item = evidenceById.get(id);
+                  return item && (
+                    <a class="mt-3 inline-flex text-sm text-[var(--accent)] underline" href={`/evidence/${item.id}.pdf`} target="_blank" rel="noopener noreferrer">
+                      Supporting evidence: {item.title}
+                    </a>
+                  );
+                })}
+                </ResponsiveCard>
               </li>
             ))}
           </ul>
         </section>
-        <section>
-          <h2 class="text-xl font-semibold">Certifications and ongoing learning</h2>
-          <ul class="mt-4 space-y-3">
-            {profile.certifications.map((certification) => (
-              <li>
-                <a class="text-[var(--accent)] underline" href={certification.credentialUrl || certification.source}>
-                  {certification.name}
-                </a>
+        <a class="text-[var(--accent)] underline" href={profile.source}>Source: LinkedIn profile</a>
+      </div>
+      <GuidePrompt question="What outcomes and leadership experience are documented in Nicolas's career?" />
+    ) : page.slug === "journey" ? (
+      <div class="mt-10 space-y-8">
+        <section id="education">
+          <h2 class="text-xl font-semibold">Education</h2>
+          <ul class="mt-4 grid items-stretch gap-4 sm:grid-cols-2 2xl:grid-cols-4">
+            {profile.education.map((item) => (
+              <li class="min-w-0">
+                <ResponsiveCard title={item.name}>
+                <OrganizationLogo organization={item.institution} />
+                {item.period && <p class="mt-1 text-sm text-[var(--accent)]">{item.period}</p>}
+                {item.detail && <p class="mt-1 text-[var(--muted)]">{item.detail}</p>}
+                {item.evidenceIds?.length > 0 && (
+                  <ul class="mt-4 space-y-2 border-t border-[var(--line)] pt-3">
+                    {item.evidenceIds.map((id) => {
+                      const source = evidenceById.get(id);
+                      return source && (
+                        <li>
+                          <a class="text-sm text-[var(--accent)] underline" href={`/evidence/${source.id}.pdf`} target="_blank" rel="noopener noreferrer">
+                            {source.title}
+                          </a>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                )}
+                </ResponsiveCard>
               </li>
             ))}
           </ul>
+        </section>
+        <section id="certificates">
+          <h2 class="text-xl font-semibold">Certifications and ongoing learning</h2>
+          <CertificationCards />
           <p class="mt-5 leading-7 text-[var(--muted)]">{profile.learning}</p>
         </section>
         <section>
           <h2 class="text-xl font-semibold">Languages</h2>
-          <ul class="mt-4 flex flex-wrap gap-3">
-            {profile.spokenLanguages.map((language) => (
-              <li class="rounded-full border border-[var(--line)] px-4 py-2">{language}</li>
-            ))}
-          </ul>
+          <SpokenLanguages languages={profile.spokenLanguages} />
         </section>
         <a class="text-[var(--accent)] underline" href={profile.source}>Source: LinkedIn profile</a>
       </div>
+      <GuidePrompt question="How has Nicolas's education and career journey evolved across engineering, quality, software, and AI?" />
     ) : page.slug === "contact" ? (
       <div class="mt-10 space-y-8">
         <ContactForm />
-        <ul class="flex flex-wrap gap-4">
-          {contact.map((item) => (
-            <li><a class="button button-secondary" href={item.href}>{item.label}</a></li>
-          ))}
-        </ul>
       </div>
     ) : page.slug === "media" ? (
-      <ul class="mt-10 grid items-stretch gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
-        {media.map((item) => (
-          <li class="flex h-full min-w-0 flex-col rounded-xl border border-[var(--line)] bg-[var(--surface)] p-6">
-            <h2 class="text-xl font-semibold">{item.title}</h2>
-            <p class="mt-2 flex-1 leading-7 text-[var(--muted)]">{item.description}</p>
-            <a class="mt-4 inline-flex break-words text-[var(--accent)] underline" href={item.url} target="_blank" rel="noreferrer">{item.label}</a>
-          </li>
-        ))}
-      </ul>
+      <>
+        <ul class="mt-10 grid items-start gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          {media.map((item) => (
+            <li class="min-w-0">
+              <ResponsiveCard title={item.title} heading="h2">
+              {item.type === "presentation-gallery" ? (
+                <>
+                  <p class="mt-3 leading-7 text-[var(--muted)]">{item.description}</p>
+                  <ul class="mt-5 space-y-4">
+                    {item.evidenceIds.map((id) => {
+                      const presentation = evidenceById.get(id);
+                      return presentation && (
+                        <li class="min-w-0">
+                          <ResponsiveCard title={presentation.title}>
+                          {presentation.description && <p class="mt-2 text-sm leading-6 text-[var(--muted)]">{presentation.description}</p>}
+                          <div class="mt-3 flex flex-wrap gap-4">
+                            <a class="text-sm text-[var(--accent)] underline" href={`/evidence/${presentation.id}.pdf`} target="_blank" rel="noopener noreferrer">Open PDF</a>
+                            <a class="text-sm text-[var(--accent)] underline" href={`/evidence/${presentation.id}.pdf`} download={presentation.fileName}>Download</a>
+                          </div>
+                          </ResponsiveCard>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </>
+              ) : (
+                <>
+                  <p class="mt-2 leading-7 text-[var(--muted)]">{item.description}</p>
+                  <a class="mt-4 inline-flex break-words text-[var(--accent)] underline" href={item.url} target="_blank" rel="noopener noreferrer">{item.label}</a>
+                </>
+              )}
+              </ResponsiveCard>
+            </li>
+          ))}
+        </ul>
+        <GuidePrompt question="What presentations and professional media are available?" />
+      </>
     ) : page.slug === "the-guide" ? (
       <GuideForm />
     ) : page.slug === "check-fit" ? (
-      <FitForm />
+      <>
+        <FitForm />
+        <GuidePrompt question="What evidence should I explore when assessing Nicolas's fit for this role?" />
+      </>
     ) : (
       <p class="mt-10 border-l-2 border-[var(--accent)] pl-5 text-[var(--muted)]">{page.placeholder}</p>
     )}

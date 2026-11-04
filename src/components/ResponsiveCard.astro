@@ -1,0 +1,20 @@
+---
+interface Props {
+  title: string;
+  heading?: "h2" | "h3" | "h4";
+  class?: string;
+  alwaysCollapsible?: boolean;
+}
+
+const { title, heading: Heading = "h3", class: className, alwaysCollapsible = false } = Astro.props;
+---
+
+<details class:list={["responsive-card h-full min-w-0 rounded-xl border border-[var(--line)] bg-[var(--surface)] p-5", { "report-section": alwaysCollapsible }, className]} data-responsive-card={alwaysCollapsible ? undefined : ""} data-report-section={alwaysCollapsible ? "" : undefined}>
+  <summary>
+    <Heading class="font-semibold">{title}</Heading>
+    <span class="card-chevron" aria-hidden="true"></span>
+  </summary>
+  <div class="card-content">
+    <slot />
+  </div>
+</details>

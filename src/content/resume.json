@@ -32,7 +32,7 @@
         "Senior Validation Administrator",
         "Lead Systems Support Engineer"
       ],
-      "skillGroups": ["languages", "platformsAndFrameworks", "practices", "spokenLanguages"],
+      "skillGroups": ["languages", "platformsAndFrameworks", "practices", "leadership", "business", "qualitySystems", "medicalDevices", "spokenLanguages"],
       "skillFilters": {},
       "projectNames": [
         "AI Trip Planner",
@@ -77,7 +77,7 @@
         "Senior Systems Support Engineer",
         "Junior Systems Support Engineer"
       ],
-      "skillGroups": ["languages", "platformsAndFrameworks", "practices", "spokenLanguages"],
+      "skillGroups": ["languages", "platformsAndFrameworks", "softwareEngineering", "data", "aiAndMachineLearning", "practices", "qualitySystems", "medicalDevices", "spokenLanguages"],
       "skillFilters": {
         "practices": [
           "AI applications",
@@ -132,7 +132,7 @@
         "Senior Validation Administrator",
         "Lead Systems Support Engineer"
       ],
-      "skillGroups": ["practices", "spokenLanguages"],
+      "skillGroups": ["leadership", "business", "qualitySystems", "medicalDevices", "practices", "spokenLanguages"],
       "skillFilters": {
         "practices": [
           "Technical operations",
@@ -183,6 +183,8 @@
       "skillGroups": [
         "languages",
         "platformsAndFrameworks",
+        "softwareEngineering",
+        "data",
         "aiAndMachineLearning",
         "practices",
         "spokenLanguages"

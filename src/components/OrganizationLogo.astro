@@ -1,0 +1,19 @@
+---
+import institutions from "../content/institutions.json";
+import companies from "../content/companies.json";
+
+interface Props {
+  organization: string;
+}
+
+const { organization } = Astro.props;
+const brand = [...institutions, ...companies].find((item) => item.name === organization);
+if (!brand) throw new Error(`Missing organization logo metadata for ${organization}.`);
+---
+
+<figure class="institution-brand">
+  <div class:list={["institution-logo", { "institution-logo-dark": brand.darkBackground }]}>
+    <img src={brand.logo} alt={`${organization} logo`} width="192" height="64" loading="lazy" decoding="async" />
+  </div>
+  <figcaption class="text-sm text-[var(--muted)]">{organization}</figcaption>
+</figure>
