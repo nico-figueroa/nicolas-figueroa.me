@@ -87,6 +87,10 @@ at least one of several alternative areas does not establish which area or
 which named tools/frameworks; the analysis must preserve that uncertainty and
 must not claim every example in the posting.
 
+The candidate-confirmed PyTorch production claim supports PyTorch and
+JAX-or-PyTorch alternatives, but not a JAX-only requirement. Its evidence must
+remain labeled as candidate-confirmed rather than independently verified.
+
 Requirements for regulated work, including medical and legal roles, must remain
 visible when no matching qualification is documented. Learning-time estimates
 do not confer a degree, license, board certification, or legal authorization.

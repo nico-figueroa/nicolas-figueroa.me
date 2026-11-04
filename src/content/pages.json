@@ -3,7 +3,7 @@
     "slug": "about",
     "title": "About Nicolas",
     "description": "A multidisciplinary engineering journey through medical devices, information systems, software, and artificial intelligence.",
-    "placeholder": ""
+    "placeholder": "About Nicolas content is being prepared."
   },
   {
     "slug": "journey",
@@ -39,13 +39,13 @@
     "slug": "the-guide",
     "title": "The Guide",
     "description": "Ask questions about Nicolas. AI will provide answers using cited evidence from verified portfolio sources.",
-    "placeholder": ""
+    "placeholder": "The Guide content is being prepared."
   },
   {
     "slug": "check-fit",
     "title": "Check Nico's Fit",
     "description": "AI assisted comparison of fit for a role. Compare a job or role description with documented skills, experience, and projects.",
-    "placeholder": ""
+    "placeholder": "Check Nico's Fit content is being prepared."
   },
   {
     "slug": "contact",
@@ -57,6 +57,6 @@
     "slug": "privacy-policy",
     "title": "Privacy Policy",
     "description": "How this portfolio handles information submitted through its forms and interactive tools.",
-    "placeholder": ""
+    "placeholder": "Privacy Policy content is being prepared."
   }
 ]

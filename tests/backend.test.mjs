@@ -237,7 +237,7 @@ test("Fit growth projections have no fabricated timelines when there are no iden
   ));
 });
 
-test("Fit recognizes confirmed aggregate MLOps evidence without claiming unverified tools", () => {
+test("Fit recognizes confirmed MLOps and PyTorch evidence without claiming unverified tools", () => {
   const result = analyzeFit(`MLOps Engineer, LLM Performance at Confidential
 
 Requirements:
@@ -252,11 +252,11 @@ Demonstrable career progression, strong written communication, and the ability t
   ));
   assert.ok(result.requirements.some((item) =>
     item.id === "practical-ml-systems" && item.status === "matched"
-      && /specific area and tools were not identified/.test(item.evidence),
+      && /AI_Engineering repository.*practical experience in ML-systems areas/.test(item.evidence),
   ));
   assert.ok(result.requirements.some((item) =>
     item.id === "jax-pytorch-production" && item.status === "matched"
-      && /specific framework was not identified/.test(item.evidence),
+      && /production experience with PyTorch/.test(item.evidence),
   ));
   assert.ok(result.potentialGaps.length > 0);
   assert.ok(result.potentialGaps.some((item) => /multiple ML-systems areas/i.test(item)));
@@ -269,6 +269,22 @@ Demonstrable career progression, strong written communication, and the ability t
     level.skills.map((item) => item.skill).join("|") === result.potentialGaps.join("|"),
   ));
   assert.ok(!result.requirements.some((item) => ["Pallas", "Triton", "CUDA", "CUTLASS", "JAX", "PyTorch", "vLLM"].includes(item.label)));
+});
+
+test("Fit limits confirmed PyTorch experience to supported framework requirements", () => {
+  for (const framework of ["PyTorch", "JAX and/or PyTorch", "JAX or PyTorch"]) {
+    const result = analyzeFit(`Requirements:\nProduction experience with ${framework}.`);
+    const requirement = result.requirements.find((item) => item.id === "jax-pytorch-production");
+    assert.equal(requirement?.status, "matched", `Expected PyTorch evidence to support ${framework}`);
+    assert.match(requirement.evidence, /production experience with PyTorch/);
+    assert.ok(requirement.sources.every((source) => source.kind === "Candidate-confirmed evidence"));
+    assert.ok(!result.requirements.some((item) => item.id === "production-ml-framework"));
+  }
+
+  const result = analyzeFit("Requirements:\nProduction experience with JAX.");
+  const requirement = result.requirements.find((item) => item.id === "jax-pytorch-production");
+  assert.equal(requirement?.status, "gap");
+  assert.deepEqual(requirement.sources, []);
 });
 
 test("Fit keeps unknown requirements and regulated qualifications visible for unfamiliar roles", () => {

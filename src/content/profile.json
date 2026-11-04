@@ -177,49 +177,34 @@
   },
   "achievements": [
     {
-      "title": "Quality-system remediation and measurable outcomes",
-      "description": "Remediated product quality and compliance gaps, eliminated deviations, and met all reported metrics by June 2025.",
+      "title": "Measurable outcomes",
+      "description": "Remediated product quality and compliance gaps in all product categories, eliminated deviations, and met all reported metrics by June 2025.",
       "evidenceIds": ["resume-pdf"]
     },
     {
-      "title": "Global quality-system leadership",
-      "description": "Led a Philips Oral Healthcare organization with four direct managers, 29 indirect engineers, and two dotted-line managers; established a quality management system aligned with ISO 9001, ISO 13485, and ISO 22716.",
+      "title": "Global leadership",
+      "description": "Led a Philips Oral Healthcare global organization with four direct managers, 29 indirect engineers, and two dotted-line managers; leading teams in multiple regions and coordinating cross-functional initiatives.",
       "evidenceIds": ["resume-pdf"]
     },
     {
-      "title": "Audit and process-improvement results",
+      "title": "Process-improvement results",
       "description": "Reduced nonconformance report lead times to under 30 days and completed external audits with zero findings.",
       "evidenceIds": ["resume-pdf"]
     },
     {
-      "title": "Cross-organizational team leadership",
+      "title": "Cross-organizational and cross-functional leadership",
       "description": "Managed teams including four direct managers, 29 indirect engineers, and two dotted-line managers at Philips Oral Healthcare; also led a 30-person engineering and technician team at Philips Image Guided Therapy.",
       "evidenceIds": ["resume-pdf"]
     },
     {
-      "title": "Medical-device process and systems improvement",
+      "title": "Regulated industry process and systems improvement",
       "description": "Established sustaining design-assurance and complaint-trending capabilities, improved process-validation procedures, and completed SAP implementation at Philips Image Guided Therapy.",
       "evidenceIds": ["resume-pdf"]
     },
     {
-      "title": "Software and manufacturing validation",
+      "title": "Software, manufacturing and product validation",
       "description": "Implemented a process-validation system and completed validations supporting infusion-pump manufacturing; also supported remediation of production and quality-system software validation.",
       "evidenceIds": ["resume-pdf"]
-    },
-    {
-      "title": "Infusion-pump manufacturing remediation",
-      "description": "Supported remediation activities for the FDA import ban affecting infusion-pump manufacturing and improved rework processes.",
-      "evidenceIds": ["resume-pdf"]
-    },
-    {
-      "title": "Global documentation-control capability",
-      "description": "Established a documentation-control team and transferred global support activities to the Costa Rica facility.",
-      "evidenceIds": ["resume-pdf"]
-    },
-    {
-      "title": "Graduate education",
-      "description": "Completed the University of Washington M.S. in Information Management with a 4.0 GPA.",
-      "evidenceIds": ["uw-msim-diploma", "uw-transcript"]
     }
   ],
   "education": [
@@ -290,13 +275,14 @@
     }
   ],
   "skills": {
-    "languages": ["Python", "JavaScript", "SQL", "C++"],
-    "platformsAndFrameworks": ["Node.js", "Express", "React", "PostgreSQL", "MySQL", "HTML", "CSS"],
+    "languages": ["Python", "JavaScript", "SQL", "HTML", "CSS"],
+    "platformsAndFrameworks": ["Node.js", "Express", "React", "PostgreSQL", "MySQL", "Astro", "Tailwind CSS", "Vite", "Next.js"],
     "softwareEngineering": [
+      "AI agent design and development",
+      "AI model integration and deployment",
+      "AI-assisted development and programming",
       "Web application design and development",
       "Full-stack application development",
-      "AI-assisted development and programming",
-      "AI agent design and development",
       "REST API design and integration",
       "Systems architecture, design, and implementation",
       "Software and application validation",
@@ -304,13 +290,12 @@
       "Git and GitHub"
     ],
     "data": [
+      "Retrieval-augmented generation and embeddings",
       "SQL and relational databases",
       "MySQL",
       "Statistical analysis",
-      "Complaint analysis and trending",
-      "Process variation analysis",
-      "Data-informed continuous improvement",
-      "Retrieval-augmented generation and embeddings"
+      "Six Sigma",
+      "Continuous improvement"
     ],
     "practices": [
       "OAuth",
@@ -320,6 +305,7 @@
       "LLM and RAG pipelines",
       "Automation",
       "Technical operations",
+      "Cybersecurity",
       "Product quality engineering",
       "Software validation",
       "Design controls",
@@ -378,7 +364,17 @@
       "AI-assisted development",
       "Recurrent Neural Networks (RNN)",
       "Convolutional Neural Networks (CNN)",
-      "Transformer Models"
+      "Transformer Models",
+      "Generative AI",
+      "Reinforcement Learning",
+      "Natural Language Processing (NLP)",
+      "Hugging Face",
+      "OpenAI API",
+      "LangChain",
+      "Prompt engineering",
+      "AI model evaluation and fine-tuning",
+      "AI model deployment and integration",
+      "AI-assisted development and programming"
     ]
   },
   "spokenLanguages": [

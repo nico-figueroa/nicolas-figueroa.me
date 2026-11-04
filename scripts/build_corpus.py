@@ -12,17 +12,14 @@ ROOT = Path(__file__).resolve().parents[1]
 CONTENT_DIR = ROOT / "src" / "content"
 OUTPUT_PATH = ROOT / "data" / "source_content.json"
 
-
 def _read_json(path: Path) -> Any:
     """Read a JSON file from the content directory."""
     with path.open(encoding="utf-8") as content_file:
         return json.load(content_file)
 
-
 def _slug(value: str) -> str:
     """Return a stable identifier suitable for corpus documents."""
     return re.sub(r"[^a-z0-9]+", "-", value.lower()).strip("-")
-
 
 def _document(
     document_id: str,
@@ -43,7 +40,6 @@ def _document(
         "text": normalized_text,
         "source": source,
     }
-
 
 def build_corpus(content_dir: Path = CONTENT_DIR) -> list[dict[str, str]]:
     """Collect verified profile, certification, and project content."""
@@ -228,7 +224,6 @@ def build_corpus(content_dir: Path = CONTENT_DIR) -> list[dict[str, str]]:
             documents.append(item)
 
     return documents
-
 
 def main() -> None:
     """Write the source corpus used by the chunking step."""

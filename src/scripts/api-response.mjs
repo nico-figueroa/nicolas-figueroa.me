@@ -1,3 +1,5 @@
+// Utility function for reading and validating API responses, ensuring JSON content and proper error handling
+
 export async function readApiResponse(response) {
   const contentType = response.headers.get("content-type") || "";
   if (!contentType.toLowerCase().includes("application/json")) {

@@ -1,3 +1,5 @@
+// Fit input utility functions for handling and normalizing job descriptions, CSV, RTF, and DOCX inputs
+
 import { lookup } from "node:dns/promises";
 import https from "node:https";
 import { DOMMatrix } from "@napi-rs/canvas";
@@ -6,7 +8,7 @@ import { load } from "cheerio";
 import WordExtractor from "word-extractor";
 import { readBodyBytes, readJsonBody, sanitizeText } from "./http.mjs";
 
-globalThis.DOMMatrix ??= DOMMatrix;
+globalThis.DOMMatrix ??= DOMMatrix; // Ensure DOMMatrix is available globally for PDF parsing and other operations.
 const { PDFParse } = await import("pdf-parse");
 
 export const MAX_JOB_DESCRIPTION_LENGTH = 12_000;
@@ -19,6 +21,7 @@ const ALLOWED_FILE_TYPES = new Set([
   "csv", "doc", "docx", "htm", "html", "json", "md", "pdf", "rtf", "tsv", "txt",
 ]);
 
+// Custom error class for handling input-related issues in the fit analysis process.
 export class FitInputError extends Error {
   constructor(message, status = 400) {
     super(message);
@@ -27,6 +30,7 @@ export class FitInputError extends Error {
   }
 }
 
+// Flattens a JSON object into a list of strings, respecting maximum length and depth constraints.
 function flattenJson(value, output = [], depth = 0, state = { length: 0 }) {
   if (state.length >= MAX_JOB_DESCRIPTION_LENGTH || depth > 10) return output;
   const append = (item) => {
@@ -47,6 +51,7 @@ function flattenJson(value, output = [], depth = 0, state = { length: 0 }) {
   return output;
 }
 
+// Normalizes input text by trimming whitespace and flattening JSON structures if detected.
 function normalizeText(text) {
   const trimmed = text.trim();
   if (trimmed.startsWith("{") || trimmed.startsWith("[")) {
@@ -59,6 +64,7 @@ function normalizeText(text) {
   return trimmed;
 }
 
+// Converts CSV input into a plain text representation, using a specified delimiter and handling quoted fields.
 function csvToText(input, delimiter = ",") {
   const rows = [];
   let row = [];
@@ -89,6 +95,7 @@ function csvToText(input, delimiter = ",") {
   return rows.filter(Boolean).join("\n");
 }
 
+// Converts RTF input into plain text by interpreting common RTF control words and escaping sequences.
 function rtfToText(input) {
   return input
     .replace(/\\'[0-9a-f]{2}/gi, (match) =>
@@ -102,6 +109,7 @@ function rtfToText(input) {
     .trim();
 }
 
+// Validates the structure of a DOCX archive, ensuring it conforms to expected ZIP format constraints and size limits.
 function validateDocxArchive(buffer) {
   const searchStart = Math.max(0, buffer.length - 65_557);
   let endOffset = -1;
@@ -168,6 +176,7 @@ function validateDocxArchive(buffer) {
   }
 }
 
+// Extracts and normalizes text content from HTML input, removing non-content elements and collapsing whitespace.
 export function extractHtmlText(html) {
   const document = load(html);
   document("script, style, noscript, svg, iframe, nav, footer").remove();
@@ -203,6 +212,8 @@ export function validateJobDescriptionUrl(value) {
   return url;
 }
 
+// Validates and normalizes a job description URL, ensuring it uses HTTPS, points to a public host, and adheres to standard port conventions.
+// Checks if an IP address is within the public unicast range.
 function isPublicAddress(address) {
   try {
     return ipaddr.process(address).range() === "unicast";
@@ -211,6 +222,7 @@ function isPublicAddress(address) {
   }
 }
 
+// Fetches the job description page from a public URL, ensuring it resolves to public network addresses and meets content type and size constraints.
 async function fetchPublicJobPage(url) {
   let addresses;
   try {
@@ -286,6 +298,7 @@ async function fetchPublicJobPage(url) {
   });
 }
 
+// Extracts text content from a PDF buffer, handling page limits, timeouts, and format validation.
 async function extractPdfText(buffer) {
   const parser = new PDFParse({ data: new Uint8Array(buffer) });
   let timer;
@@ -316,9 +329,10 @@ async function extractPdfText(buffer) {
   }
 }
 
+// Extracts and validates text from a job description file.
 export async function extractJobDescriptionFile(fileName, buffer) {
   if (!Buffer.isBuffer(buffer) || buffer.length === 0) {
-    throw new FitInputError("Choose a non-empty job-description file.");
+    throw new FitInputError("Choose a non-empty job-description file.", 422);
   }
   if (buffer.length > MAX_FILE_BYTES) {
     throw new FitInputError("Files must be 2 MB or smaller.", 413);
@@ -331,14 +345,14 @@ export async function extractJobDescriptionFile(fileName, buffer) {
   let text;
   if (extension === "pdf") {
     if (!buffer.subarray(0, 1_024).toString("latin1").includes("%PDF-")) {
-      throw new FitInputError("The selected file is not a valid PDF.");
+      throw new FitInputError("The selected file is not a valid PDF.", 422);
     }
     text = await extractPdfText(buffer);
   } else if (extension === "doc" || extension === "docx") {
     const isLegacyWord = buffer.subarray(0, 8).equals(Buffer.from("d0cf11e0a1b11ae1", "hex"));
     const isOpenXmlWord = buffer.subarray(0, 2).toString() === "PK";
     if (extension === "doc" ? !isLegacyWord : !isOpenXmlWord) {
-      throw new FitInputError("The selected Word file does not match its file extension.");
+      throw new FitInputError("The selected Word file does not match its file extension.", 422);
     }
     if (extension === "docx") validateDocxArchive(buffer);
     try {
@@ -353,7 +367,7 @@ export async function extractJobDescriptionFile(fileName, buffer) {
       try {
         text = flattenJson(JSON.parse(contents)).join(" ");
       } catch {
-        throw new FitInputError("The selected JSON file is not valid JSON.");
+        throw new FitInputError("The selected JSON file is not valid JSON.", 422);
       }
     } else if (extension === "csv" || extension === "tsv") {
       text = csvToText(contents, extension === "csv" ? "," : "\t");
@@ -368,11 +382,12 @@ export async function extractJobDescriptionFile(fileName, buffer) {
 
   const jobDescription = sanitizeText(text, MAX_JOB_DESCRIPTION_LENGTH);
   if (!jobDescription) {
-    throw new FitInputError("No readable job-description text was found, or the extracted text exceeds 12,000 characters.");
+    throw new FitInputError("No readable job-description text was found, or the extracted text exceeds 12,000 characters.", 422);
   }
   return jobDescription;
 }
 
+// Reads and validates the job description input from the request.
 export async function readFitInput(request) {
   const contentType = request.headers.get("content-type")?.toLowerCase() || "";
   if (contentType.includes("application/json")) {
@@ -380,11 +395,11 @@ export async function readFitInput(request) {
     if (parsed.error) throw new FitInputError(parsed.error, parsed.status);
     const { jobDescription, jobDescriptionUrl } = parsed.payload;
     if (Object.hasOwn(parsed.payload, "jobDescriptionUrl") && Object.hasOwn(parsed.payload, "jobDescription")) {
-      throw new FitInputError("Provide a job description or a URL, not both.");
+      throw new FitInputError("Provide a job description or a URL, not both.", 422);
     }
     if (Object.hasOwn(parsed.payload, "jobDescriptionUrl")) {
       if (typeof jobDescriptionUrl !== "string") {
-        throw new FitInputError("Enter a valid HTTPS job-description URL.");
+        throw new FitInputError("Enter a valid HTTPS job-description URL.", 422);
       }
       const url = validateJobDescriptionUrl(jobDescriptionUrl);
       const page = await fetchPublicJobPage(url);
@@ -397,7 +412,7 @@ export async function readFitInput(request) {
       MAX_JOB_DESCRIPTION_LENGTH,
     );
     if (!text) {
-      throw new FitInputError(`Job description must contain 1–${MAX_JOB_DESCRIPTION_LENGTH} characters.`);
+      throw new FitInputError(`Job description must contain 1–${MAX_JOB_DESCRIPTION_LENGTH} characters.`, 422);
     }
     return text;
   }
@@ -413,15 +428,15 @@ export async function readFitInput(request) {
         body: body.bytes,
       }).formData();
     } catch {
-      throw new FitInputError("The uploaded form data is invalid.");
+      throw new FitInputError("The uploaded form data is invalid.", 422);
     }
     const file = form.get("file");
     const description = form.get("jobDescription");
     if (file instanceof File && description) {
-      throw new FitInputError("Provide a job description or a file, not both.");
+      throw new FitInputError("Provide a job description or a file, not both.", 422);
     }
     if (file instanceof File) {
-      if (!file.name) throw new FitInputError("Choose a job-description file.");
+      if (!file.name) throw new FitInputError("Choose a job-description file.", 422);
       return extractJobDescriptionFile(file.name, Buffer.from(await file.arrayBuffer()));
     }
     const text = sanitizeText(
@@ -429,7 +444,7 @@ export async function readFitInput(request) {
       MAX_JOB_DESCRIPTION_LENGTH,
     );
     if (!text) {
-      throw new FitInputError(`Job description must contain 1–${MAX_JOB_DESCRIPTION_LENGTH} characters.`);
+      throw new FitInputError(`Job description must contain 1–${MAX_JOB_DESCRIPTION_LENGTH} characters.`, 422);
     }
     return text;
   }

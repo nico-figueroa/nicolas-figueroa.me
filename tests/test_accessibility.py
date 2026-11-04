@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+from html import escape
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
@@ -140,8 +141,11 @@ def test_certification_cards_share_newest_first_order_and_about_omits_evidence()
     assert "Evidence library" not in about
     assert "Certifications and training" not in about
     assert "data-certification-cards" not in about
-    assert "2000–2003" in about
-    assert "Network administrator and computer repair technician" in about
-    assert "configured Linux servers" in about
+    about_content = json.loads(
+        (ROOT_DIR / "src" / "content" / "about.json").read_text(encoding="utf-8")
+    )
+    for entry in about_content["timeline"]:
+        for field in ("period", "title", "description"):
+            assert escape(entry[field], quote=False) in about, (entry, field)
     experience = (DIST_DIR / "experience" / "index.html").read_text(encoding="utf-8")
     assert "Selected outcomes" in experience

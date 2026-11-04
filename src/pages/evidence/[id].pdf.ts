@@ -1,3 +1,5 @@
+// Handles evidence PDF files, providing static path generation and file retrieval for evidence items
+
 import { readFile } from "node:fs/promises";
 import { resolve, sep } from "node:path";
 import evidence from "../../content/evidence.json";
@@ -15,6 +17,7 @@ interface EvidenceProps {
 const contentRoot = resolve(process.cwd(), "src", "content");
 const evidenceRoot = resolve(contentRoot);
 
+// Utility functions for handling evidence PDF files, including static path generation and file retrieval
 export function getStaticPaths() {
   return (evidence as EvidenceRecord[]).map((item) => {
     const sourcePath = resolve(contentRoot, item.file);
@@ -28,6 +31,7 @@ export function getStaticPaths() {
   });
 }
 
+// Retrieves the PDF file for the given evidence ID and returns it as a response with appropriate headers
 export async function GET({ props }: { props: EvidenceProps }) {
   return new Response(new Uint8Array(await readFile(props.sourcePath)), {
     headers: {

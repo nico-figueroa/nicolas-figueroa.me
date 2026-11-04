@@ -95,19 +95,19 @@
     "fileName": "DOE in Validations Final.pdf",
     "title": "DOE in Validations",
     "category": "Presentation",
-    "description": "Presentation PDF; additional summary metadata is not available.",
+    "description": "Presentation provided for a conference sponsored by the Institute of Validation Technology",
     "supportedSkills": ["Design of experiments", "Validation"],
-    "knowledge": "Presentation titled DOE in Validations."
+    "knowledge": "Presentation about design of experiments in validations."
   },
   {
     "id": "presentation-medical-device",
     "file": "media/Medical Device CC Imp Pres Full.pdf",
     "fileName": "Medical Device CC Imp Pres Full.pdf",
-    "title": "Medical Device CC Imp Pres",
+    "title": "Medical Device Change Control Implementation Presentation",
     "category": "Presentation",
-    "description": "Presentation PDF; the supplied filename is retained because a fuller title was not available.",
+    "description": "Presentation provided for a conference sponsored by the Institute of Validation Technology in San Francisco, CA, January 24-26, 2011. PDF format.",
     "supportedSkills": [],
-    "knowledge": "Presentation titled Medical Device CC Imp Pres."
+    "knowledge": "Presentation about medical device change control implementation."
   },
   {
     "id": "presentation-ingeniero-forastero",
@@ -115,9 +115,9 @@
     "fileName": "Presentacion Ingeniero Forastero Nov 2019.pdf",
     "title": "Presentación: Ingeniero Forastero",
     "category": "Presentation",
-    "description": "Spanish-language presentation from November 2019.",
+    "description": "Spanish-language presentation from November 2019. Speech shared at Universidad Internacional de las Americas.",
     "supportedSkills": ["Technical communication", "Cross-cultural communication"],
-    "knowledge": "Spanish-language presentation titled Ingeniero Forastero from November 2019."
+    "knowledge": "Spanish-language presentation about the challenges faced by foreign engineers."
   },
   {
     "id": "presentation-production-records",
@@ -125,7 +125,7 @@
     "fileName": "Review Production Records for Compliance_Nic Fig.pdf",
     "title": "Review Production Records for Compliance",
     "category": "Presentation",
-    "description": "Presentation about reviewing production records for compliance.",
+    "description": "Presentation provided for a conference sponsored by the Institute of Validation Technology",
     "supportedSkills": ["Production records review", "Quality compliance"],
     "knowledge": "Presentation about reviewing production records for compliance."
   },
@@ -133,9 +133,9 @@
     "id": "presentation-process-variation",
     "file": "media/Understand Control Reduce Variation_Nic Fig.pdf",
     "fileName": "Understand Control Reduce Variation_Nic Fig.pdf",
-    "title": "Understand, Control, Reduce Variation",
+    "title": "Understand, Control and Reduce Variation",
     "category": "Presentation",
-    "description": "Presentation about understanding, controlling, and reducing variation.",
+    "description": "Presentation provided for a conference sponsored by the Institute of Validation Technology",
     "supportedSkills": ["Statistical analysis", "Process variation analysis", "Continuous improvement"],
     "knowledge": "Presentation about understanding, controlling, and reducing process variation."
   }

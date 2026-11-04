@@ -1,3 +1,6 @@
+// ai-guide.mjs - Handles AI-guided question answering, including evidence retrieval, rate limiting, and response generation.
+// Exposes a handler function for processing POST requests with questions and returning grounded answers or evidence-only responses.
+
 import {
   evidenceOnlyResponse,
   generateGroundedAnswer,
@@ -11,9 +14,10 @@ import {
   sanitizeText,
 } from "../src/server/http.mjs";
 
-const MAX_BODY_BYTES = 8_000;
-const MAX_QUESTION_LENGTH = 1_200;
+const MAX_BODY_BYTES = 8_000; // Maximum allowed size for the request body in bytes.
+const MAX_QUESTION_LENGTH = 1_200; // Maximum allowed length for the question text.
 
+// Handles the incoming request, validates it, enforces rate limits, retrieves evidence, and generates a grounded answer.
 export async function handleGuide(request, context = {}, apiKeyValue = process.env.OPENAI_API_KEY || "") {
   if (request.method !== "POST") {
     return jsonResponse({ error: "Method not allowed." }, 405, { allow: "POST" });
@@ -100,6 +104,7 @@ export async function handleGuide(request, context = {}, apiKeyValue = process.e
   }
 }
 
+// Export the default handler function for the Netlify function endpoint.
 export default function handler(request, context) {
   return handleGuide(request, context);
 }

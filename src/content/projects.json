@@ -72,7 +72,7 @@
     ]
   },
   {
-    "name": "Tara Hidalgo Artist Portfolio",
+    "name": "Tutare",
     "description": "A bilingual portfolio for creative workshops and event services, with facilitator profiles and an artwork gallery. Spanish is the default language, with English available throughout the site.",
     "technologies": ["Next.js", "React", "TypeScript", "Tailwind CSS", "Netlify"],
     "source": "https://github.com/nico-figueroa/Personal-Projects/tree/main/Tara_Portfolio_Site",
@@ -91,7 +91,7 @@
   },
   {
     "name": "Unbound Root",
-    "description": "A static, multilingual educational website about digital safety and cybersecurity awareness for families and everyday internet users.",
+    "description": "A static, multilingual educational website about cyberspace, digital safety and cybersecurity awareness for families and everyday internet users.",
     "technologies": ["HTML", "CSS", "JavaScript", "Accessibility"],
     "source": "https://github.com/nico-figueroa/unboundroot.com",
     "productionLinks": [
@@ -103,7 +103,7 @@
   },
   {
     "name": "HusKey Manager Security Coursework",
-    "description": "A course repository centered on learning to identify and remediate security issues in a sample password-manager application.",
+    "description": "A UW course repository centered on learning to identify and remediate security issues in a sample password-manager application.",
     "technologies": ["Application Security", "Docker", "PHP", "MySQL"],
     "source": "https://github.com/nico-figueroa/Nico-Custom-Huskey-Manager"
   }

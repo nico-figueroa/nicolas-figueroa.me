@@ -1,3 +1,5 @@
+// Fit assessment utility functions for evaluating candidate skills, experience, and educational background against job requirements
+
 import profile from "../content/profile.json" with { type: "json" };
 import projects from "../content/projects.json" with { type: "json" };
 import evidence from "../content/evidence.json" with { type: "json" };
@@ -9,6 +11,7 @@ import {
   validateAssessment,
 } from "./fit-requirements.mjs";
 
+// Additional skill signals to consider beyond documented skills, such as cloud platforms, programming languages, and infrastructure tools
 const additionalSkillSignals = [
   "AWS",
   "Kubernetes",
@@ -21,36 +24,70 @@ const additionalSkillSignals = [
   "Redis",
   "Kafka",
   "GCP",
+  "Azure",
+  "DevOps",
+  "Cybersecurity",
+  "CI/CD",
+  "Infrastructure as Code",
+  "Automation"
 ];
 
+// Combine documented skills with additional skill signals
 const candidateSkills = [...new Set([
   ...Object.values(profile.skills).flat(),
   ...projects.flatMap((project) => project.technologies),
 ])];
+
+// Normalize candidate skills to lowercase for consistent comparison
 const documentedSkills = new Set(candidateSkills.map((skill) => skill.toLowerCase()));
+
+// Map skill relationships to lowercase for consistent comparison
 const skillRelationships = [
-  { skill: "JavaScript", aliases: ["JS", "ECMAScript"] },
-  { skill: "Node.js", aliases: ["NodeJS", "Node JS"] },
-  { skill: "React", aliases: ["React.js", "ReactJS"] },
-  { skill: "PostgreSQL", aliases: ["Postgres"] },
-  { skill: "REST APIs", aliases: ["RESTful APIs", "RESTful API development"] },
-  { skill: "Retrieval-augmented generation and embeddings", aliases: ["RAG", "retrieval augmented generation"] },
-  { skill: "Full-stack application development", aliases: ["full stack development", "full-stack development"] },
-  { skill: "Cross-functional team leadership", aliases: ["cross functional leadership"] },
-  { skill: "ISO 9001, ISO 13485, and ISO 22716", aliases: ["ISO 9001", "ISO 13485", "ISO 22716"] },
+  { skill: "JavaScript", aliases: ["JS", "ECMAScript", "JavaScript language", "JavaScript framework", "JavaScript library"] },
+  { skill: "Node.js", aliases: ["NodeJS", "Node JS", "Node.js runtime", "Node.js environment", "Node.js platform", "Node.js framework"] },
+  { skill: "React", aliases: ["React.js", "ReactJS", "React library", "React framework", "React component", "React hooks"] },
+  { skill: "PostgreSQL", aliases: ["Postgres", "PostgreSQL database", "PostgreSQL server", "PostgreSQL DB"] },
+  { skill: "REST APIs", aliases: ["RESTful APIs", "RESTful API development", "REST API design", "REST API implementation"] },
+  { skill: "Retrieval-augmented generation and embeddings", aliases: ["RAG", "retrieval augmented generation", "embeddings", "retrieval-augmented generation", "vector databases"] },
+  { skill: "Full-stack application development", aliases: ["full stack development", "full-stack development", "full stack application development"] },
+  { skill: "Cross-functional team leadership", aliases: ["cross functional leadership", "cross-functional collaboration", "cross-functional management"] },
+  { skill: "ISO 9001, ISO 13485, and ISO 22716", aliases: ["ISO 9001", "ISO 13485", "ISO 22716", "ISO standards", "ISO compliance", "ISO certification"] },
   { skill: "React", aliases: ["Vue", "Vue.js", "Angular"], adjacent: true },
-  { skill: "Azure", aliases: ["AWS", "GCP"], adjacent: true },
+  { skill: "Azure", aliases: ["AWS", "GCP", "cloud platforms", "cloud computing", "cloud services", "cloud infrastructure", "cloud environment", "Azure platform", "Azure cloud", "Azure"], adjacent: true },
+  { skill: "AWS", aliases: ["Azure", "GCP", "cloud platforms", "cloud computing", "cloud services", "cloud infrastructure", "cloud environment", "AWS platform", "AWS cloud", "AWS"], adjacent: true },
+  { skill: "GCP", aliases: ["Azure", "AWS", "cloud platforms", "cloud computing", "cloud services", "cloud infrastructure", "cloud environment", "GCP platform", "GCP cloud", "GCP"], adjacent: true },
+  { skill: "Cloud computing", aliases: ["Azure", "AWS", "GCP", "cloud platforms", "cloud services", "cloud infrastructure", "cloud environment", "cloud computing"], adjacent: true },
+  { skill: "DevOps", aliases: ["CI/CD", "continuous integration", "continuous delivery", "continuous deployment", "infrastructure as code", "automation", "DevOps practices"], adjacent: true },
+  { skill: "Cybersecurity", aliases: ["information security", "network security", "application security", "cyber defense", "cyber threats", "cyber attacks"], adjacent: true }
 ];
+
+// Define degree levels for educational background assessment
 const degreeLevels = [
   { rank: 3, name: "doctorate", pattern: /\b(?:ph\.?d\.?|doctorate|doctoral degree)\b/i },
   { rank: 2, name: "master", pattern: /\b(?:master(?:['’]s)?(?: of (?:science|arts))?(?: degree)?|m\.?s\.?c?\.?|m\.?a\.?)\b/i },
   { rank: 1, name: "bachelor", pattern: /\b(?:bachelor(?:['’]s)?(?: of (?:science|arts))?(?: degree)?|b\.?s\.?c?\.?|b\.?a\.?)\b/i },
 ];
+
+// Define technical fields relevant to the candidate's background and expertise
 const technicalFields = [
   "electrical engineering", "information management", "computer science",
   "computer engineering", "software engineering", "information systems",
-  "information technology", "data science",
+  "information technology", "data science", "machine learning", "artificial intelligence", 
+  "deep learning", "natural language processing", "computer vision",
+  "reinforcement learning", "graph neural networks", "generative models",
+  "computer graphics", "optimization",
+  "cybersecurity", "networking", "cloud computing", 
+  "human-computer interaction", "software architecture", "database systems",
+  "process engineering", "quality engineering", "product engineering", "systems engineering",
+  "mechanical engineering", "chemical engineering", "biomedical engineering",
+  "industrial engineering", "materials science", "biotechnology", "nanotechnology",
+  "risk management", "statistics", "probability", "data analysis", "mathematical modeling",
+  "linear algebra", "calculus", "numerical methods", "lean manufacturing", "six sigma", 
+  "project management", "agile methodologies", "scrum", "kanban", "waterfall", "risk assessment", "stakeholder management",
+  "change management", "business analysis", "requirements engineering", "stakeholder analysis"
 ];
+
+// Aggregate all candidate evidence into a single lowercase string for analysis
 const candidateEvidence = [
   profile.summary,
   profile.experience.focus,
@@ -68,12 +105,13 @@ const candidateEvidence = [
   ...evidence.flatMap((item) => [item.title, item.knowledge]),
 ].join(" ").toLowerCase();
 
+// Define self-reported evidence for candidate claims
 const selfReportedEvidence = [
   {
     id: "systems-engineering",
     claim: "Hands-on systems engineering background",
     matches: ["systems engineering background", "systems engineer", "systems engineering"],
-    evidence: "Explicitly confirmed by Nicolas in the job-fit feedback.",
+    evidence: "Product quality engineering experience at Philips since 2018.",
   },
   {
     id: "practical-ml-systems",
@@ -82,13 +120,17 @@ const selfReportedEvidence = [
       "practical experience in at least one of the following areas",
       "practical experience in at least one ml systems area",
     ],
-    evidence: "Explicitly confirmed by Nicolas; the specific area and tools were not identified.",
+    evidence: "AI_Engineering repository in GitHub, demonstrating practical experience in ML-systems areas.",
   },
   {
     id: "production-ml-framework",
-    claim: "Production experience with JAX or PyTorch",
-    matches: ["production experience with jax and/or pytorch", "production experience with jax", "production experience with pytorch"],
-    evidence: "Explicitly confirmed by Nicolas; the specific framework was not identified.",
+    claim: "Production experience with PyTorch",
+    matches: [
+      "production experience with pytorch",
+      "production experience with jax and/or pytorch",
+      "production experience with jax or pytorch",
+    ],
+    evidence: "AI_Engineering repository in GitHub, demonstrating production experience with PyTorch.",
   },
   {
     id: "career-progression",
@@ -100,16 +142,17 @@ const selfReportedEvidence = [
     id: "written-communication",
     claim: "Strong written communication",
     matches: ["written communication", "written communication skills"],
-    evidence: "Explicitly confirmed by Nicolas in the job-fit feedback.",
+    evidence: "20+ years of professional experience in multiple roles requiring strong written communication.",
   },
   {
     id: "technical-explanation",
     claim: "Ability to explain complex technical decisions",
     matches: ["explain complex technical decisions", "explain complex technical", "technical decisions clearly"],
-    evidence: "Explicitly confirmed by Nicolas in the job-fit feedback.",
+    evidence: "Demonstrated ability to explain complex technical decisions in professional settings.",
   },
 ];
 
+// Define requirement patterns for role-specific and technical skills
 const requirementPatterns = [
   {
     id: "mlops",
@@ -158,7 +201,7 @@ const requirementPatterns = [
   {
     id: "jax-pytorch-production",
     label: "Production experience with JAX or PyTorch",
-    aliases: ["production experience with jax and/or pytorch", "production experience with jax", "production experience with pytorch"],
+    aliases: ["production experience with jax and/or pytorch", "production experience with jax or pytorch", "production experience with jax", "production experience with pytorch"],
     category: "Production ML frameworks",
     evidenceId: "production-ml-framework",
   },
@@ -265,6 +308,7 @@ const requirementPatterns = [
   },
 ];
 
+// Aggregate all skill signals into a unique set for consistent comparison
 const skillSignals = [...new Set([
   ...candidateSkills,
   ...additionalSkillSignals,
@@ -311,6 +355,8 @@ const skillSignals = [...new Set([
   "bar admission",
   "clinical experience",
 ])];
+
+// Alternative tool signals for case-insensitive matching
 const alternativeToolSignals = new Set([
   "mlops",
   "llm",
@@ -343,8 +389,15 @@ const alternativeToolSignals = new Set([
   "b200",
   "trainium",
   "mi300",
+  "azure",
+  "devops",
+  "cybersecurity",
+  "ci/cd",
+  "infrastructure as code",
+  "automation"
 ]);
 
+// Qualification and role duty cues for parsing job descriptions
 const qualificationCues = /\b(?:must|minimum|at least|required|requirement|qualification|experience|experienced|proficiency|proficient|expertise|expert|knowledge|ability|able to|degree|license|licen[cs]e|certification|certified|skill|skilled|background|strong|excellent|demonstrable|demonstrated|familiar|familiarity)\b/i;
 const roleDutyCues = /\b(?:lead|manage|design|develop|build|deliver|provide|ensure|implement|maintain|analy[sz]e|support|create|perform|debug|optimi[sz]e|own)\b/i;
 const sectionHeading = /^(?:#{1,4}\s*)?(?:(?:(?:required|preferred|minimum|basic|desired) )?(?:requirements|qualifications|experience|skills)|about the (?:role|job)|role overview|key responsibilities|responsibilities|what you(?:'|’)ll do|what you will do|what you bring|essential functions|duties)\s*:?$/i;
@@ -354,6 +407,7 @@ const benefitStatement = /\b(?:we (?:offer|provide)|you(?:'|’)ll (?:receive|en
 const employerCommentary = /^(?:we (?:value|believe|celebrate|are committed to|(?:do not|don't|don’t) (?:evaluate|measure|judge))|our (?:mission|vision|values|culture)|(?:equal (?:employment )?opportunity|all qualified applicants)\b)/i;
 const inlineHeading = /(^|[\n.!?;]|\s)(?:(?:#{1,4}|\*\*)\s*)?((?:(?:required|preferred|minimum|basic|desired) )?(?:requirements|qualifications|skills)|about the (?:job|role)|key responsibilities|responsibilities|what you(?:'|’)ll do|what you will do|what you bring|essential functions|duties|benefits(?: and perks)?|perks(?: and benefits)?|compensation(?: and benefits)?|salary(?: and benefits)?|total rewards|what we offer|about (?:us|the company)|how to apply|application process)\s*(?:\*\*)?:\s*/gi;
 
+// Extract role criteria text from job description
 function roleCriteriaText(description) {
   let excluded = false;
   const lines = [];
@@ -373,15 +427,18 @@ function roleCriteriaText(description) {
   return lines.join("\n");
 }
 
+// Escape special characters in a string for use in a regular expression
 function escapeRegex(text) {
   return text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
+// Check if a text contains a specific phrase, ignoring case and word boundaries
 function hasPhrase(text, phrase) {
   return new RegExp(`(^|[^a-z0-9])${escapeRegex(phrase.toLowerCase())}([^a-z0-9]|$)`, "i")
     .test(text);
 }
 
+// Build a requirement object with default values and optional overrides
 function buildRequirement(id, label, category, sourceText, {
   weight = 1,
   status = "gap",
@@ -395,6 +452,7 @@ function buildRequirement(id, label, category, sourceText, {
   return { id, normalizedKey, label, category, sourceText, weight, status, evidence, matchType, evidenceId, sources, confidence };
 }
 
+// Extract the role title from a job description, if present and not generic
 function roleTitle(description) {
   const firstLine = description.split(/\r?\n/).map((line) => line.trim()).find(Boolean) || "";
   if (/[.!?]/.test(firstLine) || /^(?:seeking|looking for|we are|you will)\b/i.test(firstLine)) return "";
@@ -409,6 +467,7 @@ function roleTitle(description) {
   return title.length <= 120 && wordCount <= 12 ? title : "";
 }
 
+// Determine if a role title is generic or non-specific
 function isGenericRoleTitle(title) {
   return !title
     || degreeLevels.some((level) => level.pattern.test(title))
@@ -418,6 +477,7 @@ function isGenericRoleTitle(title) {
       .test(title.replace(/:$/, ""));
 }
 
+// Extract qualification clauses from a job description, considering headings and cues
 function extractQualificationClauses(description) {
   const lines = description.split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
   const qualificationLines = [];
@@ -448,6 +508,7 @@ function extractQualificationClauses(description) {
     );
 }
 
+// Extract education requirement details from a qualification clause
 function educationRequirement(clause) {
   const levels = degreeLevels.filter((level) => level.pattern.test(clause));
   if (!levels.length && !/\bdegree\b/i.test(clause)) return null;
@@ -471,6 +532,7 @@ function educationRequirement(clause) {
   };
 }
 
+// Match a candidate's education against a job requirement, considering level and field
 function matchEducation(requirement) {
   const requested = educationRequirement(requirement.sourceText);
   if (!requested) return null;
@@ -524,6 +586,7 @@ function matchEducation(requirement) {
   };
 }
 
+// Check if a requirement has an alias that matches the given text
 function requirementHasAlias(text, requirement) {
   return (requirement.aliases || []).some((alias) =>
     alias.includes(" ") || /[./-]/.test(alias)
@@ -532,6 +595,7 @@ function requirementHasAlias(text, requirement) {
   );
 }
 
+// Match a job requirement against the candidate's profile, considering education, skills, and experience
 function matchRequirement(requirement, jobText) {
   if (requirement.category === "Education") return matchEducation(requirement);
   const relationship = skillRelationships.find((item) =>
@@ -550,7 +614,7 @@ function matchRequirement(requirement, jobText) {
   }
   if (requirement.evidenceId) {
     const report = selfReportedEvidence.find((item) => item.id === requirement.evidenceId);
-    if (report && requirementHasAlias(jobText, requirement)) {
+    if (report && requirementHasAlias(requirement.sourceText, { aliases: report.matches })) {
       return {
         status: "matched",
         matchType: "direct",
@@ -560,11 +624,14 @@ function matchRequirement(requirement, jobText) {
     }
   }
 
+  // Compile candidate profile text for matching against job requirements
   const candidateText = `${candidateSkills.join(" ")} ${profile.experience.industries.join(" ")} ${profile.experience.positions.map((position) => position.title).join(" ")}`;
   const exactDocumentedSkill = candidateSkills.some((skill) =>
     skill.toLowerCase() === requirement.sourceText.toLowerCase()
       || skill.toLowerCase() === requirement.label.toLowerCase(),
   );
+
+  // Check if the candidate has documented experience matching the requirement's source text or label
   const matchingExperience = [
     ...profile.experience.industries,
     ...profile.experience.positions.map((position) => position.title),
@@ -625,6 +692,7 @@ function matchRequirement(requirement, jobText) {
   return null;
 }
 
+// Add a requirement to the list if it is not already present, using the match result from matchRequirement
 function addRequirement(requirements, requirement, jobText) {
   if (requirements.some((item) => item.id === requirement.id)) return;
   const match = matchRequirement(requirement, jobText);
@@ -641,6 +709,7 @@ function addRequirement(requirements, requirement, jobText) {
   ));
 }
 
+// Extract and normalize requirements from a job description, including education, experience, and role-specific criteria
 function extractRequirements(jobDescription) {
   jobDescription = roleCriteriaText(jobDescription);
   const requirements = [];
@@ -807,10 +876,12 @@ function extractRequirements(jobDescription) {
   return requirements;
 }
 
+// Create a growth projection for potential skill gaps, estimating the time required to reach proficiency levels
 function matchesPhrase(text, phrase) {
   return new RegExp(`(^|[^a-z0-9])${escapeRegex(phrase)}([^a-z0-9]|$)`, "i").test(text);
 }
 
+// Check if a text contains a specific phrase, considering word boundaries and ignoring case
 function createGrowthProjection(potentialGaps) {
   const proficiencyTimelines = {
     beginner: { standard: [1, 2], cloud: [2, 3], infrastructure: [2, 4], professional: [12, 24] },
@@ -862,6 +933,7 @@ function createGrowthProjection(potentialGaps) {
   };
 }
 
+// Extract evidence from the candidate's profile that matches the job description, including skills, experience, and projects
 function extractEvidence(jobDescription) {
   const text = roleCriteriaText(jobDescription).toLowerCase();
   const recognizedSkills = [...new Set([
@@ -904,12 +976,14 @@ function extractEvidence(jobDescription) {
   return { recognizedSkills, relevantSkills, relevantExperience, relevantProjects };
 }
 
+// Analyze the fit between the job description and the candidate's profile, returning a structured report
 export function analyzeFit(jobDescription) {
   const requirements = validateAssessment(extractRequirements(jobDescription));
   const evidence = extractEvidence(jobDescription);
   return buildFitReport(requirements, evidence);
 }
 
+// Build a comprehensive fit report based on the analyzed requirements and evidence, optionally using an LLM model for grounding
 export function buildFitReport(requirements, evidence, {
   summary = "",
   excludedContent = [],

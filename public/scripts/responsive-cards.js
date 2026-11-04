@@ -1,6 +1,9 @@
+// responsive-cards.js - Handles the initialization and responsive behavior of collapsible cards on the page.
+
 const desktopCards = window.matchMedia("(min-width: 64rem)");
 const initializedCards = new WeakSet();
 
+// Initialize and manage the responsive behavior of collapsible cards based on the viewport width.
 function initializeCards() {
   document.querySelectorAll("details[data-responsive-card]").forEach((card) => {
     if (initializedCards.has(card)) return;
@@ -12,6 +15,7 @@ function initializeCards() {
   });
 }
 
+// Listen for changes in the viewport width and update the state of the cards accordingly.
 initializeCards();
 desktopCards.addEventListener("change", () => {
   document.querySelectorAll("details[data-responsive-card]").forEach((card) => {

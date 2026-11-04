@@ -1,4 +1,4 @@
-# Nicolas Figueroa — Portfolio
+# nicolas-figueroa.me
 
 A static-first, AI-enhanced portfolio built with Astro and Tailwind CSS. Its core experience is designed to work independently of optional AI features.
 

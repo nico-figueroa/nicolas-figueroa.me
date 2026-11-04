@@ -1,3 +1,6 @@
+// site-navigation.js - Manages the behavior of the site navigation menu, including toggle and responsive handling.
+// Handles opening and closing the menu, keyboard interactions, and responsive adjustments based on viewport width.
+
 const menuToggle = document.querySelector("[data-navigation-toggle]");
 document.documentElement.dataset.navigationEnhanced = "true";
 

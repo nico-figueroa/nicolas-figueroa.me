@@ -372,7 +372,9 @@ test("resume audience views are unique and every section has valid audiences", (
   for (const view of resume.views) {
     assert.ok(view.sectionOrder.every((section) => sectionIds.has(section)));
     assert.ok(view.experienceTitles.every((title) => positionTitles.has(title)));
-    assert.ok(view.projectNames.every((name) => projectNames.has(name)));
+    for (const name of view.projectNames) {
+      assert.ok(projectNames.has(name), `Unknown project "${name}" in ${view.slug} Resume view`);
+    }
     assert.ok(view.sectionTitles.skills);
     assert.ok(view.sectionDescriptions.skills);
     assert.ok(view.skillGroups.every((group) =>

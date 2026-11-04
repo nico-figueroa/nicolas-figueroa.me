@@ -1,9 +1,12 @@
+// HTTP utility functions for handling JSON requests, rate limiting, and text sanitization
+
 import { createHash } from "node:crypto";
 
 const requestWindows = new Map();
 const WINDOW_MS = 60_000;
 const REQUEST_LIMIT = 12;
 
+// HTTP utility functions for handling JSON requests, rate limiting, and text sanitization
 export function jsonResponse(payload, status = 200, extraHeaders = {}) {
   return new Response(JSON.stringify(payload), {
     status,
@@ -18,6 +21,7 @@ export function jsonResponse(payload, status = 200, extraHeaders = {}) {
   });
 }
 
+// Read and parse the JSON body of a request, enforcing a maximum size limit
 export async function readJsonBody(request, maximumBytes) {
   if (!request.headers.get("content-type")?.includes("application/json")) {
     return { error: "Content-Type must be application/json.", status: 415 };
@@ -38,6 +42,7 @@ export async function readJsonBody(request, maximumBytes) {
   return { payload };
 }
 
+// Read the raw bytes of a request body, enforcing a maximum size limit
 export async function readBodyBytes(request, maximumBytes) {
   if (!request.body) {
     return { error: "Request body is required.", status: 400 };
@@ -58,6 +63,7 @@ export async function readBodyBytes(request, maximumBytes) {
   return { bytes: Buffer.concat(chunks) };
 }
 
+// Sanitize and truncate text input, removing control characters and enforcing a maximum length
 export function sanitizeText(value, maximumLength) {
   if (typeof value !== "string") {
     return null;
@@ -68,6 +74,7 @@ export function sanitizeText(value, maximumLength) {
   return sanitized && sanitized.length <= maximumLength ? sanitized : null;
 }
 
+// Consume a rate limit token for the given identifier, returning whether the request is allowed and the retry-after time
 export function consumeRateLimit(identifier, now = Date.now()) {
   const key = createHash("sha256").update(String(identifier || "unknown")).digest("hex");
   if (requestWindows.size > 1_024) {
@@ -94,6 +101,7 @@ export function consumeRateLimit(identifier, now = Date.now()) {
   return { allowed: true, retryAfter: 0 };
 }
 
+// Generate a unique identifier for the request, typically based on the client's IP address
 export function requestIdentifier(request, context) {
   return context?.ip || request.headers.get("x-nf-client-connection-ip") || "unknown";
 }

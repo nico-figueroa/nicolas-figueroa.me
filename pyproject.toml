@@ -1,5 +1,6 @@
 [tool.pytest.ini_options]
 testpaths = ["tests", "scripts/tests"]
+addopts = ["-p", "no:anyio", "-p", "no:langsmith_plugin"]
 
 [tool.black]
 line-length = 88

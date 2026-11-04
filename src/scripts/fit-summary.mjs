@@ -1,3 +1,6 @@
+// Utility function for summarizing fit assessment results, including supported requirements, gaps, and learning estimates
+// Returns an object with the gap count, estimated learning time, and a descriptive paragraph summarizing the fit assessment
+
 export function summarizeFit(payload) {
   const { requirements, growthProjection } = payload;
   const supported = requirements.filter((item) => item.status === "matched");

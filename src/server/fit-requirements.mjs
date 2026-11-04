@@ -1,8 +1,12 @@
+// Fit requirement utility functions for mapping skills to canonical keys and defining capabilities
+
 import profile from "../content/profile.json" with { type: "json" };
 import projects from "../content/projects.json" with { type: "json" };
 
+// The source URL for the candidate's portfolio, used in evidence references
 const portfolioSource = "https://github.com/nico-figueroa/nicolas-figueroa.me";
 
+// The source URL for the candidate's portfolio, used in evidence references
 export const candidateSources = [
   ...Object.entries(profile.skills).flatMap(([group, skills]) => skills.map((skill) => ({
     title: skill, text: skill, url: profile.source, kind: `Profile: ${group}`,
@@ -63,11 +67,13 @@ const canonicalSkillKeys = new Map([
   ["github oauth", "capability-cybersecurity"],
 ]);
 
+// Returns the canonical key for a requirement, falling back to normalizedKey or id if not found.
 export function canonicalRequirementKey(requirement) {
   const key = canonicalSkillKeys.get(requirement.sourceText.toLowerCase());
   return key || requirement.normalizedKey || requirement.id;
 }
 
+// Defines the capabilities and their associated requested and evidence patterns.
 const capabilities = [
   {
     id: "software-design", label: "Software design",
@@ -136,11 +142,13 @@ const capabilities = [
   },
 ];
 
+// Defines the domains and their associated requested and evidence patterns.
 const domains = [
   { id: "defense", label: "Defense mission-planning domain", requested: /\b(?:weapons?[- ]planning|defen[cs]e|military|mission[- ]planning)\b/i, evidence: /\b(?:defense|military|weapon|mission.planning)\b/i },
   { id: "medical-devices", label: "Medical-device domain", requested: /\bmedical.devices?\b/i, evidence: /\bmedical.device\b/i },
 ];
 
+// Defines the human skills and their associated requested and evidence patterns.
 const humanSkills = [
   {
     id: "delivery", label: "Making progress and delivering outcomes",
@@ -174,6 +182,7 @@ const humanSkills = [
   },
 ];
 
+// Normalizes and extracts human skills from a clause and its associated sources.
 function normalizeHumanSkills(clause, sources) {
   return humanSkills.filter((rule) => rule.requested.test(clause)).map((rule) => {
     const found = sourceMatches(rule.evidence, sources).filter((source) => /Professional experience|Profile: leadership/.test(source.kind));
@@ -193,10 +202,12 @@ function normalizeHumanSkills(clause, sources) {
   });
 }
 
+// Filters sources that match a given pattern in their title or text content, returning only the matching sources.
 function sourceMatches(pattern, sources) {
   return sources.filter((source) => pattern.test(`${source.title} ${source.text}`));
 }
 
+// Assesses a capability requirement against a clause and its associated sources, returning a structured assessment.
 function capabilityAssessment(rule, clause, sources) {
   const found = sourceMatches(rule.evidence, sources);
   const advanced = /\b(?:expert|advanced|large.scale|production.grade|specialist|deep expertise)\b/i.test(clause);
@@ -224,6 +235,7 @@ function capabilityAssessment(rule, clause, sources) {
   };
 }
 
+// Normalizes and assesses all capabilities and domains for a set of clauses, returning structured requirements.
 export function normalizeCapabilities(clauses, sources = candidateSources) {
   const requirements = [];
   for (const clause of clauses) {
@@ -256,6 +268,7 @@ export function normalizeCapabilities(clauses, sources = candidateSources) {
   return requirements;
 }
 
+// Converts a period string to start and end months, returning an array of two numbers representing the start and end months.
 function periodMonths(period) {
   const months = { january: 0, february: 1, march: 2, april: 3, may: 4, june: 5, july: 6, august: 7, september: 8, october: 9, november: 10, december: 11 };
   const ends = [...period.matchAll(/(?:(January|February|March|April|May|June|July|August|September|October|November|December)\s+)?(\d{4})/gi)];
@@ -263,6 +276,7 @@ function periodMonths(period) {
   return ends.map((end, index) => Number(end[2]) * 12 + (end[1] ? months[end[1].toLowerCase()] : index ? 11 : 0) + index);
 }
 
+// Merges overlapping periods from a list of positions and calculates the total number of years of experience.
 function mergedYears(positions) {
   const ranges = positions.map((position) => periodMonths(position.period)).filter(Boolean).sort((a, b) => a[0] - b[0]);
   const merged = [];
@@ -274,6 +288,7 @@ function mergedYears(positions) {
   return Math.floor(merged.reduce((total, [start, end]) => total + end - start, 0) / 12);
 }
 
+// Assesses the duration requirement from a text string, returning structured information about the minimum years, scope, and related positions.
 export function assessDuration(text) {
   const minimum = Number(text.match(/\d+/)?.[0]);
   const scope = text.replace(/^\d+(?:\s*[-–]\s*\d+)?\+?\s*(?:years?|yrs?)\s*(?:of\s+)?/i, "")
@@ -301,9 +316,10 @@ export function assessDuration(text) {
   };
 }
 
-const statusRank = { gap: 0, partial: 1, matched: 2 };
-const matchRank = { none: 0, adjacent: 1, equivalent: 2, direct: 3, exceeds: 4 };
+const statusRank = { gap: 0, partial: 1, matched: 2 }; // Ranks the status of requirements for comparison.
+const matchRank = { none: 0, adjacent: 1, equivalent: 2, direct: 3, exceeds: 4 }; // Ranks the match types for comparison.
 
+// Validates and normalizes the assessment results, ensuring consistency and merging duplicate entries.
 export function validateAssessment(requirements) {
   const normalized = new Map();
   for (const original of requirements) {

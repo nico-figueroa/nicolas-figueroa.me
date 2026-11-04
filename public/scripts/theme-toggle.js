@@ -1,3 +1,6 @@
+// theme-toggle.js - Manages the theme toggle functionality, allowing users to switch between light and dark themes.
+// Updates the document's theme attribute and the toggle button's label and text accordingly.
+
 const toggle = document.querySelector("[data-theme-toggle]");
 
 toggle?.addEventListener("click", () => {

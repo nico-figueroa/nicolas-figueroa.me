@@ -1,8 +1,12 @@
+// astro.config.mjs - Configuration file for the Astro project, including site settings, Vite plugins, and local Netlify function handling.
+
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
 import { handleGuide } from "./functions/ai-guide.mjs";
 import { handleFitAnalysis } from "./functions/check-nicos-fit.mjs";
 
+// Function to handle local Netlify functions during development.
+// Intercepts requests to Netlify function endpoints and routes them to the appropriate handler.
 function localNetlifyFunctions() {
   const handlers = new Map([
     ["/.netlify/functions/ai-guide", handleGuide],
@@ -45,6 +49,7 @@ function localNetlifyFunctions() {
   };
 }
 
+// Export the Astro configuration, including site URL, trailing slash behavior, Vite build settings, and plugins.
 export default defineConfig({
   site: "https://nicolas-figueroa.me",
   trailingSlash: "always",

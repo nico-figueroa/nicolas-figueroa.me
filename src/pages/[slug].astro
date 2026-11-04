@@ -1,4 +1,5 @@
 ---
+// [slug].astro - Dynamic page template for rendering content based on the slug parameter.
 import pages from "../content/pages.json";
 import projects from "../content/projects.json";
 import profile from "../content/profile.json";
@@ -19,6 +20,7 @@ import ResponsiveCard from "../components/ResponsiveCard.astro";
 import OrganizationLogo from "../components/OrganizationLogo.astro";
 import SpokenLanguages from "../components/SpokenLanguages.astro";
 
+// Define static paths for the pages and determine which pages have wide or fluid layouts.
 export function getStaticPaths() {
   return pages.map((page) => ({
     params: { slug: page.slug },

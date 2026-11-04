@@ -1,3 +1,6 @@
+// check-nicos-fit.mjs - Handles AI-guided fit analysis for job descriptions, including rate limiting and error handling.
+// Exposes a handler function for processing POST requests with job descriptions and returning fit analysis results.
+
 import { analyzeFitWithAI, FitAnalysisError } from "../src/server/fit-ai.mjs";
 import {
   consumeRateLimit,
@@ -6,6 +9,7 @@ import {
 } from "../src/server/http.mjs";
 import { FitInputError, readFitInput } from "../src/server/fit-input.mjs";
 
+// Handles the incoming request, validates it, enforces rate limits, reads the job description input, and performs fit analysis.
 export function handleFitAnalysis(request, context = {}, options = {}) {
   if (request.method !== "POST") {
     return jsonResponse({ error: "Method not allowed." }, 405, { allow: "POST" });
@@ -33,6 +37,7 @@ export function handleFitAnalysis(request, context = {}, options = {}) {
     });
 }
 
+// Export the default handler function for the Netlify function endpoint.
 export default function handler(request, context) {
   return handleFitAnalysis(request, context);
 }

@@ -1,3 +1,6 @@
+// Utility functions for managing and displaying fit assessment progress messages
+
+// Messages displayed during the fit assessment process to indicate progress and context
 export const FIT_PROGRESS_MESSAGES = [
   "Putting the job description under the evidence microscope.",
   "Looking beyond keywords. Context deserves a seat at the table.",
@@ -25,6 +28,8 @@ export const FIT_PROGRESS_MESSAGES = [
   "Still working on the assessment. Thanks for giving the evidence some airtime.",
 ];
 
+// Starts the fit assessment progress updates, calling the provided update function with messages at regular intervals
+// Returns a function to stop the progress updates
 export function startFitProgress(update, initialMessage) {
   update(initialMessage);
   let index = 0;
