@@ -1,8 +1,8 @@
 """Build source documents from verified portfolio content."""
 
-from __future__ import annotations
+from __future__ import annotations # Enable postponed evaluation of type annotations
 
-import argparse
+import argparse # For parsing command-line arguments
 import json
 import re
 from pathlib import Path

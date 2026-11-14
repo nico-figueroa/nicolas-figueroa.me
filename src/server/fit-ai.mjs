@@ -305,7 +305,7 @@ async function requestStructured(stage, schema, instructions, input, { apiKey, m
 // Analyzes the fit of a job description using the AI service, performing classification, assessment, and report building while handling configuration and errors.
 export async function analyzeFitWithAI(jobDescription, {
   apiKey = process.env.OPENAI_API_KEY?.trim() || "",
-  model = process.env.OPENAI_MODEL?.trim() || "gpt-4.1-mini",
+  model = process.env.OPENAI_MODEL?.trim() || "gpt-6-luna",
   fetchImpl = fetch,
 } = {}) {
   if (!apiKey || !/^[\x21-\x7e]+$/.test(apiKey) || !/^[a-z0-9._-]{1,80}$/i.test(model)) {

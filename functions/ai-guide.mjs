@@ -5,14 +5,14 @@ import {
   evidenceOnlyResponse,
   generateGroundedAnswer,
   retrieveEvidence,
-} from "../src/server/knowledge.mjs";
+} from "../src/server/knowledge.mjs"; // Functions for evidence retrieval and grounded answer generation
 import {
   consumeRateLimit,
   jsonResponse,
   readJsonBody,
   requestIdentifier,
   sanitizeText,
-} from "../src/server/http.mjs";
+} from "../src/server/http.mjs"; // Utility functions for HTTP request handling, rate limiting, and JSON responses
 
 const MAX_BODY_BYTES = 8_000; // Maximum allowed size for the request body in bytes.
 const MAX_QUESTION_LENGTH = 1_200; // Maximum allowed length for the question text.

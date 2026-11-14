@@ -1,13 +1,13 @@
 // check-nicos-fit.mjs - Handles AI-guided fit analysis for job descriptions, including rate limiting and error handling.
 // Exposes a handler function for processing POST requests with job descriptions and returning fit analysis results.
 
-import { analyzeFitWithAI, FitAnalysisError } from "../src/server/fit-ai.mjs";
+import { analyzeFitWithAI, FitAnalysisError } from "../src/server/fit-ai.mjs"; // Functions for performing AI-guided fit analysis and handling related errors
 import {
   consumeRateLimit,
   jsonResponse,
   requestIdentifier,
-} from "../src/server/http.mjs";
-import { FitInputError, readFitInput } from "../src/server/fit-input.mjs";
+} from "../src/server/http.mjs"; // Utility functions for HTTP request handling, rate limiting, and JSON responses
+import { FitInputError, readFitInput } from "../src/server/fit-input.mjs"; // Functions for reading and validating job description input
 
 // Handles the incoming request, validates it, enforces rate limits, reads the job description input, and performs fit analysis.
 export function handleFitAnalysis(request, context = {}, options = {}) {

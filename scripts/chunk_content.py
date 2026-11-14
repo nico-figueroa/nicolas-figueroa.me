@@ -1,8 +1,8 @@
 """Chunk source documents and write corpus and citation metadata artifacts."""
 
-from __future__ import annotations
+from __future__ import annotations # Enable postponed evaluation of type annotations
 
-import argparse
+import argparse # For parsing command-line arguments
 import json
 from pathlib import Path
 from typing import Any

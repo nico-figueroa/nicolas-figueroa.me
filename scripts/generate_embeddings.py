@@ -1,20 +1,20 @@
 """Generate local OpenAI embeddings for the portfolio corpus."""
 
-from __future__ import annotations
+from __future__ import annotations # Enable postponed evaluation of type annotations
 
-import argparse
+import argparse # For parsing command-line arguments
 import json
 import os
-import urllib.error
-import urllib.request
+import urllib.error # For handling HTTP and URL errors
+import urllib.request # For making HTTP requests
 from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
-CORPUS_PATH = ROOT / "data" / "corpus.json"
-OUTPUT_PATH = ROOT / "data" / "embeddings.json"
-API_URL = "https://api.openai.com/v1/embeddings"
-BATCH_SIZE = 64
+CORPUS_PATH = ROOT / "data" / "corpus.json" # Path to the corpus JSON file
+OUTPUT_PATH = ROOT / "data" / "embeddings.json" # Path to write generated embeddings
+API_URL = "https://api.openai.com/v1/embeddings" # OpenAI embeddings endpoint
+BATCH_SIZE = 64 # Number of corpus chunks to process per request
 
 
 def request_embeddings(

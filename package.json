@@ -16,13 +16,13 @@
     "test:all": "npm run build && npm run test:node-coverage && python -m pytest --cov=scripts --cov-report=term-missing --cov-report=xml --cov-report=html"
   },
   "dependencies": {
-    "@napi-rs/canvas": "^1.1.0",
-    "@tailwindcss/vite": "^4.3.4",
-    "astro": "^7.4.5",
+    "@napi-rs/canvas": "^1.1.1",
+    "@tailwindcss/vite": "^4.3.5",
+    "astro": "^7.4.12",
     "cheerio": "^1.2.0",
     "ipaddr.js": "^2.5.0",
     "pdf-parse": "^2.4.5",
-    "tailwindcss": "^4.3.4",
+    "tailwindcss": "^4.3.5",
     "word-extractor": "^1.0.4"
   }
 }
