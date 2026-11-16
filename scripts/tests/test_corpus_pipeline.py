@@ -47,6 +47,25 @@ def test_chunk_text_overlaps_without_losing_words() -> None:
     assert chunk_text("", size=4, overlap=1) == []
 
 
+def test_corpus_preserves_positioning_and_credential_scope() -> None:
+    """Public retrieval keeps the merged approach and sourced credential context."""
+    by_id = {document["id"]: document for document in build_corpus(CONTENT_DIR)}
+    badge = by_id["certification-microsoft-pro-badge-github-copilot-proficient"]
+
+    assert "Business Systems Thinker" in by_id["profile-summary"]["text"]
+    assert "simplifying processes" in by_id["about-narrative"]["text"]
+    assert "tools they already own" in by_id["about-narrative"]["text"]
+    assert by_id["portfolio-introduction"]["source"] == "/"
+    assert "Issuer: Microsoft." in badge["text"]
+    assert "Issued / completed: 2026-11-16." in badge["text"]
+    assert "Expires: 2027-05-16." in badge["text"]
+    assert "not an exam-based Microsoft certification" in badge["text"]
+    assert badge["source"].startswith("https://www.credly.com/badges/")
+    assert "Issued / completed:" not in by_id["certification-itil-v3-training"]["text"]
+    assert "Agile" in by_id["evidence-resume-pdf"]["text"]
+    assert "AWS and Azure fundamentals" in by_id["evidence-resume-pdf"]["text"]
+
+
 def test_chunk_text_rejects_invalid_overlap() -> None:
     """Chunk configuration must always make forward progress."""
     try:

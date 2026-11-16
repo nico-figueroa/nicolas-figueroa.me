@@ -5,7 +5,7 @@ import projects from "../content/projects.json";
 import profile from "../content/profile.json";
 import resume from "../content/resume.json";
 import evidence from "../content/evidence.json";
-import about from "../content/about.json";
+import aboutData from "../content/about.json";
 import privacy from "../content/privacy.json";
 import site from "../content/site.json";
 import SiteLayout from "../layouts/SiteLayout.astro";
@@ -31,6 +31,9 @@ export function getStaticPaths() {
 const widePages = new Set(["about", "experience", "journey", "media", "projects", "resume"]);
 const fluidPages = new Set(["the-guide", "check-fit"]);
 const { page } = Astro.props;
+const about: Omit<typeof aboutData, "portrait"> & {
+  portrait: { src: string; alt: string } | null;
+} = aboutData;
 const evidenceById = new Map(evidence.map((item) => [item.id, item]));
 ---
 
@@ -59,8 +62,9 @@ const evidenceById = new Map(evidence.map((item) => [item.id, item]));
             )}
             <ul class="mt-4 space-y-3 leading-7 text-[var(--muted)]">
               <li><strong class="text-[var(--text)]">Education:</strong> Electrical Engineering and Information Management</li>
-              <li><strong class="text-[var(--text)]">Experience:</strong> Medical devices, quality systems, technical operations, and software</li>
-              <li><strong class="text-[var(--text)]">Current focus:</strong> Full-stack engineering, AI, and complex systems</li>
+              <li><strong class="text-[var(--text)]">Experience:</strong> Cross-functional leadership, process improvement, systems support, and software validation</li>
+              <li><strong class="text-[var(--text)]">Current focus:</strong> {profile.headline}</li>
+              <li><strong class="text-[var(--text)]">Approach:</strong> Understand the need, simplify, assess existing tools, then build when justified</li>
             </ul>
             <a class="button button-secondary mt-6" href="/resume/">Explore resume views</a>
             </ResponsiveCard>
@@ -109,6 +113,7 @@ const evidenceById = new Map(evidence.map((item) => [item.id, item]));
       </div>
       <GuidePrompt question="Which projects best demonstrate Nicolas's systems thinking and engineering approach?" />
     ) : page.slug === "resume" ? (
+      <p class="mt-8 max-w-3xl leading-7 text-[var(--text)]">{resume.summary}</p>
       <div class="mt-10 grid items-stretch gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
         {resume.views.map((view) => (
           <ResponsiveCard title={view.label} heading="h2">
@@ -167,7 +172,10 @@ const evidenceById = new Map(evidence.map((item) => [item.id, item]));
             ))}
           </ul>
         </section>
-        <a class="text-[var(--accent)] underline" href={profile.source}>Source: LinkedIn profile</a>
+        <p class="flex flex-wrap gap-4 text-sm">
+          <a class="text-[var(--accent)] underline" href={profile.source}>Source: LinkedIn profile</a>
+          <a class="text-[var(--accent)] underline" href="/evidence/resume-pdf.pdf">Source: Resume</a>
+        </p>
       </div>
       <GuidePrompt question="What outcomes and leadership experience are documented in Nicolas's career?" />
     ) : page.slug === "journey" ? (
@@ -183,7 +191,7 @@ const evidenceById = new Map(evidence.map((item) => [item.id, item]));
                 {item.detail && <p class="mt-1 text-[var(--muted)]">{item.detail}</p>}
                 {item.evidenceIds?.length > 0 && (
                   <ul class="mt-4 space-y-2 border-t border-[var(--line)] pt-3">
-                    {item.evidenceIds.map((id) => {
+                    {item.evidenceIds?.map((id) => {
                       const source = evidenceById.get(id);
                       return source && (
                         <li>
@@ -201,7 +209,7 @@ const evidenceById = new Map(evidence.map((item) => [item.id, item]));
           </ul>
         </section>
         <section id="certificates">
-          <h2 class="text-xl font-semibold">Certifications and ongoing learning</h2>
+          <h2 class="text-xl font-semibold">Credentials, training and ongoing learning</h2>
           <CertificationCards />
           <p class="mt-5 leading-7 text-[var(--muted)]">{profile.learning}</p>
         </section>
@@ -209,7 +217,7 @@ const evidenceById = new Map(evidence.map((item) => [item.id, item]));
           <h2 class="text-xl font-semibold">Languages</h2>
           <SpokenLanguages languages={profile.spokenLanguages} />
         </section>
-        <a class="text-[var(--accent)] underline" href={profile.source}>Source: LinkedIn profile</a>
+        <p class="text-sm text-[var(--muted)]">Sources: LinkedIn profile, resume, and the credential or supporting evidence linked on each card.</p>
       </div>
       <GuidePrompt question="How has Nicolas's education and career journey evolved across engineering, quality, software, and AI?" />
     ) : page.slug === "contact" ? (
@@ -226,7 +234,7 @@ const evidenceById = new Map(evidence.map((item) => [item.id, item]));
                 <>
                   <p class="mt-3 leading-7 text-[var(--muted)]">{item.description}</p>
                   <ul class="mt-5 space-y-4">
-                    {item.evidenceIds.map((id) => {
+                    {item.evidenceIds?.map((id) => {
                       const presentation = evidenceById.get(id);
                       return presentation && (
                         <li class="min-w-0">

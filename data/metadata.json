@@ -20,6 +20,11 @@
     "source": "https://www.linkedin.com/in/nicolas-figueroa-hidalgo"
   },
   {
+    "id": "professional-experience-003",
+    "title": "Professional experience",
+    "source": "https://www.linkedin.com/in/nicolas-figueroa-hidalgo"
+  },
+  {
     "id": "technical-skills-000",
     "title": "Technical skills and practices",
     "source": "https://www.linkedin.com/in/nicolas-figueroa-hidalgo"
@@ -42,7 +47,7 @@
   {
     "id": "portfolio-introduction-000",
     "title": "Portfolio introduction",
-    "source": "https://www.linkedin.com/in/nicolas-figueroa-hidalgo"
+    "source": "/"
   },
   {
     "id": "about-narrative-000",
@@ -56,6 +61,16 @@
   },
   {
     "id": "about-narrative-002",
+    "title": "About Nicolas",
+    "source": "/about/"
+  },
+  {
+    "id": "about-narrative-003",
+    "title": "About Nicolas",
+    "source": "/about/"
+  },
+  {
+    "id": "about-narrative-004",
     "title": "About Nicolas",
     "source": "/about/"
   },
@@ -75,11 +90,6 @@
     "source": "/about/"
   },
   {
-    "id": "about-timeline-2018-000",
-    "title": "Relocated from Costa Rica to the United States",
-    "source": "/about/"
-  },
-  {
     "id": "about-timeline-2019-2026-000",
     "title": "Product quality and regulatory leadership",
     "source": "/about/"
@@ -90,14 +100,19 @@
     "source": "/about/"
   },
   {
+    "id": "certification-microsoft-pro-badge-github-copilot-proficient-000",
+    "title": "Microsoft Pro Badge: GitHub Copilot - Proficient",
+    "source": "https://www.credly.com/badges/6a68d0cf-6244-4433-abad-16173bc4296b"
+  },
+  {
     "id": "certification-ai-engineer-career-path-000",
     "title": "AI Engineer Career Path",
-    "source": "https://www.linkedin.com/in/nicolas-figueroa-hidalgo"
+    "source": "https://www.codecademy.com/profiles/Nomadant/certificates/d71aa6cd51ca461b9d84ec55441e34bf"
   },
   {
     "id": "certification-full-stack-engineer-career-path-000",
     "title": "Full-Stack Engineer Career Path",
-    "source": "https://www.linkedin.com/in/nicolas-figueroa-hidalgo"
+    "source": "https://www.codecademy.com/profiles/Nomadant/certificates/ffd0f42cce1a44e9a0108b365047a0a6"
   },
   {
     "id": "certification-integrating-risk-management-into-the-product-lifecycle-000",
@@ -220,52 +235,57 @@
     "source": "https://www.linkedin.com/in/nicolas-figueroa-hidalgo"
   },
   {
-    "id": "achievement-quality-system-remediation-and-measurable-outcomes-000",
-    "title": "Quality-system remediation and measurable outcomes",
+    "id": "achievement-measurable-outcomes-000",
+    "title": "Measurable outcomes",
     "source": "/evidence/resume-pdf.pdf"
   },
   {
-    "id": "achievement-global-quality-system-leadership-000",
-    "title": "Global quality-system leadership",
+    "id": "achievement-global-leadership-000",
+    "title": "Global leadership",
     "source": "/evidence/resume-pdf.pdf"
   },
   {
-    "id": "achievement-audit-and-process-improvement-results-000",
-    "title": "Audit and process-improvement results",
+    "id": "achievement-process-improvement-results-000",
+    "title": "Process-improvement results",
     "source": "/evidence/resume-pdf.pdf"
   },
   {
-    "id": "achievement-cross-organizational-team-leadership-000",
-    "title": "Cross-organizational team leadership",
+    "id": "achievement-cross-organizational-and-cross-functional-leadership-000",
+    "title": "Cross-organizational and cross-functional leadership",
     "source": "/evidence/resume-pdf.pdf"
   },
   {
-    "id": "achievement-medical-device-process-and-systems-improvement-000",
-    "title": "Medical-device process and systems improvement",
+    "id": "achievement-regulated-industry-process-and-systems-improvement-000",
+    "title": "Regulated industry process and systems improvement",
     "source": "/evidence/resume-pdf.pdf"
   },
   {
-    "id": "achievement-software-and-manufacturing-validation-000",
-    "title": "Software and manufacturing validation",
+    "id": "achievement-software-manufacturing-and-product-validation-000",
+    "title": "Software, manufacturing and product validation",
     "source": "/evidence/resume-pdf.pdf"
   },
   {
-    "id": "achievement-infusion-pump-manufacturing-remediation-000",
-    "title": "Infusion-pump manufacturing remediation",
+    "id": "achievement-practical-process-integration-000",
+    "title": "Practical process integration",
     "source": "/evidence/resume-pdf.pdf"
   },
   {
-    "id": "achievement-global-documentation-control-capability-000",
-    "title": "Global documentation-control capability",
+    "id": "achievement-simplification-and-validated-tools-000",
+    "title": "Simplification and validated tools",
     "source": "/evidence/resume-pdf.pdf"
   },
   {
-    "id": "achievement-graduate-education-000",
-    "title": "Graduate education",
-    "source": "/evidence/uw-msim-diploma.pdf"
+    "id": "achievement-international-systems-support-000",
+    "title": "International systems support",
+    "source": "/evidence/resume-pdf.pdf"
   },
   {
     "id": "evidence-resume-pdf-000",
+    "title": "Resume",
+    "source": "/evidence/resume-pdf.pdf"
+  },
+  {
+    "id": "evidence-resume-pdf-001",
     "title": "Resume",
     "source": "/evidence/resume-pdf.pdf"
   },
@@ -316,7 +336,7 @@
   },
   {
     "id": "evidence-presentation-medical-device-000",
-    "title": "Medical Device CC Imp Pres",
+    "title": "Medical Device Change Control Implementation Presentation",
     "source": "/evidence/presentation-medical-device.pdf"
   },
   {
@@ -331,8 +351,23 @@
   },
   {
     "id": "evidence-presentation-process-variation-000",
-    "title": "Understand, Control, Reduce Variation",
+    "title": "Understand, Control and Reduce Variation",
     "source": "/evidence/presentation-process-variation.pdf"
+  },
+  {
+    "id": "project-ai-video-studio-000",
+    "title": "AI Video Studio",
+    "source": "https://github.com/nico-figueroa/AI_video_studio"
+  },
+  {
+    "id": "project-ai-video-studio-resource-video-generator-builder-agensi-000",
+    "title": "video generator builder (Agensi)",
+    "source": "https://www.agensi.io/skills/video-generator-builder"
+  },
+  {
+    "id": "project-casa-perla-000",
+    "title": "Casa Perla",
+    "source": "https://casaperlapuntauva.com/"
   },
   {
     "id": "project-ai-trip-planner-000",
@@ -355,6 +390,11 @@
     "source": "https://github.com/nico-figueroa/AI_Engineering_Lessons"
   },
   {
+    "id": "project-ai-engineering-lessons-resource-xerj-corpus-hub-selection-000",
+    "title": "XERJ Corpus Hub selection",
+    "source": "https://hub.xerj.org/contributors/nico-figueroa"
+  },
+  {
     "id": "project-full-stack-engineering-lessons-000",
     "title": "Full Stack Engineering Lessons",
     "source": "https://github.com/nico-figueroa/Full_Stack_Engineering_Lessons"
@@ -365,8 +405,8 @@
     "source": "https://github.com/nico-figueroa/Full_Stack_Engineering_Lessons/tree/main/Full_Stack/RESTful_restaurants"
   },
   {
-    "id": "project-tara-hidalgo-artist-portfolio-000",
-    "title": "Tara Hidalgo Artist Portfolio",
+    "id": "project-tutare-000",
+    "title": "Tutare",
     "source": "https://github.com/nico-figueroa/Personal-Projects/tree/main/Tara_Portfolio_Site"
   },
   {

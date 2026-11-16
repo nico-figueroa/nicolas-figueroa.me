@@ -125,7 +125,8 @@ def test_certification_cards_share_newest_first_order_and_about_omits_evidence()
         (ROOT_DIR / "src" / "content" / "profile.json").read_text(encoding="utf-8")
     )
     names = [item["name"] for item in profile["certifications"]]
-    assert names[:2] == ["AI Engineer Career Path", "Full-Stack Engineer Career Path"]
+    dates = [item["issuedOn"] for item in profile["certifications"] if item.get("issuedOn")]
+    assert dates == sorted(dates, reverse=True)
     pages = [
         DIST_DIR / "journey" / "index.html",
         *sorted((DIST_DIR / "resume").glob("*/index.html")),
@@ -135,6 +136,12 @@ def test_certification_cards_share_newest_first_order_and_about_omits_evidence()
         assert "data-certification-cards" in html, path
         positions = [html.index(f">{name}</h3>") for name in names]
         assert positions == sorted(positions), path
+        for credential in profile["certifications"]:
+            for date_field in ("issuedOn", "expiresOn"):
+                if credential.get(date_field):
+                    assert f'datetime="{credential[date_field]}"' in html, (path, credential)
+            if credential.get("detail"):
+                assert escape(credential["detail"], quote=False) in html, (path, credential)
         assert "résumé" not in html.lower(), path
     about = (DIST_DIR / "about" / "index.html").read_text(encoding="utf-8")
     assert "Selected outcomes" not in about
@@ -149,3 +156,33 @@ def test_certification_cards_share_newest_first_order_and_about_omits_evidence()
             assert escape(entry[field], quote=False) in about, (entry, field)
     experience = (DIST_DIR / "experience" / "index.html").read_text(encoding="utf-8")
     assert "Selected outcomes" in experience
+
+
+def test_resume_skill_cards_emphasize_transferable_process_improvement() -> None:
+    """Process-focused cards render their shared skills without industry headings."""
+    content = ROOT_DIR / "src" / "content"
+    profile = json.loads((content / "profile.json").read_text(encoding="utf-8"))
+    resume = json.loads((content / "resume.json").read_text(encoding="utf-8"))
+    headings = {
+        "processSimplification": "Process design and simplification",
+        "continuousImprovement": "Continuous improvement",
+    }
+
+    for view in resume["views"]:
+        html = (DIST_DIR / "resume" / view["slug"] / "index.html").read_text(encoding="utf-8")
+        assert ">Quality systems</h3>" not in html, view["slug"]
+        assert ">Medical-device experience</h3>" not in html, view["slug"]
+        assert "ISO 9001" not in html, view["slug"]
+        assert "ISO 13485" not in html, view["slug"]
+        assert "ISO 22716" not in html, view["slug"]
+        for group, heading in headings.items():
+            if group in view["skillGroups"]:
+                assert f">{heading}</h3>" in html, view["slug"]
+        for group in view["skillGroups"]:
+            if group == "spokenLanguages":
+                continue
+            skills = profile["skills"][group]
+            if group in view["skillFilters"]:
+                skills = [skill for skill in skills if skill in view["skillFilters"][group]]
+            for skill in skills:
+                assert f'alt="{escape(skill, quote=True)}"' in html, (view["slug"], skill)

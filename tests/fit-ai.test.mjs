@@ -308,7 +308,8 @@ test("the complete pasted TCS description produces a report with all criteria as
   assert.deepEqual(requiredIds, result.requirements.map((entry) => entry.id));
 });
 
-test("AI errors produce explicit failures with no deterministic fallback or score", async () => {
+test("AI errors produce explicit failures with no deterministic fallback or score", async (t) => {
+  const loggedErrors = t.mock.method(console, "error", () => {});
   for (const [label, fetchImpl] of [
     ["unavailable", async () => new Response("", { status: 429 })],
     ["network", async () => { throw new TypeError("network disconnected"); }],
@@ -325,6 +326,14 @@ test("AI errors produce explicit failures with no deterministic fallback or scor
     assert.ok(payload.error, label);
     assert.equal(payload.matchScore, undefined, label);
   }
+  assert.deepEqual(loggedErrors.mock.calls.map((call) => call.arguments), [
+    ["Fit assessment failed", { code: "service_http_429" }],
+    ["Fit assessment failed", { code: "service_unavailable" }],
+    ["Fit assessment failed", { code: "classification_incomplete" }],
+    ["Fit assessment failed", { code: "invalid_assessment" }],
+    ["Fit assessment failed", { code: "invalid_assessment" }],
+    ["Fit assessment failed", { code: "incomplete_job_coverage" }],
+  ]);
   await assert.rejects(() => analyzeFitWithAI(job, { apiKey: "" }),
     (error) => error instanceof FitAnalysisError && error.status === 503);
   await assert.rejects(() => analyzeFitWithAI(job, { apiKey: "invalid\nkey" }), FitAnalysisError);

@@ -51,7 +51,7 @@ def build_corpus(content_dir: Path = CONTENT_DIR) -> list[dict[str, str]]:
     documents: list[dict[str, str]] = []
 
     profile_documents = [
-        ("profile-summary", "Professional profile", profile["summary"]),
+        ("profile-summary", "Professional profile", f'{profile["headline"]}. {profile["summary"]}'),
         (
             "professional-experience",
             "Professional experience",
@@ -105,7 +105,8 @@ def build_corpus(content_dir: Path = CONTENT_DIR) -> list[dict[str, str]]:
     ]
 
     for document_id, title, text in profile_documents:
-        item = _document(document_id, title, text, profile["source"])
+        source = "/" if document_id == "portfolio-introduction" else profile["source"]
+        item = _document(document_id, title, text, source)
         if item:
             documents.append(item)
 
@@ -137,8 +138,16 @@ def build_corpus(content_dir: Path = CONTENT_DIR) -> list[dict[str, str]]:
         item = _document(
             f'certification-{_slug(certification["name"])}',
             certification["name"],
-            f'{certification["name"]}.{credential}',
-            certification["source"],
+            " ".join(
+                part for part in (
+                    f'{certification["name"]}. Issuer: {certification["institution"]}.',
+                    f'Issued / completed: {certification["issuedOn"]}.' if certification.get("issuedOn") else "",
+                    f'Expires: {certification["expiresOn"]}.' if certification.get("expiresOn") else "",
+                    certification.get("detail", ""),
+                    credential,
+                ) if part
+            ),
+            certification.get("credentialUrl") or certification["source"],
         )
         if item:
             documents.append(item)
@@ -222,6 +231,16 @@ def build_corpus(content_dir: Path = CONTENT_DIR) -> list[dict[str, str]]:
         )
         if item:
             documents.append(item)
+
+        for link in project.get("relatedLinks", []):
+            item = _document(
+                f'project-{_slug(project["name"])}-resource-{_slug(link["label"])}',
+                link["label"],
+                link["description"],
+                link["url"],
+            )
+            if item:
+                documents.append(item)
 
     return documents
 

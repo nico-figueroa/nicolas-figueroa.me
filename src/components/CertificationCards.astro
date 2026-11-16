@@ -6,6 +6,9 @@ import ResponsiveCard from "./ResponsiveCard.astro";
 import OrganizationLogo from "./OrganizationLogo.astro";
 
 const evidenceById = new Map(evidence.map((item) => [item.id, item]));
+const formatDate = (date: string) => new Date(`${date}T00:00:00Z`).toLocaleDateString("en-US", {
+  year: "numeric", month: "long", day: "numeric", timeZone: "UTC",
+});
 ---
 
 <ul class="mt-4 grid items-stretch gap-4 sm:grid-cols-2 xl:grid-cols-3" data-certification-cards>
@@ -13,6 +16,17 @@ const evidenceById = new Map(evidence.map((item) => [item.id, item]));
     <li class="min-w-0">
       <ResponsiveCard title={certification.name}>
       <OrganizationLogo organization={certification.institution} />
+      {certification.issuedOn && (
+        <p class="mt-3 text-sm text-[var(--accent)]">
+          Issued / completed: <time datetime={certification.issuedOn}>{formatDate(certification.issuedOn)}</time>
+        </p>
+      )}
+      {certification.expiresOn && (
+        <p class="mt-1 text-sm text-[var(--muted)]">
+          Expires: <time datetime={certification.expiresOn}>{formatDate(certification.expiresOn)}</time>
+        </p>
+      )}
+      {certification.detail && <p class="mt-3 text-sm leading-6 text-[var(--muted)]">{certification.detail}</p>}
       <div class="mt-3 flex flex-wrap gap-3">
         <a
           class="text-sm text-[var(--accent)] underline"

@@ -145,6 +145,94 @@ test("lexical search covers new evidence records without regenerated embeddings"
   assert.deepEqual(found.map((item) => item.id), ["new-evidence"]);
 });
 
+test("Guide retrieves the business-first approach and scoped Copilot credential", () => {
+  const approach = rankDocuments("simplifying processes tools they already own");
+  assert.ok(approach.some((item) =>
+    item.source === "/about/" && /underlying problem and its root causes/.test(item.text),
+  ));
+  const credentials = rankDocuments("GitHub Copilot Proficient Microsoft badge");
+  const badge = credentials.find((item) => item.source.startsWith("https://www.credly.com/badges/"));
+  assert.ok(badge);
+  assert.match(badge.text, /2026-11-16/);
+  assert.match(badge.text, /2027-05-16/);
+  assert.match(badge.text, /not an exam-based Microsoft certification/);
+});
+
+test("Fit receives merged positioning, credential limits, and resume outcomes", () => {
+  const overview = fitSources.find((item) => item.kind === "Professional overview");
+  assert.match(overview.text, /Product Builder \| Business Systems Thinker/);
+  assert.match(overview.text, /tools already in place/);
+  const badge = fitSources.find((item) => /GitHub Copilot - Proficient/.test(item.title));
+  assert.match(badge.text, /Issuer: Microsoft/);
+  assert.match(badge.text, /Expires: 2027-05-16/);
+  assert.match(badge.text, /not an exam-based Microsoft certification/);
+  assert.match(badge.url, /^https:\/\/www\.credly\.com\/badges\//);
+  assert.ok(fitSources.some((item) =>
+    item.url === "/evidence/resume-pdf.pdf" && /Agile/.test(item.text),
+  ));
+  assert.ok(fitSources.some((item) => item.title === "AWS cloud fundamentals"));
+});
+
+test("Guide and Fit receive transferable process-improvement skills without ISO skill claims", () => {
+  const found = rankDocuments("Gemba walks structured problem solving");
+  assert.ok(found.some((item) => /Gemba walks/.test(item.text)));
+  assert.ok(fitSources.some((item) =>
+    item.kind === "Profile: processSimplification" && item.title === "Process simplification",
+  ));
+  assert.ok(fitSources.some((item) =>
+    item.kind === "Profile: continuousImprovement" && item.title === "Gemba walks",
+  ));
+  assert.ok(!fitSources.some((item) => item.kind.startsWith("Profile:") && /\bISO \d/.test(item.text)));
+});
+
+test("Guide and Fit cite projects, commercial outputs, and corpus recognition using public evidence", () => {
+  for (const { title, url, query, content } of [
+    {
+      title: "AI Video Studio",
+      url: "https://github.com/nico-figueroa/AI_video_studio",
+      query: "AI Video Studio storyboards narration local rendering estimates",
+      content: /estimates are not provider quotes or actual invoice totals/i,
+    },
+    {
+      title: "video generator builder (Agensi)",
+      url: "https://www.agensi.io/skills/video-generator-builder",
+      query: "video generator builder commercially available skill Agensi",
+      content: /commercially available AI agent skill derived from AI Video Studio/,
+    },
+    {
+      title: "AI Engineering Lessons",
+      url: "https://github.com/nico-figueroa/AI_Engineering_Lessons",
+      query: "AI Engineering Lessons capstone banking classification MLP RoBERTa XERJ",
+      content: /banking-classification capstone using MLP and RoBERTa with PII protections/,
+    },
+    {
+      title: "XERJ Corpus Hub selection",
+      url: "https://hub.xerj.org/contributors/nico-figueroa",
+      query: "XERJ Corpus Hub selection whole repository pinned commit",
+      content: /code-reference indexing, not evidence that a model was trained/,
+    },
+    {
+      title: "Casa Perla",
+      url: "https://casaperlapuntauva.com/",
+      query: "Casa Perla bilingual vacation rental Punta Uva",
+      content: /source repository is private/,
+    },
+  ]) {
+    const document = rankDocuments(query).find((item) => item.title === title);
+    assert.ok(document, `Guide is missing ${title}`);
+    assert.equal(document.source, url);
+    assert.match(document.text, content);
+    const source = fitSources.find((item) => item.title === title);
+    assert.ok(source, `Fit is missing ${title}`);
+    assert.equal(source.url, url);
+    assert.match(source.text, content);
+  }
+  assert.equal(fitSources.find((item) => item.title === "Casa Perla").kind, "Deployed portfolio project");
+  assert.equal(fitSources.find((item) => item.title === "video generator builder (Agensi)").kind, "Published project resource");
+  assert.equal(fitSources.find((item) => item.title === "AI Video Studio").kind, "Repository or academic project");
+  assert.doesNotMatch(JSON.stringify(fitSources), /github\.com\/nico-figueroa\/Nauta/i);
+});
+
 test("Guide returns evidence-only fallback with the required response fields", async () => {
   const response = await handleGuide(
     jsonRequest("/guide", { question: "What AI engineering work uses RAG and Azure?" }),

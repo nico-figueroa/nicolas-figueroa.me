@@ -29,7 +29,7 @@ function sourceFor(item) {
 // Constructs the list of fit sources, including professional overview, candidate sources, positions, education, achievements, and evidence records.
 export const fitSources = [
   { title: "Professional overview",
-    text: `${profile.summary} ${profile.experience.focus} Documented industries: ${profile.experience.industries.join(", ")}.`,
+    text: `${profile.headline}. ${profile.summary} ${profile.experience.focus} Documented industries: ${profile.experience.industries.join(", ")}.`,
     url: profile.source, kind: "Professional overview" },
   ...candidateSources.filter((source) => source.kind !== "Professional experience"),
   ...profile.experience.positions.map((position) => ({

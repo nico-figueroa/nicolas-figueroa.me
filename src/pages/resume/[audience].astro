@@ -12,27 +12,33 @@ import OrganizationLogo from "../../components/OrganizationLogo.astro";
 import SpokenLanguages from "../../components/SpokenLanguages.astro";
 
 export function getStaticPaths() {
+  type SkillGroupKey = keyof typeof profile.skills | "spokenLanguages";
+  const isSkillGroupKey = (key: string): key is SkillGroupKey =>
+    key === "spokenLanguages" || Object.hasOwn(profile.skills, key);
   const evidenceById = new Map(evidence.map((item) => [item.id, item]));
   const skillGroupLabels = {
     languages: "Programming languages",
     platformsAndFrameworks: "Platforms and frameworks",
-    practices: "Practices and domains",
+    practices: "Engineering practices",
     softwareEngineering: "Software engineering",
     data: "Data skills",
     leadership: "Leadership",
     business: "Business and operations",
-    qualitySystems: "Quality systems",
-    medicalDevices: "Medical-device experience",
+    processSimplification: "Process design and simplification",
+    continuousImprovement: "Continuous improvement",
     aiAndMachineLearning: "AI and machine learning",
     spokenLanguages: "Spoken languages",
   };
   return resume.views.map((view) => {
+    const skillFilters: Partial<Record<SkillGroupKey, string[]>> = view.skillFilters;
     const skillGroups = view.skillGroups.map((key) => {
+      if (!isSkillGroupKey(key)) throw new Error(`Unknown resume skill group: ${key}.`);
       const skills = key === "spokenLanguages"
         ? profile.spokenLanguages
         : profile.skills[key];
-      const selectedSkills = view.skillFilters[key]
-        ? skills.filter((skill) => view.skillFilters[key].includes(skill))
+      const filter = skillFilters[key];
+      const selectedSkills = filter
+        ? skills.filter((skill) => filter.includes(skill))
         : skills;
       return {
         key,
@@ -47,7 +53,7 @@ export function getStaticPaths() {
       skills: skillGroups,
       projects: view.projectNames
         .map((name) => projects.find((project) => project.name === name))
-        .filter(Boolean),
+        .filter((project) => project !== undefined),
       education: [
       ...profile.education.map((item) => ({
         label: item.name,
@@ -56,18 +62,40 @@ export function getStaticPaths() {
         detail: item.detail,
         evidence: (item.evidenceIds || [])
           .map((id) => evidenceById.get(id))
-          .filter(Boolean),
+          .filter((item) => item !== undefined),
       })),
       ],
     };
+    type ResumeSection = {
+      [Id in keyof typeof detailsBySection]: {
+        id: Id;
+        title: string;
+        content: string;
+        details: (typeof detailsBySection)[Id];
+      };
+    }[keyof typeof detailsBySection];
+    const sectionTitles: Record<string, string> = view.sectionTitles;
+    const sectionDescriptions: Record<string, string> = view.sectionDescriptions;
     const sections = resume.sections
       .filter((section) => section.audiences.includes(view.slug))
-      .map((section) => ({
-        ...section,
-        title: view.sectionTitles[section.id] || section.title,
-        content: view.sectionDescriptions[section.id] || section.content,
-        details: detailsBySection[section.id] || [],
-      }))
+      .map((section): ResumeSection => {
+        const content = {
+          title: sectionTitles[section.id] || section.title,
+          content: sectionDescriptions[section.id] || section.content,
+        };
+        switch (section.id) {
+          case "experience":
+            return { ...content, id: "experience", details: detailsBySection.experience };
+          case "skills":
+            return { ...content, id: "skills", details: detailsBySection.skills };
+          case "projects":
+            return { ...content, id: "projects", details: detailsBySection.projects };
+          case "education":
+            return { ...content, id: "education", details: detailsBySection.education };
+          default:
+            throw new Error(`Unknown resume section: ${section.id}.`);
+        }
+      })
       .sort((left, right) =>
         view.sectionOrder.indexOf(left.id) - view.sectionOrder.indexOf(right.id),
       );
@@ -79,7 +107,8 @@ export function getStaticPaths() {
   });
 }
 
-const { view, sections } = Astro.props;
+type Props = ReturnType<typeof getStaticPaths>[number]["props"];
+const { view, sections }: Props = Astro.props;
 ---
 
 <SiteLayout title={`${view.label} Resume`} description={view.focus} wide>
@@ -89,6 +118,7 @@ const { view, sections } = Astro.props;
       {view.label} perspective
     </p>
     <h1 class="text-4xl font-semibold tracking-tight md:text-5xl">{view.label} Resume</h1>
+    <p class="mt-4 text-lg text-[var(--text)]">{profile.headline}</p>
     <p class="mt-6 text-lg leading-8 text-[var(--muted)]">{view.focus}</p>
     <a class="mt-4 inline-flex text-sm text-[var(--accent)] underline" href="/evidence/resume-pdf.pdf" download="Resume_Nicolas_Figueroa_Simp.pdf">
       Download Resume PDF
@@ -120,16 +150,10 @@ const { view, sections } = Astro.props;
             <div class="mt-4 grid gap-4 md:grid-cols-2 2xl:grid-cols-4">
               {section.details.map((group) => (
                 <ResponsiveCard title={group.label}>
-                  {["languages", "platformsAndFrameworks", "softwareEngineering", "data", "practices", "aiAndMachineLearning"].includes(group.key) ? (
-                    <TechnologyBanners technologies={group.skills} label={`${group.label} skills`} />
-                  ) : group.key === "spokenLanguages" ? (
+                  {group.key === "spokenLanguages" ? (
                     <SpokenLanguages languages={group.skills} />
                   ) : (
-                    <ul class="mt-3 flex flex-wrap gap-2">
-                    {group.skills.map((skill) => (
-                      <li class="max-w-full break-words rounded-full border border-[var(--line)] px-3 py-1 text-sm text-[var(--muted)]">{skill}</li>
-                    ))}
-                    </ul>
+                    <TechnologyBanners technologies={group.skills} label={`${group.label} skills`} />
                   )}
                 </ResponsiveCard>
               ))}
@@ -159,7 +183,7 @@ const { view, sections } = Astro.props;
                   </li>
                 ))}
               </ul>
-              <h3 class="mt-6 text-lg font-semibold">Certifications and training</h3>
+              <h3 class="mt-6 text-lg font-semibold">Credentials and training</h3>
               <CertificationCards />
             </>
           )}
@@ -171,6 +195,9 @@ const { view, sections } = Astro.props;
                     <p class="mt-2 flex-1 leading-6 text-sm text-[var(--muted)]">{project.description}</p>
                     <TechnologyBanners technologies={project.technologies} label={`${project.name} technologies`} />
                     <a class="mt-4 break-words text-sm text-[var(--accent)] underline" href={project.source}>Project details</a>
+                    {project.relatedLinks?.map((link) => (
+                      <a class="mt-3 break-words text-sm text-[var(--accent)] underline" href={link.url}>{link.label}</a>
+                    ))}
                   </ResponsiveCard>
                 ))}
               </div>

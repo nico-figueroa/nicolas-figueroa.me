@@ -1,11 +1,11 @@
 {
-  "summary": "Systems, automation, and technical operations leader with progressive experience across enterprise support, engineering, software validation, quality operations, product quality, and safety, quality, and regulatory leadership. Combines cross-functional team leadership and product-lifecycle expertise with graduate study and hands-on software and AI engineering.",
+  "summary": "Product builder and business systems thinker who starts with business needs, root causes, process simplification, and existing-tool fit. Combines cross-functional leadership, operational improvement, and hands-on software and AI engineering to build high-quality products when they are the right solution.",
   "views": [
     {
       "slug": "recruiter",
       "label": "Recruiter",
-      "focus": "A concise, role-alignment view of leadership progression, breadth, and core capabilities.",
-      "summary": "Systems and technical operations leader with progressive experience across financial services, medical devices, and manufacturing. Brings cross-functional leadership, quality and regulatory expertise, enterprise systems support, and hands-on software and AI learning.",
+      "focus": "A concise, industry-agnostic view of business problem solving, leadership progression, and software-building capabilities.",
+      "summary": "Product builder and business systems thinker combining operational excellence, process improvement, automation, and AI. Understands root causes and existing-tool fit before recommending new software. Brings cross-functional leadership and measurable outcomes from financial services, medical devices, and manufacturing, alongside an MS in Information Management (4.0 GPA) and hands-on full-stack and AI projects.",
       "presentation": "screening",
       "sectionOrder": ["experience", "skills", "projects", "education"],
       "sectionTitles": {
@@ -15,8 +15,8 @@
         "education": "Education and Certifications"
       },
       "sectionDescriptions": {
-        "experience": "A concise chronology of cross-industry leadership, product quality, and technical operations.",
-        "skills": "A screening-friendly view of documented technical, operational, and domain capabilities.",
+        "experience": "A concise chronology of cross-industry leadership, process improvement, and technical operations.",
+        "skills": "A screening-friendly view of technical skills, process design and simplification, and continuous improvement methods.",
         "projects": "Selected examples of software, AI learning, and digital product work.",
         "education": "Verified degrees, studies, and professional credentials."
       },
@@ -32,9 +32,11 @@
         "Senior Validation Administrator",
         "Lead Systems Support Engineer"
       ],
-      "skillGroups": ["languages", "platformsAndFrameworks", "practices", "leadership", "business", "qualitySystems", "medicalDevices", "spokenLanguages"],
+      "skillGroups": ["languages", "platformsAndFrameworks", "practices", "leadership", "business", "processSimplification", "continuousImprovement", "spokenLanguages"],
       "skillFilters": {},
       "projectNames": [
+        "AI Video Studio",
+        "Casa Perla",
         "AI Trip Planner",
         "IntakeWise",
         "Nomadant Tech Store",
@@ -50,8 +52,8 @@
     {
       "slug": "engineering-manager",
       "label": "Engineering Manager",
-      "focus": "A delivery-oriented technical view, led by software projects and supported by engineering and validation experience.",
-      "summary": "Technical leader with experience guiding engineering and validation teams, supporting enterprise applications, and improving software and product systems. Recent full-stack and AI projects provide direct evidence of hands-on implementation across APIs, databases, user interfaces, and AI-assisted workflows.",
+      "focus": "A delivery-oriented view of building maintainable software for genuine needs, supported by engineering and validation experience.",
+      "summary": "Hands-on product builder and technical leader who evaluates business needs, process simplification, and existing systems before choosing what to build. Full-stack and AI projects demonstrate implementation across APIs, databases, user interfaces, and AI-assisted workflows. Engineering-team leadership, software validation, and risk management inform a focus on correctness, maintainability, and useful outcomes rather than technology for its own sake.",
       "presentation": "technical",
       "sectionOrder": ["projects", "experience", "skills", "education"],
       "sectionTitles": {
@@ -62,7 +64,7 @@
       },
       "sectionDescriptions": {
         "projects": "Implementation evidence across full-stack applications, APIs, databases, and AI-assisted systems.",
-        "skills": "Documented programming languages, frameworks, and practices used across the portfolio.",
+        "skills": "Programming languages, frameworks, process design, statistical analysis, and improvement practices used across software and operational work.",
         "experience": "Selected software, systems, validation, and product-engineering roles.",
         "education": "Education and credentials supporting continued technical development."
       },
@@ -77,7 +79,7 @@
         "Senior Systems Support Engineer",
         "Junior Systems Support Engineer"
       ],
-      "skillGroups": ["languages", "platformsAndFrameworks", "softwareEngineering", "data", "aiAndMachineLearning", "practices", "qualitySystems", "medicalDevices", "spokenLanguages"],
+      "skillGroups": ["languages", "platformsAndFrameworks", "softwareEngineering", "data", "aiAndMachineLearning", "practices", "processSimplification", "continuousImprovement", "spokenLanguages"],
       "skillFilters": {
         "practices": [
           "AI applications",
@@ -91,6 +93,8 @@
         ]
       },
       "projectNames": [
+        "AI Video Studio",
+        "Casa Perla",
         "IntakeWise",
         "Nomadant Tech Store",
         "RESTful Restaurants",
@@ -102,20 +106,20 @@
     {
       "slug": "leadership",
       "label": "Leadership",
-      "focus": "An executive-oriented career narrative centered on organizational scope, transformation, and team leadership.",
-      "summary": "Cross-functional leader who has grown from frontline operations and engineering into global product quality, regulatory, and safety leadership. Experience spans the product lifecycle, organizational transitions, remediation, operational continuity, and team capability-building across regulated industries.",
+      "focus": "An executive-oriented view of business value, operational simplification, organizational scope, and team leadership.",
+      "summary": "Business systems thinker and cross-functional leader focused on root causes, simpler processes, and measurable value before new technology. Led a Philips Oral Healthcare organization with four direct managers, 29 indirect engineers, and two dotted-line managers; remediated quality and compliance gaps and met all departmental metrics by June 2025. Combines product-lifecycle leadership, change management, and capability-building with hands-on software, automation, and AI work.",
       "presentation": "leadership",
       "sectionOrder": ["experience", "education", "skills", "projects"],
       "sectionTitles": {
         "experience": "Leadership Experience",
         "education": "Education and Professional Development",
-        "skills": "Leadership and Quality Domains",
+        "skills": "Business, Leadership and Process Improvement",
         "projects": "Selected Digital Initiatives"
       },
       "sectionDescriptions": {
         "experience": "A leadership-focused chronology emphasizing organizational scope, team development, remediation, and operational continuity.",
         "education": "Academic and professional development across engineering, information management, and quality systems.",
-        "skills": "Leadership, quality, risk, regulatory, and lifecycle domains documented in the source profile.",
+        "skills": "Industry-agnostic business systems thinking, process simplification, Lean, Six Sigma, statistics, problem solving, and leadership.",
         "projects": "Selected digital products illustrating practical systems thinking and cross-functional problem solving."
       },
       "experienceHighlightLimit": 3,
@@ -132,21 +136,22 @@
         "Senior Validation Administrator",
         "Lead Systems Support Engineer"
       ],
-      "skillGroups": ["leadership", "business", "qualitySystems", "medicalDevices", "practices", "spokenLanguages"],
+      "skillGroups": ["leadership", "business", "processSimplification", "continuousImprovement", "practices", "spokenLanguages"],
       "skillFilters": {
         "practices": [
           "Technical operations",
-          "Product quality engineering",
           "Design controls",
           "Risk management",
-          "Regulatory compliance",
-          "Post-market surveillance",
+          "Process validation",
+          "Root-cause analysis",
           "Continuous improvement",
           "Systems integration",
           "Team leadership"
         ]
       },
       "projectNames": [
+        "AI Video Studio",
+        "Casa Perla",
         "IntakeWise",
         "Nomadant Tech Store",
         "Tutare",
@@ -156,8 +161,8 @@
     {
       "slug": "ai-engineering",
       "label": "AI Engineering",
-      "focus": "A portfolio-first view of AI learning, software projects, and the technical foundations that support continued growth.",
-      "summary": "Software and AI engineering practitioner building on an Electrical Engineering background, graduate study in Information Management, and experience with software validation and enterprise systems. Current work explores AI applications, machine learning, neural networks, and retrieval-augmented generation through documented projects and continued learning.",
+      "focus": "A portfolio-first view of practical AI and software work, with business fit and engineering quality before model novelty.",
+      "summary": "Software and AI product builder who treats AI as one possible solution to a business problem, not the starting assumption. Builds on Electrical Engineering, an MS in Information Management, software validation, and enterprise systems experience. Documented projects explore AI applications, neural networks, and retrieval-augmented generation. Completed Codecademy AI Engineer and Full-Stack Engineer career paths and a Microsoft GitHub Copilot Proficient usage-based badge support continued technical development.",
       "presentation": "ai-portfolio",
       "sectionOrder": ["projects", "skills", "experience", "education"],
       "sectionTitles": {
@@ -200,6 +205,8 @@
         ]
       },
       "projectNames": [
+        "AI Video Studio",
+        "Casa Perla",
         "AI Trip Planner",
         "AI Engineering Lessons",
         "Python Lessons",
@@ -220,7 +227,7 @@
     {
       "id": "skills",
       "title": "Technical skills and practices",
-      "content": "Technical operations, quality and regulatory systems, software validation, team leadership, and a hands-on software and AI portfolio.",
+      "content": "Process design and simplification, statistical analysis, Lean, Six Sigma, continuous improvement, technical operations, and a hands-on software and AI portfolio.",
       "audiences": ["recruiter", "engineering-manager", "leadership", "ai-engineering"]
     },
     {

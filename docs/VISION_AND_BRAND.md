@@ -2,15 +2,9 @@
 
 ## Core Identity
 
-Systems Thinker
+Product Builder | Business Systems Thinker | Process, Automation & AI
 
-Technical Problem Solver
-
-AI Engineer
-
-Builder
-
-Continuous Learner
+Industry-agnostic problem solver, hands-on software builder, and continuous learner.
 
 ---
 
@@ -18,19 +12,21 @@ Continuous Learner
 
 Exploring how complex systems learn, adapt, and evolve.
 
+Supporting business-value principle:
+
+Technology is not the objective. Business value is.
+
 ---
 
 # Primary Message
 
-Nicolas studies systems.
+Understand the business need and root causes first.
 
-Some systems are organizations.
+Simplify processes, eliminate unnecessary work, and assess existing tools before recommending new technology.
 
-Some systems are technologies.
+When a genuine gap remains, design and build high-quality software, automation, or AI-supported products that improve efficiency, reduce complexity, and create measurable value.
 
-Some systems are AI models.
-
-Some systems are people.
+Enjoying software development and choosing not to build unnecessarily are complementary: build what is worth building, and build it well.
 
 ---
 
@@ -38,11 +34,15 @@ Some systems are people.
 
 Visitors should leave believing:
 
-"Nicolas consistently succeeds at understanding and navigating complex systems."
+"Nicolas connects business needs with practical solutions, and can build quality software when it is the right solution."
 
 ---
 
 # Brand Pillars
+
+## Business Value
+
+Outcomes and fit before technology adoption. Treat process improvement, existing tools, and new software as options, not predetermined answers.
 
 ## Curiosity
 
@@ -54,11 +54,15 @@ Evidence of successful reinvention.
 
 ## Systems Thinking
 
-Focus on interactions rather than isolated components.
+Focus on interactions between people, processes, technology, and information rather than isolated components.
 
 ## Technical Problem Solving
 
-Ability to transform ambiguity into solutions.
+Ability to transform ambiguity into practical solutions, supported by hands-on software and AI work and evidence from cross-industry operations.
+
+## Engineering Quality
+
+Correctness, maintainability, validation, and risk awareness in service of useful products. Preserve accurate career evidence without presenting one historical industry as the limit of future contribution.
 
 ## Lifelong Learning
 

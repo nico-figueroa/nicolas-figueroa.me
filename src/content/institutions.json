@@ -1,5 +1,11 @@
 [
   {
+    "name": "Microsoft",
+    "logo": "/images/institutions/microsoft.png",
+    "source": "https://uhf.microsoft.com/images/microsoft/RE1Mu3b.png",
+    "darkBackground": false
+  },
+  {
     "name": "University of Washington",
     "logo": "/images/institutions/university-of-washington.svg",
     "source": "https://www.washington.edu/brand/brand-elements/logos/",

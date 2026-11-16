@@ -1,5 +1,30 @@
 [
   {
+    "name": "AI Video Studio",
+    "description": "An AI-powered YouTube content studio for planning stories, reviewing storyboards and narration, generating synthetic speech, and rendering downloadable videos locally. Estimate-first approvals make generation plans and resource needs visible so users can control quality and cost tradeoffs; estimates are not provider quotes or actual invoice totals. Also produced video generator builder, a reusable AI agent skill available for purchase on Agensi.",
+    "technologies": ["Python", "Next.js", "React", "TypeScript", "PostgreSQL", "OpenAI"],
+    "source": "https://github.com/nico-figueroa/AI_video_studio",
+    "relatedLinks": [
+      {
+        "label": "video generator builder (Agensi)",
+        "url": "https://www.agensi.io/skills/video-generator-builder",
+        "description": "A commercially available AI agent skill derived from AI Video Studio. Provides an engineering workflow for building video generators with cost controls, staged approvals, provider abstraction, durable media state, and validation."
+      }
+    ]
+  },
+  {
+    "name": "Casa Perla",
+    "description": "A bilingual vacation-rental website for a home in Punta Uva, Costa Rica. Brings property details, a photo gallery, local context, availability inquiries, and booking and contact links into a guest-facing experience. The site is publicly available; its source repository is private.",
+    "technologies": ["Astro", "HTML", "CSS", "JavaScript"],
+    "source": "https://casaperlapuntauva.com/",
+    "productionLinks": [
+      {
+        "label": "Live site",
+        "url": "https://casaperlapuntauva.com/"
+      }
+    ]
+  },
+  {
     "name": "AI Trip Planner",
     "description": "A Streamlit itinerary planner using OpenAI tool calling, verified place data, optional travel-guide retrieval, interactive maps, and PDF or JSON export. Optional model and place services can fail independently of itinerary planning.",
     "technologies": ["Python", "OpenAI", "Streamlit", "PostgreSQL", "Geoapify", "PyDeck"],
@@ -45,9 +70,16 @@
   },
   {
     "name": "AI Engineering Lessons",
-    "description": "A collection of AI, machine-learning, and RAG learning projects. It includes a historical archive of an exercise deploying Microsoft's Azure Search and OpenAI sample; the repository states that the model service has been retired.",
+    "description": "Selected for XERJ Corpus Hub as a public code-reference corpus for AI coding agents, with its banking-classification capstone using MLP and RoBERTa with PII protections highlighted as selected work. The collection covers AI, machine learning, and RAG. Its historical Azure Search and OpenAI sample is archived; the repository states that the model service has been retired.",
     "technologies": ["Python", "RAG", "Azure", "OpenAI", "Machine Learning"],
-    "source": "https://github.com/nico-figueroa/AI_Engineering_Lessons"
+    "source": "https://github.com/nico-figueroa/AI_Engineering_Lessons",
+    "relatedLinks": [
+      {
+        "label": "XERJ Corpus Hub selection",
+        "url": "https://hub.xerj.org/contributors/nico-figueroa",
+        "description": "XERJ Corpus Hub lists AI Engineering Lessons as a public, attributed code-reference corpus for AI coding agents and highlights the banking-classification capstone using MLP and RoBERTa with PII protections. The corpus covers the whole repository at a pinned commit. Inclusion establishes code-reference indexing, not evidence that a model was trained on this work."
+      }
+    ]
   },
   {
     "name": "Full Stack Engineering Lessons",

@@ -2,6 +2,7 @@
 // index.astro - Home page of the site, displaying the hero section with an introduction and primary actions.
 import SiteLayout from "../layouts/SiteLayout.astro";
 import site from "../content/site.json";
+import profile from "../content/profile.json";
 import NetworkMap from "../components/NetworkMap.astro";
 ---
 
@@ -12,10 +13,10 @@ import NetworkMap from "../components/NetworkMap.astro";
         {site.focusAreas.join(" · ")}
       </p>
       <h1 class="max-w-3xl text-4xl font-semibold leading-tight tracking-tight md:text-6xl">
-        Nicolas Figueroa: Exploring how complex systems learn, adapt, and evolve.
+        {site.name}: {site.brandStatement}
       </h1>
       <p class="mt-6 max-w-2xl text-xl leading-8 text-[var(--text)]">
-        Through engineering, software, artificial intelligence, and the study of complex systems.
+        {profile.headline}
       </p>
       <p class="mt-4 max-w-2xl text-base leading-7 text-[var(--muted)]">{site.introduction}</p>
       <div class="mt-9 flex flex-wrap gap-4">

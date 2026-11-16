@@ -173,7 +173,7 @@ test("career history cards use sourced local employer logos on Experience and Re
   }
 });
 
-test("project and software skill cards share accessible technology banners", async () => {
+test("project and resume skill cards share accessible technology banners", async () => {
   const banners = await readFile(new URL("../src/components/TechnologyBanners.astro", import.meta.url), "utf8");
   const project = await readFile(new URL("../src/components/ProjectCard.astro", import.meta.url), "utf8");
   assert.match(banners, /<ul class="technology-banners" aria-label=\{label\}>/);
@@ -190,8 +190,8 @@ test("README-style badges cover project technologies and embed available logos l
     assert.ok(badges[technology], `Missing badge for ${technology}`);
   }
   const badgeNames = new Set(Object.keys(badges).map((name) => name.toLowerCase()));
-  for (const group of ["languages", "platformsAndFrameworks", "softwareEngineering", "data", "practices", "aiAndMachineLearning"]) {
-    for (const skill of profile.skills[group]) {
+  for (const [group, skills] of Object.entries(profile.skills)) {
+    for (const skill of skills) {
       assert.ok(badgeNames.has(skill.toLowerCase()), `Missing ${group} badge for ${skill}`);
     }
   }
@@ -200,6 +200,7 @@ test("README-style badges cover project technologies and embed available logos l
     assert.match(svg, /<svg\b/);
     assert.doesNotMatch(svg, /<script\b|<foreignObject\b|\bonload=|(?:href|src)="https?:/i);
     if (badge.logo || badge.logoSource) assert.match(svg, /<image\b/);
+    else assert.doesNotMatch(svg, /<image\b/);
   }
 });
 
@@ -330,12 +331,14 @@ test("all supplied production deployments are linked from project cards", () => 
     "https://restful-restaurants-frontend-xjlj.onrender.com",
     "https://tara-hidalgo.netlify.app/",
     "https://nomadant-agentic-trip-planner.streamlit.app/",
+    "https://casaperlapuntauva.com/",
   ];
   const productionUrls = new Set(
     projects.flatMap((project) => (project.productionLinks || []).map((link) => link.url)),
   );
 
   assert.ok(expectedUrls.every((url) => productionUrls.has(url)));
+  assert.doesNotMatch(JSON.stringify(projects), /github\.com\/nico-figueroa\/Nauta/i);
 });
 
 test("media content includes the requested YouTube channel", () => {

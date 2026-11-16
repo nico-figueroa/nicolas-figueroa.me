@@ -23,9 +23,20 @@ export const candidateSources = [
     url: project.source,
     kind: project.productionLinks?.length ? "Deployed portfolio project" : "Repository or academic project",
   })),
+  ...projects.flatMap((project) => (project.relatedLinks || []).map((link) => ({
+    title: link.label,
+    text: `${project.name}. ${link.description}`,
+    url: link.url,
+    kind: "Published project resource",
+  }))),
   ...profile.certifications.map((certificate) => ({
     title: certificate.name,
-    text: certificate.name,
+    text: [
+      certificate.name, `Issuer: ${certificate.institution}.`,
+      certificate.issuedOn && `Issued / completed: ${certificate.issuedOn}.`,
+      certificate.expiresOn && `Expires: ${certificate.expiresOn}.`,
+      certificate.detail,
+    ].filter(Boolean).join(" "),
     url: certificate.credentialUrl || certificate.source,
     kind: "Certification or training",
   })),
